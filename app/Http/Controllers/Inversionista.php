@@ -2,6 +2,7 @@
 
 
 namespace App\Http\Controllers;
+use Carbon\Carbon;
 
 
 
@@ -18,6 +19,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
 
 use App\Models\User;
+use App\Models\inversionistanatural;
 
 
 
@@ -59,7 +61,7 @@ class Inversionista extends Controller
 
     public function users()
     {
-        $usuarios=db::table('users')->where('status','1')->get();
+        $usuarios=db::table('users')->get();
         
             return view('users')->with(compact('usuarios'));
         
@@ -87,6 +89,7 @@ class Inversionista extends Controller
 
     public function update_users(request $request, $id)
     {
+        //dd($request->file("foto"));
         
         $user = User::findOrFail($id);
         //dd($user->contrasena);
@@ -115,7 +118,7 @@ class Inversionista extends Controller
                 //dd($request->contrasena != $user->password && $request->contrasena != null);
                 $user->update(['password' => $request->contrasena]);
         }
-        if($request->file != $user->file && $request->file != "" || $request->file != $user->file && $request->file != null)
+        if($request->file("foto") != $user->file && $request->file("foto") != "" || $request->file("foto") != $user->file && $request->file("foto") != null)
         {
                 //dd("f");
                 $imagen = $request->file("foto");                        
@@ -195,6 +198,33 @@ class Inversionista extends Controller
     {
        
             return view('delegates');
+        
+    }
+
+    public function delegates_register(request $request)
+    {
+                //dd($request);
+                $registry = new inversionistanatural;
+                $registry -> user_id = $request -> cedula;
+                $registry -> nombre = $request -> nombre;
+                $registry -> apellido = $request -> apellido;
+                $registry -> doc_identidad = $request -> cedula;
+                $registry -> nacionalidad = $request -> nacionalidad;
+                $registry -> fecha_nacimiento = $request-> fecha;
+                $fechaNacimiento = $request->fecha;
+$fechaNacimientoCarbon = Carbon::parse($fechaNacimiento);
+$edad = $fechaNacimientoCarbon->age;
+
+// Asignando la edad a un nuevo campo
+$registry->edad = $edad;
+                $registry -> estado_civil = $request -> estado;
+                $registry -> sexo = $request -> genero;
+                $registry -> direccion = $request -> direccion;
+                $registry -> telefono = $request -> telefono;
+                $registry -> email = $request -> correo;
+                dd($registry);
+                $registry  -> save();
+            return back();
         
     }
     public function configurations()

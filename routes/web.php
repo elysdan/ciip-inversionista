@@ -42,6 +42,8 @@ Route::get('/enterprises', [inversionista::class, 'enterprises'])->name('enterpr
 
 Route::get('/delegates', [inversionista::class, 'delegates'])->name('delegates');
 
+Route::post('/delegates_register', [inversionista::class, 'delegates_register'])->name('delegates_register');
+
 
 Route::get('/stadistics', [inversionista::class, 'stadistics'])->name('stadistics');
 

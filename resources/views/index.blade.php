@@ -157,26 +157,26 @@
 
     
 <main class="form-signin w-100 m-auto">
-  <form method="POST" action="{{route('login')}}">
+  <form method="POST" action="{{route('login')}}" id="miFormulario">
     @csrf
    <h1 class="h2 mb-3 fw-normal">Sistema de Potenciales Inversionistas</h1>
 
     <div class="form-floating">
-      <input type="email" name="correo" class="form-control" id="floatingInput" placeholder="Usuario">
-      <label for="floatingInput">Usuario</label>
+      <input type="email" name="correo" class="form-control" id="campo1" placeholder="Correo Electronico" pattern="[A-Za-z0-9@.áÁéÉíÍóÓúÚ]{4,256}" maxlength="256" required>
+      <label for="campo1">Correo Electronico</label>
     </div>
     <div class="form-check text-start my-1">
       
     </div>
     <div class="form-floating">
-      <input type="password" name="contrasena" class="form-control" id="floatingPassword" placeholder="Contraseña">
-      <label for="floatingPassword">Contraseña</label>
+      <input type="password" name="contrasena" class="form-control" id="campo2" placeholder="Contraseña" pattern="[A-Za-z0-9@.*_'-'+áÁéÉíÍóÓúÚ]{8,100}" maxlength="100" required>
+      <label for="campo2">Contraseña</label>
     </div>
 
     <div class="form-check text-start my-3">
       
     </div>
-    <button class="btn btn-primary w-100 py-2" type="submit">Ingresar</button>
+    <button class="btn btn-primary w-100 py-2" type="submit" id="submitBtn" disabled>Ingresar</button>
     
   </form>
 
@@ -201,4 +201,54 @@
    
 </html>
 
+<script>
+  function validarCampos() {
+      var campo1 = document.getElementById('campo1');
+      var campo2 = document.getElementById('campo2');
+      var submitBtn = document.getElementById('submitBtn');
+      var valido = campo1.checkValidity() && campo2.checkValidity();
 
+      submitBtn.disabled = !valido;
+  }
+
+  document.getElementById('miFormulario').addEventListener('input', function(event) {
+      var campo = event.target;
+      if (campo.id === 'campo1' ) {
+          campo.value = campo.value.replace(/[^A-Za-z0-9@.áÁéÉíÍóÓúÚ]/g, '');
+      }
+      if (campo.id === 'campo2') {
+          campo.value = campo.value.replace(/[^A-Za-z0-9@.*6'-'_+áÁéÉíÍóÓúÚ]/g, '');
+      }
+      validarCampos();
+  });
+
+  
+
+  document.getElementById('miFormulario').addEventListener('submit', function(event) {
+      var campo1 = document.getElementById('campo1');
+      var campo2 = document.getElementById('campo2');
+      var valido = true;
+
+      if (!campo1.checkValidity()) {
+          campo1.classList.add('error');
+          valido = false;
+      } else {
+          campo1.classList.remove('error');
+      }
+
+      if (!campo2.checkValidity()) {
+          campo2.classList.add('error');
+          valido = false;
+      } else {
+          campo2.classList.remove('error');
+      }
+
+      if (!valido) {
+          event.preventDefault();
+      }
+  });
+
+
+
+
+</script>
