@@ -24,6 +24,8 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
     
     </svg>
 </button>
+
+
   
       <div class="table-responsive small">
         <table class="table table-striped table-sm">
@@ -119,7 +121,16 @@ data-toggle="modal" data-target="#DelModal{{$usuario->id}}" data-whatever="@mdo"
         </table>
       </div>
      
-    
+      @if(session('status'))
+
+
+<div class="alert alert-danger d-flex align-items-center mt-1 " role="alert">
+  
+  <div>
+    {{session('status')}}
+  </div>
+</div>
+@endif
       <div class="modal fade" id="RegModal" tabindex="-1" role="dialog" aria-labelledby="RegModal" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -172,16 +183,7 @@ data-toggle="modal" data-target="#DelModal{{$usuario->id}}" data-whatever="@mdo"
       
         </div>
       </div>
-      @if(session('status'))
-
-
-<div class="alert alert-danger d-flex align-items-center mt-1 " role="alert">
-  
-  <div>
-    {{session('status')}}
-  </div>
-</div>
-@endif
+      
 
 <script>
   function validarCampos() {

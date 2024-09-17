@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.122.0">
-    <title>Dashboard</title>
+    <title>Sistema de Inversionistas</title>
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
 
@@ -211,16 +211,17 @@
 </svg>
 
 <header class="navbar sticky-top bg-primary flex-md-nowrap p-0 shadow" data-bs-theme="primary">
-  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white bg-white" style="width: 16vw;"  href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjF-beLmrmIAxVmfDABHRcQDNIQFnoECDMQAQ&url=https%3A%2F%2Fwww.ciip.com.ve%2F&usg=AOvVaw2NVpp6EHIoQRfNasMrhiST&opi=89978449"><img class="img" style="max-width: 100%;
+  <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white bg-white" style="width: 16vw;"  href="{{route('dashboard')}}"><img class="img" style="max-width: 100%;
   height: auto;" src="{{asset('/assets/Img/Logo.png')}}"></a>
 
  
   <a class="col-md-3 col-lg-2 me-0 px-3 fs-6 text-light m-auto" style="display:block;align-content: right;align-items: right;text-align: right;" href="{{route('userpanel')}}"> 
-    <a class="text-light m-3 " style="font-size: 2vw;text-decoration: none;" href="{{route('userpanel')}}">Nombre de Usuario</a>
-    <svg  xmlns="http://www.w3.org/2000/svg"style="margin-right: 1%;width:4vw" fill="white" class="bi-person-circle" viewBox="0 0 16 16">
+    <a class="text-light m-3 " style="font-size: 2vw;text-decoration: none;" href="{{route('userpanel')}}">{{session('usuario')->name}}</a>
+    <img src="{{session('usuario')->file}}" style="margin-right: 1%;width:4vw; border-radius: 50%;" >
+    <!--<svg  xmlns="http://www.w3.org/2000/svg"style="margin-right: 1%;width:4vw" fill="white" class="bi-person-circle" viewBox="0 0 16 16">
     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
     <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
-  </svg></a>
+  </svg>--></a>
 
   <ul class="navbar-nav flex-row d-md-none">
    

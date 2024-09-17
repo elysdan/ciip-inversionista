@@ -35,6 +35,7 @@ class Inversionista extends Controller
     //dd($user->password);
   
     if($user && password_verify($request->contrasena, $user->password)) {
+        session()->put('usuario', $user);
         return view('dashboard');
     }
     else
@@ -52,19 +53,34 @@ class Inversionista extends Controller
         
     }
 
+
+    public function dashboard()
+    {
+       if(session('usuario')){
+            return view('dashboard');
+        }
+        else
+        return view('index');
+    }
+
     public function search()
     {
-       
+        if(session('usuario')){
             return view('search');
-        
+        }
+        else
+        return view('index');
     }
 
     public function users()
     {
+        if(session('usuario')){
         $usuarios=db::table('users')->get();
         
             return view('users')->with(compact('usuarios'));
-        
+        }
+        else
+        return view('index');
     }
 
     public function delete_users(request $request, $id)
@@ -196,16 +212,22 @@ class Inversionista extends Controller
 
     public function delegates()
     {
-       
-            return view('delegates');
-        
+        if(session('usuario')){
+       $delegados=db::table('inversionista_naturals')->get();
+            return view('delegates')->with(compact('delegados'));
+        }
+        else
+        return view('index');
+
     }
 
     public function delegates_register(request $request)
     {
                 //dd($request);
+                $busqueda=db::table('users')->where('email',$request->correo)->select('id')->first();
+                //dd($busqueda);
                 $registry = new inversionistanatural;
-                $registry -> user_id = $request -> cedula;
+                $registry -> user_id = $busqueda->id;
                 $registry -> nombre = $request -> nombre;
                 $registry -> apellido = $request -> apellido;
                 $registry -> doc_identidad = $request -> cedula;
@@ -222,52 +244,191 @@ $registry->edad = $edad;
                 $registry -> direccion = $request -> direccion;
                 $registry -> telefono = $request -> telefono;
                 $registry -> email = $request -> correo;
-                dd($registry);
+                //dd($registry);
                 $registry  -> save();
             return back();
         
     }
-    public function configurations()
+
+    public function edit_delegates($id)
+    {
+        $delegado = inversionistanatural::findorfail($id);
+        
+        //dd($delegado);
+            return view('edit_delegates',['delegado' => $delegado]);
+        
+    }
+
+    public function update_delegates(request $request, $id)
     {
        
-            return view('configurations');
         
+        $delegados = inversionistanatural::findOrFail($id);
+        $users = user::findorfail($id);
+        //dd($delegados);
+        if($request->nombre != $delegados->nombre && $request->nombre!="" ||  $request->nombre != $delegados->nombre && $request->nombre!=" " ||  $request->nombre != $delegados->nombre && $request->nombre!=null)
+        {  
+                //dd("a");
+                $delegados->update(['nombre' => $request->nombre]);
+            }
+        if($request->apellido != $delegados->apellido && $request->apellido != "" || $request->apellido != $delegados->apellido && $request->apellido!=" "|| $request->apellido != $delegados->apellido && $request->apellido!=null)
+        {
+                //dd("b");
+                $delegados->update(['apellido' => $request->apellido]);
+        }
+        if($request->cedula != $delegados->doc_identidad && $request->cedula!="" || $request->cedula != $delegados->doc_identidad && $request->cedula!=" " || $request->cedula != $delegados->doc_identidad && $request->cedula!=null)
+        {
+                //dd("c");
+                $delegados->update(['doc_identidad' => $request->cedula]);
+        }
+        if($request->nacionalidad != $delegados->nacionalidad)
+        {
+                //dd("d");
+                $delegados->update(['nacionalidad' => $request->nacionalidad]);
+        }
+        if($request->fecha != $delegados->fecha_nacimiento)
+        {
+                //dd("e");
+                $delegados->update(['fecha_nacimiento' => $request->fecha]);
+        }
+        $fechaNacimiento = $request->fecha;
+$fechaNacimientoCarbon = Carbon::parse($fechaNacimiento);
+$edad = $fechaNacimientoCarbon->age;
+        if($edad != $delegados->edad)
+        {
+                //dd("f");
+                $delegados->update(['edad' => $edad]);
+        }
+
+        if($request->estado != $delegados->estado_civil)
+        {
+                //dd("g");
+                $delegados->update(['estado_civil' => $request->estado]);
+        }
+
+        if($request->genero != $delegados->sexo)
+        {
+                //dd("h");
+                $delegados->update(['sexo' => $request->genero]);
+        }
+        
+        if($request->direccion != $delegados->direccion && $request->direccion != "" || $request->direccion != $delegados->direccion && $request->direccion != " " && $request->direccion != null || $request->direccion != $delegados->direccion && $request->direccion != null)
+        {
+                //dd("i");
+                $delegados->update(['direccion' => $request->direccion]);
+        }
+
+        if($request->telefono != $delegados->telefono && $request->telefono != "" || $request->telefono != $delegados->telefono && $request->telefono != " " && $request->telefono != null || $request->telefono != $delegados->telefono && $request->telefono != null)
+        {
+                //dd("j");
+                $delegados->update(['telefono' => $request->telefono]);
+        }
+        if($request->correo != $delegados->email && $request->correo != "" || $request->correo != $delegados->email && $request->correo != " " && $request->correo != null || $request->correo != $delegados->email && $request->correo != null)
+        {
+                //dd("k");
+                $delegados->update(['email' => $request->correo]);
+                $users->update(['email' => $request->correo]);
+        }
+        
+        
+       
+       
+        
+        
+        
+
+  
+        
+            return redirect()->to('delegates')->with('status','Datos Modificado');
+        
+    }
+
+
+    public function delete_delegates(request $request, $id)
+    {
+        $user = inversionistanatural::findOrFail($id);
+
+    // Update the id_status column
+    $user->delete();
+
+        
+            return back()->with('status','Usuario Suspendido');
+        
+    }
+
+    public function add_socialweb($id)
+    {
+        $delegado = inversionistanatural::findorfail($id);
+        
+        //dd($delegado);
+            return view('add_socialweb',['delegado' => $delegado]);
+        
+    }
+    public function web_register(request $request)
+    {
+        $delegado = inversionistanatural::findorfail($request->id);
+        
+        //dd($delegado);
+            return back()->with('status','funciona');
+        
+    }
+
+    public function configurations()
+    {
+        if(session('usuario')){
+            return view('configurations');
+        }
+        else
+        return $this->index();
+
     }
     public function enterprises()
     {
-       
+        if(session('usuario')){
             return view('enterprises');
-        
+        }
+        else
+        return $this->index();
     }
     public function previews()
     {
-       
+        if(session('usuario')){
             return view('previews');
-        
+        }
+        else
+        return $this->index();
     }
 
     public function results()
     {
-       
+        if(session('usuario')){
             return view('results');
-        
+        }
+        else
+        return $this->index();
     }
     public function stadistics()
     {
-       
+        if(session('usuario')){
             return view('stadistics');
-        
+        }
+        else
+        return $this->index();
+
     }
     public function userpanel()
     {
-       
+        if(session('usuario')){
             return view('Userpanel');
-        
+        }
+        else
+        return $this->index();
     }
     public function logout()
     {
        
-            return view('logout');
+        session()->forget('usuario');
+        return $this->index();
         
     }
 

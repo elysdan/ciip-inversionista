@@ -22,6 +22,8 @@ Route::post('/', [inversionista::class, 'index'])->name('index');
 
 Route::post('/dashboard', [inversionista::class, 'login'])->name('login');
 
+Route::get('/dash_board', [inversionista::class, 'dashboard'])->name('dashboard');
+
 Route::get('/search', [inversionista::class, 'search'])->name('search');
 
 Route::get('/users', [inversionista::class, 'users'])->name('users');
@@ -44,6 +46,16 @@ Route::get('/delegates', [inversionista::class, 'delegates'])->name('delegates')
 
 Route::post('/delegates_register', [inversionista::class, 'delegates_register'])->name('delegates_register');
 
+Route::get('/edit_delegates_{id}', [inversionista::class, 'edit_delegates'])->name('edit_delegates');
+
+Route::post('/update_delegates_{id}', [inversionista::class, 'update_delegates'])->name('update_delegates');
+
+
+Route::put('/delete_delegates_{id}', [inversionista::class, 'delete_delegates'])->name('delete_delegates');
+
+Route::get('/add_socialweb_{id}', [inversionista::class, 'add_socialweb'])->name('add_socialweb');
+
+Route::post('/web_register', [inversionista::class, 'web_register'])->name('web_register');
 
 Route::get('/stadistics', [inversionista::class, 'stadistics'])->name('stadistics');
 

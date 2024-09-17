@@ -46,28 +46,110 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
             </tr>
           </thead>
           <tbody>
+            @php $n=1; @endphp
+            @foreach($delegados as $delegado)
           <tr style="text-align: center;">
-              <td scope="col" >#</td>
-              <td scope="col">Nombre</td>
-              <td scope="col">Apellido</td>
-              <td scope="col">Cedula</td>
-              <td scope="col">Nacionalidad</td>
-              <td scope="col">Fecha de Nacimiento</td>
-              <td scope="col">edad</td>
-              <td scope="col">Estado Civil</td>
-              <td scope="col">Genero</td>
-              <td scope="col">Direccion</td>
-              <td scope="col">Telefono</td>
-              <td scope="col">Email</td>
-              <td scope="col">Redes Sociales</td>
-              <td scope="col" colspan="2"></td>
+              <td scope="col" >@php echo $n; @endphp</td>
+              <td scope="col">{{$delegado->nombre}}</td>
+              <td scope="col">{{$delegado->apellido}}</td>
+              <td scope="col">{{$delegado->doc_identidad}}</td>
+              <td scope="col">{{$delegado->nacionalidad}}</td>
+              <td scope="col">{{$delegado->fecha_nacimiento}}</td>
+              <td scope="col">{{$delegado->edad}}</td>
+              <td scope="col">{{$delegado->estado_civil}}</td>
+              <td scope="col">{{$delegado->sexo}}</td>
+              <td scope="col">{{$delegado->direccion}}</td>
+              <td scope="col">{{$delegado->telefono}}</td>
+              <td scope="col">{{$delegado->email}}</td>
+              <td scope="col">
+              <a href="{{route('add_socialweb',$delegado->id)}}">
+                <button type="button" 
+                class="btn btn-outline-primary mt-1 mb-1 p-0" 
+                
+                style="font-size:3vw;width: 4.5vw;border-radius:1rem;align-items: center;align-content: center;" > 
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 3vw;height:3vw">
+                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                    </svg>
+                </button>
+                
+              </a>
+              </td>
+              <td><a href="{{route('edit_delegates',$delegado->id)}}">
+                <button type="button" 
+                class="btn btn-outline-warning mt-1 mb-1 p-0" 
+                
+                style="font-size:3vw;width: 4.5vw;border-radius:1rem;align-items: center;align-content: center;" > 
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 3vw;height:3vw">
+                      <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4m9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>
+
+                    </svg>
+                </button>
+                
+              </a>
+            </td>
+              <td>
+                
+                <button type="button" 
+class="btn btn-outline-danger mt-1 mb-1 p-0" 
+
+style="font-size:3vw;width: 4.5vw;border-radius:1rem;align-items: center;align-content: center;" 
+data-toggle="modal" data-target="#DelModal{{$delegado->id}}" data-whatever="@mdo"> 
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-dash" align="center" viewBox="0 0 16 16" style="width: 3vw;height:3vw">
+      <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M11 12h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1m0-7a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+      <path d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"/>
+    
+    </svg>
+</button>
+<div class="modal fade" id="DelModal{{$delegado->id}}" tabindex="-1" role="dialog" aria-labelledby="RegModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Desafiliar Delegado</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      
+      <div class="modal-body">
+       <h3>¿Desea Suspender Al Usuario?</h3>
+      </div>
+      <div class="modal-footer">
+        
+       
+        <form method="POST" action="{{route('delete_delegates',$delegado->id)}}" > 
+          @csrf 
+          @method('PUT')
+          <input class="btn btn-primary" type="submit" value="Si">
+        </form>
+      </div>
+    </form>
+    </div>
+
+  </div>
+</div>
+                
+
+                
+              
+              </td>
             </tr>
+            @endforeach
+            @php $n++; @endphp
           </tbody>
 
         </table>
       </div>
      
-    
+      @if(session('status'))
+
+
+      <div class="alert alert-danger d-flex align-items-center mt-1 " role="alert">
+        
+        <div>
+          {{session('status')}}
+        </div>
+      </div>
+      @endif
       <div class="modal fade" id="RegModal" tabindex="-1" role="dialog" aria-labelledby="RegModal" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -143,18 +225,10 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
       
         </div>
       </div>
-      @if(session('status'))
-
-
-<div class="alert alert-danger d-flex align-items-center mt-1 " role="alert">
-  
-  <div>
-    {{session('status')}}
-  </div>
-</div>
-@endif
-
+      
 <script>
+  var campo10 = document.getElementById('campo10'); //direccion
+campo10.innerHTML=''
 function setFechaLimites() {
   const hoy = new Date();
   const fechaMin = new Date();
@@ -181,12 +255,12 @@ window.onload = setFechaLimites;
       var campo2 = document.getElementById('campo2'); //apellido
       var campo3 = document.getElementById('campo3'); //correo
       var campo4 = document.getElementById('campo4'); //nacionalidad
-      var campo5 = document.getElementById('campo6'); //cedula
-      var campo5 = document.getElementById('campo7'); //estado civil
-      var campo5 = document.getElementById('campo8'); //genero
-      var campo5 = document.getElementById('campo10'); //direccion
-      var campo5 = document.getElementById('campo11'); //telefono
-      var campo5 = document.getElementById('campo12'); //telefono
+      var campo6 = document.getElementById('campo6'); //cedula
+      var campo7 = document.getElementById('campo7'); //estado civil
+      var campo8 = document.getElementById('campo8'); //genero
+      var campo10 = document.getElementById('campo10'); //direccion
+      var campo11 = document.getElementById('campo11'); //telefono
+      var campo12 = document.getElementById('campo12'); //telefono
       var submitBtn = document.getElementById('submitBtn');
       var valido = campo1.checkValidity() && campo2.checkValidity() && campo3.checkValidity() && campo4.selectedIndex != 0 && campo7.selectedIndex != 0 && campo8.selectedIndex != 0 && campo11.checkValidity() && campo10.checkValidity() && campo6.checkValidity() && campo12.checkValidity();
 
@@ -267,7 +341,9 @@ window.onload = setFechaLimites;
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js" integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp" crossorigin="anonymous"></script><script src="dashboard.js"></script></body>
-</html>
+   
+    
+    </html>
     @endsection
     
     
