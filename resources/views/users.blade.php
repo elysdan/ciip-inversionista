@@ -1,22 +1,72 @@
 @extends('layouts.panel')
-@section('content')
-@endsection
+
 @section('usuarios') 
-<link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
 
-    
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <!-- basic -->
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <!-- mobile metas -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+      <!-- site metas -->
+      <meta name="keywords" content="">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <!-- site icon -->
+      <link rel="icon" href="images/fevicon.png" type="image/png" />
+      <!-- bootstrap css -->
+      <link rel="stylesheet" href="css/bootstrap.min.css" />
+      <!-- site css -->
+      <link rel="stylesheet" href="style.css" />
+      <!-- responsive css -->
+      <link rel="stylesheet" href="css/responsive.css" />
+      <!-- color css -->
+      <link rel="stylesheet" href="css/colors.css" />
+      <!-- select bootstrap -->
+      <link rel="stylesheet" href="css/bootstrap-select.css" />
+      <!-- scrollbar css -->
+      <link rel="stylesheet" href="css/perfect-scrollbar.css" />
+      <!-- custom css -->
+      <link rel="stylesheet" href="css/custom.css" />
+      <!-- calendar file css -->
+      <link rel="stylesheet" href="js/semantic.min.css" />
+      <!-- fancy box js -->
+      <link rel="stylesheet" href="css/jquery.fancybox.css" />
+      <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+        <style>
+          .table td{vertical-align: inherit;"}
+        </style>
+   </head>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-<link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
-<h2>Usuarios</h2>
-<button type="button" 
+   
+               <!-- dashboard inner -->
+               <div class="midde_cont">
+                  <div class="container-fluid">
+                     <div class="row column_title">
+                        <div class="col-md-12">
+                           <div class="page_title">
+                              <h2>Usuarios</h2>
+                           </div>
+                        </div>
+                     </div>
+
+                  
+                     <!-- row -->
+                    <div class="col-md-12">
+
+                         <button type="button" 
 class="btn btn-outline-success mt-3 mb-3 p-0" 
 
-style="font-size:3vw;width: 4.5vw;border-radius:1rem;align-items: center;align-content: center;" 
+style="border-radius:1rem;align-items: center;align-content: center;width: 3vw;height: 3vw;"  
 data-toggle="modal" data-target="#RegModal" data-whatever="@mdo"> 
-    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-fill-add" align="center" viewBox="0 0 16 16" style="width: 3vw;height:3vw">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-fill-add" align="center" viewBox="0 0 16 16" style="width: 2.5vw;height:2.5vw">
     
         <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0m-2-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
     
@@ -24,116 +74,11 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
     
     </svg>
 </button>
-
-
-  
-      <div class="table-responsive small">
-        <table class="table table-striped table-sm">
-          <thead>
-            <tr style="text-align: center;">
-              <th scope="col" >#</th>
-              <th scope="col">Nombre</th>
-              <th scope="col">Apellido</th>
-              <th scope="col">Correo</th>
-              <th scope="col">Rol</th>
-              <th scope="col">Estatus</th>
-              <th scope="col">Foto de perfil</th>
-              <th scope="col" colspan="2"></th>
-            </tr>
-          </thead>
-          <tbody>
-             @php $n=1; @endphp
-            @foreach($usuarios as $usuario)
-            
-            <tr style="text-align: center;align-items: center;align-content: center;" >
-              <td>@php echo $n; @endphp</td>
-              <td>{{$usuario->name}}</td>
-              <td>{{$usuario->surname}}</td>
-              <td>{{$usuario->email}}</td>
-              <td>{{$usuario->role}}</td>
-              <td>{{$usuario->status}}</td>
-              <td><img src="{{$usuario->file}}" style="width: 7vw;border-radius: 50%;"></td>
-              <td><a href="{{route('edit_users',$usuario->id)}}">
-                <button type="button" 
-                class="btn btn-outline-warning mt-3 mb-3 p-0" 
-                
-                style="font-size:3vw;width: 4.5vw;border-radius:1rem;align-items: center;align-content: center;" > 
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 3vw;height:3vw">
-                      <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4m9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>
-
-                    </svg>
-                </button>
-                
-              </a>
-            </td>
-              <td>
-                
-                <button type="button" 
-class="btn btn-outline-danger mt-3 mb-3 p-0" 
-
-style="font-size:3vw;width: 4.5vw;border-radius:1rem;align-items: center;align-content: center;" 
-data-toggle="modal" data-target="#DelModal{{$usuario->id}}" data-whatever="@mdo"> 
-    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-dash" align="center" viewBox="0 0 16 16" style="width: 3vw;height:3vw">
-      <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M11 12h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1m0-7a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
-      <path d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"/>
-    
-    </svg>
-</button>
-<div class="modal fade" id="DelModal{{$usuario->id}}" tabindex="-1" role="dialog" aria-labelledby="RegModal" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Suspender Usuario</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      
-      <div class="modal-body">
-       <h3>¿Desea Suspender Al Usuario?</h3>
-      </div>
-      <div class="modal-footer">
-        
-       
-        <form method="POST" action="{{route('delete_users',$usuario->id)}}" > 
-          @csrf 
-          @method('PUT')
-          <input class="btn btn-primary" type="submit" value="Si">
-        </form>
-      </div>
-    </form>
-    </div>
-
-  </div>
-</div>
-                
-
-                
-              
-              </td>
-              @php $n++; @endphp
-            </tr>
-              
-            @endforeach
-            
-            
-          </tbody>
-        </table>
-      </div>
-     
-      @if(session('status'))
-
-
-<div class="alert alert-danger d-flex align-items-center mt-1 " role="alert">
-  
-  <div>
-    {{session('status')}}
-  </div>
-</div>
-@endif
-      <div class="modal fade" id="RegModal" tabindex="-1" role="dialog" aria-labelledby="RegModal" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
+<div class="modal fade w-100" id="RegModal" tabindex="-1" role="dialog" aria-labelledby="RegModal" aria-hidden="true" style="align-items: center;
+  justify-content: center;
+  align-content: center;">  
+        <div class="modal-dialog w-100" role="document">
+          <div class="modal-content ">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">Creacion de Usuarios</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -183,7 +128,160 @@ data-toggle="modal" data-target="#DelModal{{$usuario->id}}" data-whatever="@mdo"
       
         </div>
       </div>
+                           <div class="white_shd full margin_bottom_30">
+
+
+                              <div class="full graph_head">
+                                 <div class="heading1 margin_0">
+                                    <h2>Usuarios del Sistema</h2>
+                                 </div>
+                              </div>
+                              <div class="table_section padding_infor_info">
+                                 <div class="table-responsive-sm">
+                                    <table class="table">
+                                       <thead class="thead" >
+                                          <tr style="background-color: #13579e;color: white;">
+                                             <th>#</th>
+                                             <th>Nombre</th>
+                                             <th>Apellido</th>
+                                             <th>Correo</th>
+                                             <th>Rol</th>
+                                             <th>Foto de Perfil</th>
+                                             <th colspan="2">Gestion de administradores</th>
+                                            
+                                          </tr>
+                                       </thead>
+                                       <tbody style="color:black">
+                                         
+                                           @php $n=1; @endphp
+            @foreach($usuarios as $usuario)
+            
+            <tr style="vertical-align: none;text-align: center;align-items: center;
+  justify-content: center;
+  align-content: center;" >
+              <td>@php echo $n; @endphp</td>
+              <td>{{$usuario->name}}</td>
+              <td>{{$usuario->surname}}</td>
+              <td>{{$usuario->email}}</td>
+              @if(session('usuario')->role==9 || session('usuario')->role==2)
+              <td>{{$usuario->role}}</td>
+              @endif
+              
+              <td style="vertical-align: top;align-items: center;
+  justify-content: center;
+  align-content: center;"> <img src="{{$usuario->file}}" style="border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  width: 3vw;"></td>
+              @if(session('usuario')->role==9)
+              <td><a href="{{route('edit_users',$usuario->id)}}">
+                <button type="button" 
+                class="btn btn-outline-warning mt-3 mb-3 p-0" 
+                
+                style="border-radius:1rem;align-items: center;align-content: center;width: 3vw;height: 3vw;" > 
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2.5vw;"> 
+                      <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4m9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>
+
+                    </svg>
+                </button>
+                
+              </a>
+              
+            </td>
+            @endif
+            @if(session('usuario')->role==9)
+              <td>
+                
+                <button type="button" 
+class="btn btn-outline-danger mt-3 mb-3 p-0" 
+
+style="border-radius:1rem;align-items: center;align-content: center;width: 3vw;height:3vw" 
+data-toggle="modal" data-target="#DelModal{{$usuario->id}}" data-whatever="@mdo"> 
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-dash " align="center" viewBox="0 0 16 16" style="width: 2.5vw;">
+      <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M11 12h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1m0-7a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+      <path d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"/>
+    
+    </svg>
+</button>
+<div class="modal fade" id="DelModal{{$usuario->id}}" tabindex="-1" role="dialog" aria-labelledby="RegModal" aria-hidden="true" style="align-items: center;
+  justify-content: center;
+  align-content: center;">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Suspender Usuario</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
       
+      <div class="modal-body">
+       <h3>¿Desea Suspender Al Usuario?</h3>
+      </div>
+      <div class="modal-footer">
+        
+       
+        <form method="POST" action="{{route('delete_users',$usuario->id)}}" > 
+          @csrf 
+          @method('PUT')
+          <input class="btn btn-primary" type="submit" value="Si">
+        </form>
+      </div>
+    </form>
+    </div>
+
+  </div>
+</div>
+                
+
+                
+              
+              </td>
+              @endif
+              
+             
+            </tr>
+            @php $n++; @endphp
+            @endforeach
+            
+                                       </tbody>
+                                    </table>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+      <!-- jQuery -->
+      <script src="js/jquery.min.js"></script>
+      <script src="js/popper.min.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <!-- wow animation -->
+      <script src="js/animate.js"></script>
+      <!-- select country -->
+      <script src="js/bootstrap-select.js"></script>
+      <!-- owl carousel -->
+      <script src="js/owl.carousel.js"></script> 
+      <!-- chart js -->
+      <script src="js/Chart.min.js"></script>
+      <script src="js/Chart.bundle.min.js"></script>
+      <script src="js/utils.js"></script>
+      <script src="js/analyser.js"></script>
+      <!-- nice scrollbar -->
+      <script src="js/perfect-scrollbar.min.js"></script>
+      <script>
+         var ps = new PerfectScrollbar('#sidebar');
+      </script>
+      <!-- fancy box js -->
+      <script src="js/jquery-3.3.1.min.js"></script>
+      <script src="js/jquery.fancybox.min.js"></script>
+      <!-- custom js -->
+      <script src="js/custom.js"></script>
+      <!-- calendar file css -->     
+      <script src="js/semantic.min.js"></script>
+   </body>
+</html>
+
+
 
 <script>
   function validarCampos() {

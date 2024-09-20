@@ -36,7 +36,12 @@ class Inversionista extends Controller
   
     if($user && password_verify($request->contrasena, $user->password)) {
         session()->put('usuario', $user);
-        return view('dashboard');
+        if(session('usuario')->role==9 || session('usuario')->role==2)
+        {
+            return view('dashboard');
+        }
+        else
+        return view('search');
     }
     else
     {
@@ -56,11 +61,11 @@ class Inversionista extends Controller
 
     public function dashboard()
     {
-       if(session('usuario')){
+       if(session('usuario') && session('usuario')->role==9 || session('usuario') && session('usuario')->role==2 ){
             return view('dashboard');
         }
         else
-        return view('index');
+        return view('search');
     }
 
     public function search()
@@ -75,7 +80,7 @@ class Inversionista extends Controller
     public function users()
     {
         if(session('usuario')){
-        $usuarios=db::table('users')->get();
+        $usuarios=db::table('users')->where('status',1)->get();
         
             return view('users')->with(compact('usuarios'));
         }
@@ -212,7 +217,7 @@ class Inversionista extends Controller
 
     public function delegates()
     {
-        if(session('usuario')){
+        if(session('usuario') && session('usuario')->role==9 || session('usuario') && session('usuario')->role==2 ){
        $delegados=db::table('inversionista_naturals')->get();
             return view('delegates')->with(compact('delegados'));
         }
@@ -384,7 +389,7 @@ $edad = $fechaNacimientoCarbon->age;
     }
     public function enterprises()
     {
-        if(session('usuario')){
+        if(session('usuario') && session('usuario')->role==9 || session('usuario') && session('usuario')->role==2 ){
             return view('enterprises');
         }
         else
@@ -409,7 +414,7 @@ $edad = $fechaNacimientoCarbon->age;
     }
     public function stadistics()
     {
-        if(session('usuario')){
+        if(session('usuario') && session('usuario')->role==9 || session('usuario') && session('usuario')->role==2){
             return view('stadistics');
         }
         else
