@@ -41,6 +41,20 @@ Route::post('/users_register', [inversionista::class, 'users_register'])->name('
 
 Route::get('/enterprises', [inversionista::class, 'enterprises'])->name('enterprises');
 
+Route::post('/enterprises_register', [inversionista::class, 'enterprises_register'])->name('enterprises_register');
+
+Route::get('/add_web_{id}', [inversionista::class, 'add_web'])->name('add_web');
+
+Route::put('/delete_enterprises_{id}', [inversionista::class, 'delete_enterprises'])->name('delete_enterprises');
+
+Route::get('/edit_web_enterprise_{id}', [inversionista::class, 'edit_web_enterprise'])->name('edit_web_enterprise');
+
+Route::post('/web_register_enterprise', [inversionista::class, 'web_register_enterprise'])->name('web_register_enterprise');
+
+Route::put('/update_web_enterprise_inner_{id}', [inversionista::class, 'update_web_enterprise_inner'])->name('update_web_enterprise_inner');
+
+Route::put('/delete_web_enterprise_register_{id}', [inversionista::class, 'delete_web_enterprise_register'])->name('delete_web_enterprise_register');
+
 
 Route::get('/delegates', [inversionista::class, 'delegates'])->name('delegates');
 
@@ -51,11 +65,19 @@ Route::get('/edit_delegates_{id}', [inversionista::class, 'edit_delegates'])->na
 Route::post('/update_delegates_{id}', [inversionista::class, 'update_delegates'])->name('update_delegates');
 
 
+
+
 Route::put('/delete_delegates_{id}', [inversionista::class, 'delete_delegates'])->name('delete_delegates');
 
 Route::get('/add_socialweb_{id}', [inversionista::class, 'add_socialweb'])->name('add_socialweb');
 
 Route::post('/web_register', [inversionista::class, 'web_register'])->name('web_register');
+
+Route::get('/edit_web_{id}', [inversionista::class, 'edit_web'])->name('edit_web');
+
+Route::put('/update_web_inner_{id}', [inversionista::class, 'update_web_inner'])->name('update_web_inner');
+
+Route::put('/delete_web_register_{id}', [inversionista::class, 'delete_web_register'])->name('delete_web_register');
 
 Route::get('/stadistics', [inversionista::class, 'stadistics'])->name('stadistics');
 

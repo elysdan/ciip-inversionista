@@ -20,6 +20,9 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Models\User;
 use App\Models\inversionistanatural;
+use App\Models\redessocialesdelegado;
+use App\Models\RedesSocialesempresa;
+use App\Models\datosempresa;
 
 
 
@@ -364,17 +367,82 @@ $edad = $fechaNacimientoCarbon->age;
     public function add_socialweb($id)
     {
         $delegado = inversionistanatural::findorfail($id);
+
+        $redes=db::table('redes_sociales_delegados')->join('rrss', 'rrss.id', '=' ,'redes_sociales_delegados.site')->select(
+            'redes_sociales_delegados.id as id',
+             'redes_sociales_delegados.site as site',
+              'redes_sociales_delegados.username as username',
+              'rrss.red as red',
+
+    )->where('delegate_id',$id)->get();
         
-        //dd($delegado);
-            return view('add_socialweb',['delegado' => $delegado]);
+        //dd($red);
+            return view('add_socialweb',['delegado' => $delegado],['redes' => $redes]);
         
     }
     public function web_register(request $request)
     {
-        $delegado = inversionistanatural::findorfail($request->id);
+
+                
+                $registry = new redessocialesdelegado;
+                
+                $registry -> site = $request->red;
+                $registry -> username = $request->usuario;
+                $registry -> delegate_id = $request->id;
+                //dd($registry);
+                $registry -> save();
+                
         
-        //dd($delegado);
+        //dd($request);
             return back()->with('status','funciona');
+        
+    }
+
+    public function edit_web($id)
+    {
+        $delegado = redessocialesdelegado::findorfail($id);
+        //dd($delegado);
+            return view('edit_web',['delegado' => $delegado]);
+        
+    }
+
+       public function update_web_inner(request $request,$id)
+    {
+        $delegados = redessocialesdelegado::findorfail($id);
+
+         $delegado = redessocialesdelegado::findorfail($id);
+            $peticion=$delegado->delegate_id;
+            //dd($request);
+
+        if($request->usuario != $delegados->username && $request->usuario!="" ||  $request->usuario != $delegados->username && $request->usuario!=" " ||  $request->usuario != $delegados->username && $request->usuario!=null)
+        {  
+                //dd("a");
+                $delegados->update(['username' => $request->usuario]);
+            }
+
+             if($request->red != $delegados->site && $request->red!="" ||  $request->red != $delegados->site && $request->red!=" " ||  $request->red != $delegados->site && $request->red!=null)
+        {  
+                //dd("B");
+                $delegados->update(['site' => $request->red]);
+            }
+        //dd($delegado);
+
+            return $this->add_socialweb($peticion)->with('status','Red Social Modificada');
+        
+    }
+
+
+    public function delete_web_register( $id)
+    {
+
+                
+               $red = redessocialesdelegado::findOrFail($id);
+
+    // Update the id_status column
+    $red->delete();
+
+        
+            return back()->with('status','Red Social Eliminada');
         
     }
 
@@ -390,11 +458,140 @@ $edad = $fechaNacimientoCarbon->age;
     public function enterprises()
     {
         if(session('usuario') && session('usuario')->role==9 || session('usuario') && session('usuario')->role==2 ){
-            return view('enterprises');
+
+            $empresas=db::table('datos_empresas')->get();
+            return view('enterprises',['empresas'=>$empresas]);
         }
         else
         return $this->index();
     }
+
+    public function enterprises_register(request $request)
+    {
+        
+        $registry = new datosempresa;
+        if($request->File("foto")){
+
+                        $imagen = $request->file("foto");                        
+                        $nombreimagen = $request->rif;
+                        $ruta = "images/usuario/fotos/";            
+                        $imagen->move($ruta,$nombreimagen);   
+                        $registry-> foto = $ruta.$nombreimagen;
+                        
+                    }
+        $registry -> razonsocial = $request->razon;
+        $registry -> rif = $request->rif;
+        $registry -> identificador = $request->identificador;
+        $registry -> pais_origen = $request->lorigen;
+        $registry -> lregistro = $request->lregistro;
+        $registry -> direccion = $request->direccion;
+        $registry ->save();
+        //dd($registry);
+        return back()->with('status','Empresa Registrada');
+    }
+
+    public function delete_enterprises($id)
+    {
+        
+         
+               $empresa = datosempresa::findOrFail($id);
+
+    // Update the id_status column
+    $empresa->update(['status' => 0]);
+
+        
+            return back()->with('status','Empresa Eliminada');
+    }
+
+
+public function add_web($id)
+    {
+        $empresa = datosempresa::findorfail($id);
+
+        $redes=db::table('redes_sociales_empresas')->join('rrss', 'rrss.id', '=' ,'redes_sociales_empresas.site')->select(
+            'redes_sociales_empresas.id as id',
+             'redes_sociales_empresas.site as site',
+              'redes_sociales_empresas.username as username',
+              'rrss.red as red',
+
+    )->where('enterprise_id',$id)->get();
+        
+        //dd($red);
+            return view('add_social_enterprises',['empresa' => $empresa],['redes' => $redes]);
+        
+    }
+
+    public function web_register_enterprise(request $request)
+    {
+
+                
+                $registry = new redessocialesempresa;
+                
+                $registry -> site = $request->red;
+                $registry -> username = $request->usuario;
+                $registry -> enterprise_id = $request->id;
+                //dd($registry);
+                $registry -> save();
+                
+        
+        //dd($request);
+            return back()->with('status','funciona');
+        
+    }
+
+
+    public function edit_web_enterprise($id)
+    {
+        $delegado = redessocialesempresa::findorfail($id);
+        //dd($delegado);
+            return view('edit_web_enterprise',['delegado' => $delegado]);
+        
+    }
+
+
+    public function update_web_enterprise_inner(request $request,$id)
+    {
+        $empresas = redessocialesempresa::findorfail($id);
+
+         $empresa = redessocialesempresa::findorfail($id);
+            $peticion=$empresa->enterprise_id;
+            //dd($request);
+
+        if($request->usuario != $empresas->username && $request->usuario!="" ||  $request->usuario != $empresas->username && $request->usuario!=" " ||  $request->usuario != $empresas->username && $request->usuario!=null)
+        {  
+                //dd("a");
+                $empresas->update(['username' => $request->usuario]);
+            }
+
+             if($request->red != $empresas->site && $request->red!="" ||  $request->red != $empresas->site && $request->red!=" " ||  $request->red != $empresas->site && $request->red!=null)
+        {  
+                //dd("B");
+                $empresas->update(['site' => $request->red]);
+            }
+        //dd($empresa);
+
+            return $this->add_web($peticion)->with('status','Red Social Modificada');
+        
+    }
+
+
+    public function delete_web_enterprise_register( $id)
+    {
+
+                
+               $red = redessocialesempresa::findOrFail($id);
+
+    // Update the id_status column
+    $red->delete();
+
+        
+            return back()->with('status','Red Social Eliminada');
+        
+    }
+
+
+
+
     public function previews()
     {
         if(session('usuario')){

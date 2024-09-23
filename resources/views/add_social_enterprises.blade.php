@@ -19,7 +19,7 @@
                         </div>
                      </div>
 
-<h2>{{$delegado->nombre}} </h2>
+<h2>{{$empresa->nombre}} </h2>
 <button type="button" 
 class="btn btn-outline-success mt-3 mb-3 p-0" 
 
@@ -79,7 +79,7 @@ align-content: center;" >
 
 @if(session('usuario')->role==9 )
               <td>
-                <a href="{{route('edit_web', $red->id)}}">
+                <a href="{{route('edit_web_enterprise', $red->id)}}">
                 <button type="button" 
                 class="btn btn-outline-warning mt-1 mb-1 p-0" 
                 
@@ -171,10 +171,10 @@ data-toggle="modal" data-target="#DelModal{{$red->id}}" data-whatever="@mdo">
 
             
             <div class="modal-body">
-              <form action="{{route('web_register')}}" method="POST"  id="miFormulario">
+              <form action="{{route('web_register_enterprise')}}" method="POST"  id="miFormulario">
                 @csrf
                 <div class="form-group">
-                  <input type="hidden" name="id" value="{{$delegado->id}}">
+                  <input type="hidden" name="id" value="{{$empresa->id}}">
                     <label for="campo4" class="col-form-label" >Red Social:</label>
                     <select class="form-control" id="campo4" name="red" required>
                         <option selected disabled>Seleccione una opcion</option>
