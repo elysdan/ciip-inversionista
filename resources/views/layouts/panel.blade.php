@@ -33,6 +33,9 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
       <![endif]-->
    </head>
+   <style type="text/css">
+      th{text-align: center;}
+   </style>
    <body class="dashboard dashboard_1">
       <div class="full_container">
          <div class="inner_container">

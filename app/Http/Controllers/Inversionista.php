@@ -83,7 +83,7 @@ class Inversionista extends Controller
     public function users()
     {
         if(session('usuario')){
-        $usuarios=db::table('users')->where('status',1)->get();
+        $usuarios=db::table('users')->get();
         
             return view('users')->with(compact('usuarios'));
         }
@@ -117,6 +117,8 @@ class Inversionista extends Controller
         
         $user = User::findOrFail($id);
         //dd($user->contrasena);
+        if($user->status==1)
+        {
         if($request->nombre != $user->name && $request->nombre!="" ||  $request->nombre != $user->name && $request->nombre!=" " ||  $request->nombre != $user->name && $request->nombre!=null)
         {  
                 //dd($request->nombre!="");
@@ -152,6 +154,34 @@ class Inversionista extends Controller
                         
                 $user->update(['file' => $ruta.$nombreimagen]);
         }
+    }
+    else
+    {
+        $user->update(['status' => '1']);
+    }
+        
+        
+
+  
+        
+            return redirect()->to('users')->with('status','Usuario Modificado');
+        
+    }
+
+    public function suspend_users($id)
+    {
+        //dd($request->file("foto"));
+        
+        $user = User::findOrFail($id);
+        //dd($user->contrasena);
+        if($user->status==1)
+        {
+            $user->update(['status' => '0']);
+    }
+    else
+    {
+        
+    }
         
         
 
@@ -463,7 +493,7 @@ $edad = $fechaNacimientoCarbon->age;
             return view('enterprises',['empresas'=>$empresas]);
         }
         else
-        return $this->index();
+        return $this->dashboard();
     }
 
     public function enterprises_register(request $request)
@@ -501,6 +531,106 @@ $edad = $fechaNacimientoCarbon->age;
 
         
             return back()->with('status','Empresa Eliminada');
+    }
+
+    public function edit_enterprises($id)
+    {
+        $empresa = datosempresa::findorfail($id);
+
+        
+        //dd($red);
+            return view('edit_enterprises',['empresa' => $empresa]);
+        
+    }
+
+     public function update_enterprises(request $request,$id)
+    {
+        $empresas = datosempresa::findorfail($id);
+
+            //dd($request);
+             //dd($peticion);
+if($empresas->status==1)
+{
+        if($request->razon != $empresas->razonsocial && $request->razon!="" ||  $request->razon != $empresas->razonsocial && $request->razon!=" " ||  $request->razon != $empresas->razonsocial && $request->razon!=null)
+        {  
+                //dd("a");
+                $empresas->update(['razonsocial' => $request->razon]);
+            }
+
+
+        if($request->identificador != $empresas->identificador && $request->identificador!="" ||  $request->identificador != $empresas->identificador && $request->identificador!=" " ||  $request->identificador != $empresas->identificador && $request->identificador!=null)
+        {  
+               // dd("b");
+                $empresas->update(['identificador' => $request->identificador]);
+            }
+
+
+        if($request->rif != $empresas->rif && $request->rif!="" ||  $request->rif != $empresas->rif && $request->rif!=" " ||  $request->rif != $empresas->rif && $request->rif!=null)
+        {  
+                //dd("c");
+                $empresas->update(['rif' => $request->rif]);
+            }
+
+
+        if($request->lorigen != $empresas->pais_origen && $request->lorigen!="" ||  $request->lorigen != $empresas->pais_origen && $request->lorigen!=" " ||  $request->lorigen != $empresas->pais_origen && $request->lorigen!=null)
+        {  
+               // dd("d");
+                $empresas->update(['pais_origen' => $request->lorigen]);
+            }
+
+
+        if($request->lregistro != $empresas->lregistro && $request->lregistro!="" ||  $request->lregistro != $empresas->lregistro && $request->lregistro!=" " ||  $request->lregistro != $empresas->lregistro && $request->lregistro!=null)
+        {  
+               // dd("e");
+                $empresas->update(['lregistro' => $request->lregistro]);
+            }
+
+
+        if($request->direccion != $empresas->direccion && $request->direccion!="" ||  $request->direccion != $empresas->direccion && $request->direccion!=" " ||  $request->direccion != $empresas->direccion && $request->direccion!=null)
+        {  
+               // dd("f");
+                $empresas->update(['direccion' => $request->direccion]);
+            }
+
+             if($request->file("foto") != $empresas->foto && $request->file("foto") != "" || $request->file("foto") != $empresas->foto && $request->file("foto") != null)
+        {
+              //  dd("g");
+                $imagen = $request->file("foto");                        
+                        $nombreimagen = $request->rif;
+                        $ruta = "images/usuario/fotos/";            
+                        $imagen->move($ruta,$nombreimagen);   
+                        
+                $empresas->update(['foto' => $ruta.$nombreimagen]);
+        }
+    }
+    else
+    {
+        $empresas->update(['status' => '1']);
+
+    }
+        //dd($empresa);
+
+            return $this->enterprises()->with('status','Empresa Modificada');
+    
+        
+    }
+
+public function suspend_enterprises($id)
+    {
+        $empresas = datosempresa::findorfail($id);
+
+            //dd($request);
+             //dd($peticion);
+if($empresas->status==1)
+{
+         $empresas->update(['status' => '0']);
+    }
+    
+        //dd($empresa);
+
+            return $this->enterprises()->with('status','Empresa Modificada');
+    
+        
     }
 
 
@@ -554,8 +684,10 @@ public function add_web($id)
         $empresas = redessocialesempresa::findorfail($id);
 
          $empresa = redessocialesempresa::findorfail($id);
+
             $peticion=$empresa->enterprise_id;
             //dd($request);
+             //dd($peticion);
 
         if($request->usuario != $empresas->username && $request->usuario!="" ||  $request->usuario != $empresas->username && $request->usuario!=" " ||  $request->usuario != $empresas->username && $request->usuario!=null)
         {  
@@ -579,23 +711,34 @@ public function add_web($id)
     {
 
                 
-               $red = redessocialesempresa::findOrFail($id);
-
+               $red = redessocialesempresa::findorFail($id);
+               $peticion=$red->enterprise_id;
+               //dd($red);
     // Update the id_status column
     $red->delete();
 
         
-            return back()->with('status','Red Social Eliminada');
+            return $this->add_web($peticion)->with('status','Red Social Eliminada');
         
     }
 
 
 
 
-    public function previews()
+    public function previews($id)
     {
         if(session('usuario')){
-            return view('previews');
+
+            $previa=datosempresa::findorFail($id);
+
+
+
+
+
+
+
+
+            return view('previews' ,['previa' => $previa]);
         }
         else
         return $this->index();

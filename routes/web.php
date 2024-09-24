@@ -36,12 +36,20 @@ Route::get('/edit_users_{id}', [inversionista::class, 'edit_users'])->name('edit
 
 Route::put('/update_users_{id}', [inversionista::class, 'update_users'])->name('update_users');
 
+Route::put('/suspend_users_{id}', [inversionista::class, 'suspend_users'])->name('suspend_users');
+
 Route::post('/users_register', [inversionista::class, 'users_register'])->name('users_register');
 
 
 Route::get('/enterprises', [inversionista::class, 'enterprises'])->name('enterprises');
 
 Route::post('/enterprises_register', [inversionista::class, 'enterprises_register'])->name('enterprises_register');
+
+Route::get('/edit_enterprises_{id}', [inversionista::class, 'edit_enterprises'])->name('edit_enterprises');
+
+Route::put('/update_enterprises_{id}', [inversionista::class, 'update_enterprises'])->name('update_enterprises');
+
+Route::put('/suspend_enterprises_{id}', [inversionista::class, 'suspend_enterprises'])->name('suspend_enterprises');
 
 Route::get('/add_web_{id}', [inversionista::class, 'add_web'])->name('add_web');
 
@@ -82,7 +90,7 @@ Route::put('/delete_web_register_{id}', [inversionista::class, 'delete_web_regis
 Route::get('/stadistics', [inversionista::class, 'stadistics'])->name('stadistics');
 
 
-Route::get('/previews', [inversionista::class, 'previews'])->name('previews');
+Route::get('/previews_{id}', [inversionista::class, 'previews'])->name('previews');
 
 
 Route::get('/userpanel', [inversionista::class, 'userpanel'])->name('userpanel');
