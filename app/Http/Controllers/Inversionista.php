@@ -731,14 +731,73 @@ public function add_web($id)
 
             $previa=datosempresa::findorFail($id);
 
+            $twitter=db::table('datos_empresas')
+            ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('rrss','rrss.id','=','redes_sociales_empresas.site')->where('datos_empresas.id',$id)->where('red','twitter')
+            ->select('redes_sociales_empresas.username as twitter')->first();
+
+           
+
+             $facebook=db::table('datos_empresas')
+            ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('rrss','rrss.id','=','redes_sociales_empresas.site')
+            ->select('redes_sociales_empresas.username as facebook')->where('datos_empresas.id',$id)->where('red','facebook')->first();
+
+             $instagram=db::table('datos_empresas')
+            ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('rrss','rrss.id','=','redes_sociales_empresas.site')
+            ->select('redes_sociales_empresas.username as instagram')->where('datos_empresas.id',$id)->where('red','instagram')->first();
+
+             $linkedin=db::table('datos_empresas')
+            ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('rrss','rrss.id','=','redes_sociales_empresas.site')
+            ->select('redes_sociales_empresas.username as linkedin')->where('datos_empresas.id',$id)->where('red','linkedin')->first();
+
+             $telefono=db::table('datos_empresas')
+            ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('rrss','rrss.id','=','redes_sociales_empresas.site')
+            ->select('redes_sociales_empresas.username as telefono')->where('datos_empresas.id',$id)->where('red','telefono')->first();
+
+              $correo=db::table('datos_empresas')
+            ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('rrss','rrss.id','=','redes_sociales_empresas.site')
+            ->select('redes_sociales_empresas.username as correo')->where('datos_empresas.id',$id)->where('red','correo')->first();
+
+        
+
+            if($twitter==null)
+            {
+                $twitter=0;
+            }
+            if($instagram==null)
+            {
+                $instagram= 0;
+            }
+            if($linkedin==null)
+            {
+                $linkedin=0;
+            }
+            if($telefono==null)
+            {
+                $telefono=0;
+            }
+            if($correo==null)
+            {
+                $correo=0;
+            }
+            if($facebook==null)
+            {
+                $facebook=0;
+            }
+
+
+
+  //dd($twitter);
 
 
 
 
-
-
-
-            return view('previews' ,['previa' => $previa]);
+            return view('previews' ,['instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
         }
         else
         return $this->index();

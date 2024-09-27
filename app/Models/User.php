@@ -42,7 +42,8 @@ class User extends Model
 	protected $casts = [
 		'email_verified_at' => 'datetime',
 		'role' => 'float',
-		'status' => 'float'
+		'status' => 'float',
+		'password' => 'hashed'
 	];
 
 	protected $hidden = [
