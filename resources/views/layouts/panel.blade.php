@@ -35,6 +35,7 @@
       <![endif]-->
    </head>
    <style type="text/css">
+      body{background-color: none;}
       th{text-align: center;}
    </style>
    <body class="dashboard dashboard_1">
@@ -102,12 +103,12 @@
                   </nav>
                </div>
                <!-- end topbar -->
-
+<div style="height:100%;width:100%;background-color:none;margin: 0;padding: 0;">
                  @yield('content')
   
 
     @yield('usuarios')
-
+</div>
               
             </div>
          </div>
@@ -125,5 +126,6 @@
       <!-- custom js -->
       <script src="js/print.min.js"></script>
       <script src="js/custom.js"></script>
+      
    </body>
 </html>

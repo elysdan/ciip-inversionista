@@ -1,6 +1,19 @@
-@extends('layouts.panel')
-@section('content')
-
+<link rel="icon" href="images/fevicon.png" type="image/png" />
+      <!-- bootstrap css -->
+      <link rel="stylesheet" href="css/bootstrap.min.css" />
+      <!-- site css -->
+      <link rel="stylesheet" href="style.css" />
+      <!-- responsive css -->
+      <link rel="stylesheet" href="css/responsive.css" />
+      <!-- color css -->
+      <link rel="stylesheet" href="css/colors.css" />
+      <!-- select bootstrap -->
+      <link rel="stylesheet" href="css/bootstrap-select.css" />
+      <!-- scrollbar css -->
+      <link rel="stylesheet" href="css/perfect-scrollbar.css" />
+      <!-- custom css -->
+      <link rel="stylesheet" href="css/custom.css" />
+      <link rel="stylesheet" type="text/css" href="js/print.min.css">
     <style>
         body{
             margin: 0;
@@ -33,7 +46,7 @@
             padding: 8px;
             border: 1px solid #ddd;
             color: black;
-            font-size: 140%;
+            font-size: 135%;
 
 
         }
@@ -46,7 +59,7 @@
             height: 3rem;
         }
         .anexo{
-            height:  15rem;
+            height:  10rem;
         }
 
         th, tr,td{
@@ -56,11 +69,11 @@
     <body>
 
 
-<div class="previews">
+<div class="previews m-3">
 
 
-            <h2 class="m-5 w-100" style="text-align:center">REPORTE DE VERIFICACIÓN DE EMPRESAS</h2>
-
+            <h2 class="m-5 w-100" style="text-align:center">REPORTE DE VERIFICACIÓN DE PERSONAS</h2>
+<br>
 
                     <div class="row " >
 
@@ -77,7 +90,7 @@
                                             
                                             <tr style="height:auto">
                                                 
-                                                    <td class="consideraciones p-3" >Tiene por objeto realizar a través de la contratación de personal especializado, la prestación de servicios acuáticos y portuarios Propios del Negocio y del transaporte Maritimo. tales como compra y venta de buques, accesorios de navegacion, plataformas de perforacion, de produccion y/o explotacion de buques propios o fletados, sea por tiempo, por viaje o mixto, llamados Contracto of Affreighment (COA), arrendados a cascos denusdos o bajo arrendamiento financiero de cualquier clase, tipo, porte o utilidad; asi como transaporte maritimo Fluivial, lascustre, bien sea nacional, se cabotaje y navegacion domestica, o inmternacional. (Expediente)</td>
+                                                    <td class="consideraciones " >Tiene por objeto realizar a través de la contratación de personal especializado, la prestación de servicios acuáticos y portuarios Propios del Negocio y del transaporte Maritimo. tales como compra y venta de buques, accesorios de navegacion, plataformas de perforacion, de produccion y/o explotacion de buques propios o fletados, sea por tiempo, por viaje o mixto, llamados Contracto of Affreighment (COA), arrendados a cascos denusdos o bajo arrendamiento financiero de cualquier clase, tipo, porte o utilidad; asi como transaporte maritimo Fluivial, lascustre, bien sea nacional, se cabotaje y navegacion domestica, o inmternacional. (Expediente)</td>
                                             </tr>
                                     </table>
     <br>
@@ -191,7 +204,7 @@
                         <div class="ml-5" style="background-color:LIGHTGREY;width: 35%;height: auto;align-items: center;justify-content: center;font-size: 100%;">
                             <div style="win-width:100%;  display: flex;
   justify-content: center;">
-                            <div class="d-flex m-3 p-2" style="width:10vw;height: 10vw;border:solid 1px black;justify-content: center;align-items: center;align-content: center;margin: 0 auto;">
+                            <div class="d-flex m-3 p-2" style="width:15vw;height: 15vw;border:solid 1px black;justify-content: center;align-items: center;align-content: center;margin: 0 auto;">
                                 <img src="{{$previa->foto}}" style="width:100%">
                             </div>
                             </div>
@@ -199,53 +212,53 @@
                                          
 
                             
-                                <h3 style="text-align:CENTER">INFORMACIÓN GENERAL</h3>
+                                <h5 style="text-align:CENTER;width:100%">INFORMACIÓN GENERAL</h5>
 
                                      <br>
                             
-                                <h4 style="text-align:CENTER">Razón Social</h4>
+                                <h4 style="text-align:CENTER;width:100%">Razón Social</h4>
 
-                                <h5 style="text-align:CENTER">{{$previa->razonsocial}}</h5>
-
-                                     <br>
-                            
-                                <h4 style="text-align:CENTER">País de Origen</h4>
-
-                                <h5 style="text-align:CENTER">{{$previa->pais_origen}}</h5>
+                                <h5 style="text-align:CENTER;width:100%">{{$previa->razonsocial}}</h5>
 
                                      <br>
                             
-                                <h4 style="text-align:CENTER">Registro Fizcal</h4>
+                                <h4 style="text-align:CENTER;width:100%">País de Origen</h4>
 
-                                <h5 style="text-align:CENTER">{{$previa->identificador}}-{{$previa->rif}}</h5>
-
-                                     <br>
-                            
-                                <h4 style="text-align:CENTER">Lugar de Registro</h4>
-
-                                <h5 style="text-align:CENTER">{{$previa->lregistro}}</h5>
+                                <h5 style="text-align:CENTER;width:100%">{{$previa->pais_origen}}</h5>
 
                                      <br>
                             
-                                <h4 style="text-align:CENTER">Direccion Fiscal</h4>
+                                <h4 style="text-align:CENTER;width:100%">Registro Fizcal</h4>
 
-                                <h5 style="text-align:CENTER">{{$previa->direccion}}</h5>
-
-                                     <br>
-                            
-                                <h4 style="text-align:CENTER">Representante Legal</h4>
-
-                                <h5 style="text-align:CENTER">no hay</h5>
+                                <h5 style="text-align:CENTER;width:100%">{{$previa->identificador}}-{{$previa->rif}}</h5>
 
                                      <br>
                             
-                                <h4 style="text-align:CENTER">Fecha de Consulta</h4>
+                                <h4 style="text-align:CENTER;width:100%">Lugar de Registro</h4>
 
-                                <h5 style="text-align:CENTER">{{ date('d-m-y') }}</h5>
+                                <h5 style="text-align:CENTER;width:100%">{{$previa->lregistro}}</h5>
+
+                                     <br>
+                            
+                                <h4 style="text-align:CENTER";width:100%>Direccion Fiscal</h4>
+
+                                <h5 style="text-align:CENTER;width:100%">{{$previa->direccion}}</h5>
+
+                                     <br>
+                            
+                                <h4 style="text-align:CENTER;width:100%">Representante Legal</h4>
+
+                                <h5 style="text-align:CENTER;width:100%">no hay</h5>
+
+                                     <br>
+                            
+                                <h4 style="text-align:CENTER;width:100%">Fecha de Consulta</h4>
+
+                                <h5 style="text-align:CENTER;width:100%">{{ date('d-m-y') }}</h5>
 
                                    <br>
-                                <div class="d-flex m-3 p-1" style="justify-content: center;font-size: auto;">
-                                <table>
+                                <div class="d-flex m-5 p-1" style="justify-content: center;widht:100%;font-size: auto;">
+                                <table style="win-width:100%">
                                     <tr>
                                         <td >
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">
@@ -327,7 +340,11 @@
 
 </div>
 
-    <div class="mt-5" style="text-align:center;width: 100%;">
-<a href="{{route('prueba_pdf',$previa->id)}}" class="btn btn-primary">Imprimir</a></div>
+
+
 </body>
-    @endsection
+<script type="text/javascript">window.print();</script>
+<script type="text/javascript"> window.onafterprint = (event) => {
+       window.history.go(-1);
+       
+    };</script>

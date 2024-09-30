@@ -89,8 +89,18 @@ Route::put('/delete_web_register_{id}', [inversionista::class, 'delete_web_regis
 
 Route::get('/stadistics', [inversionista::class, 'stadistics'])->name('stadistics');
 
+Route::get('/previews_delegates_{id}', [inversionista::class, 'previews_delegates'])->name('previews_delegates');
+
+Route::get('/prueba_delegates_pdf_{id}', [inversionista::class, 'prueba_delegates_pdf'])->name('prueba_delegates_pdf');
 
 Route::get('/previews_{id}', [inversionista::class, 'previews'])->name('previews');
+
+Route::get('/prueba_pdf_{id}', [inversionista::class, 'prueba_pdf'])->name('prueba_pdf');
+
+
+
+
+
 
 
 Route::get('/userpanel', [inversionista::class, 'userpanel'])->name('userpanel');

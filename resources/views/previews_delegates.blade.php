@@ -77,8 +77,27 @@
                                             
                                             <tr style="height:auto">
                                                 
-                                                    <td class="consideraciones p-3" >Tiene por objeto realizar a través de la contratación de personal especializado, la prestación de servicios acuáticos y portuarios Propios del Negocio y del transaporte Maritimo. tales como compra y venta de buques, accesorios de navegacion, plataformas de perforacion, de produccion y/o explotacion de buques propios o fletados, sea por tiempo, por viaje o mixto, llamados Contracto of Affreighment (COA), arrendados a cascos denusdos o bajo arrendamiento financiero de cualquier clase, tipo, porte o utilidad; asi como transaporte maritimo Fluivial, lascustre, bien sea nacional, se cabotaje y navegacion domestica, o inmternacional. (Expediente)</td>
+                                                    <td class="consideraciones " >
+Representante legal y presidente de la empresa SPM Maritime C.A. Es ingeniero en Petróleo egresado de la universidad de Oriente en 2005. Fue superintendente en Petróleos de Venezuela PDVSA. En el periodo 2008-2013.<br>
+Gestor de contratos en SERGEOPETROL en el periodo 2003-2007. Director ejecutivo internacional de PETROPAN world Panamá en 2016-2020.<br>
+https://www.linkedin.com/in/guillermo-morgado-
+7079aa75/?originalSubdomain=pa</td>
                                             </tr>
+                                    </table>
+
+                                      <br>
+                                    
+                                    <table>
+                                            
+                                            <tr>
+                                                    <th>INFORMACION POLITICA</th>
+       
+                                            </tr>
+                                             <tr>
+                                                    <td>Sin resultados </td>
+       
+                                            </tr>
+  
                                     </table>
     <br>
                                     
@@ -192,53 +211,44 @@
                             <div style="win-width:100%;  display: flex;
   justify-content: center;">
                             <div class="d-flex m-3 p-2" style="width:10vw;height: 10vw;border:solid 1px black;justify-content: center;align-items: center;align-content: center;margin: 0 auto;">
-                                <img src="{{$previa->foto}}" style="width:100%">
+                                <img src="{{$previa->file}}" style="width:100%">
                             </div>
                             </div>
 
                                          
 
                             
-                                <h3 style="text-align:CENTER">INFORMACIÓN GENERAL</h3>
+                                <h3 style="text-align:CENTER">INFORMACIÓN PERSONAL</h3>
 
                                      <br>
                             
-                                <h4 style="text-align:CENTER">Razón Social</h4>
+                                <h4 style="text-align:CENTER">Nombres y Apellidos</h4>
 
-                                <h5 style="text-align:CENTER">{{$previa->razonsocial}}</h5>
+                                <h4 style="text-align:CENTER">{{$previa->nombre}}</h4>
 
-                                     <br>
-                            
-                                <h4 style="text-align:CENTER">País de Origen</h4>
-
-                                <h5 style="text-align:CENTER">{{$previa->pais_origen}}</h5>
+                                <h4 style="text-align:CENTER">{{$previa->apellido}}</h4>
 
                                      <br>
                             
-                                <h4 style="text-align:CENTER">Registro Fizcal</h4>
+                                <h4 style="text-align:CENTER">Numero de Cedula</h4>
 
-                                <h5 style="text-align:CENTER">{{$previa->identificador}}-{{$previa->rif}}</h5>
-
-                                     <br>
-                            
-                                <h4 style="text-align:CENTER">Lugar de Registro</h4>
-
-                                <h5 style="text-align:CENTER">{{$previa->lregistro}}</h5>
+                                <h5 style="text-align:CENTER">{{$previa->doc_identidad}}</h5>
 
                                      <br>
                             
-                                <h4 style="text-align:CENTER">Direccion Fiscal</h4>
+                                <h4 style="text-align:CENTER">Nacionalidad</h4>
 
-                                <h5 style="text-align:CENTER">{{$previa->direccion}}</h5>
-
-                                     <br>
-                            
-                                <h4 style="text-align:CENTER">Representante Legal</h4>
-
-                                <h5 style="text-align:CENTER">no hay</h5>
+                                <h5 style="text-align:CENTER">{{$previa->nacionalidad}}</h5>
 
                                      <br>
                             
+                                <h4 style="text-align:CENTER">Fecha de Nacimiento</h4>
+
+                                <h5 style="text-align:CENTER">{{$previa->fecha_nacimiento}}</h5>
+
+                                     <br>
+                            
+                                                        
                                 <h4 style="text-align:CENTER">Fecha de Consulta</h4>
 
                                 <h5 style="text-align:CENTER">{{ date('d-m-y') }}</h5>
@@ -293,8 +303,8 @@
   <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"/>
 </svg></td>
                                     <td>
-  @if($telefono!= '0')
-                                        {{$telefono->telefono}}
+  @if($previa!= '0')
+                                        {{$previa->telefono}}
    @endif 
                                     </td>
                                 </tr>
@@ -303,8 +313,8 @@
   <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z"/>
 </svg></td>
                                     <td>
-  @if($correo!= '0')
-                                        {{$correo->correo}}
+  @if($previa!= '0')
+                                        {{$previa->email}}
    @endif 
                                     </td>
                                 </tr>
@@ -320,14 +330,15 @@
                     </div>
                  
                     <div class="mt-5" style="text-align:center;width: 100%;">
-   <h4>Av.Venezuela Torre CIIP, Sector el Rosal.Chacao, Caracas, Venezuela</h4>
-<h4>Contactos@ciip.com.ve</h4>
-<h5>www.ciip.com.ve</h5>
+   <h4>Av. Venezuela, Municipio Chacao, Urb. El Rosal, Torre Epsilon, Caracas - Venezuela </h4>
+   <h4>Caracas 1060-Venezuela web: www.clip.com.ve</h4>
+
+<h5>Correo: presidencia@clipven.com teléfono de contacto: 0414-3903989</h5>
 </div>
 
 </div>
 
     <div class="mt-5" style="text-align:center;width: 100%;">
-<a href="{{route('prueba_pdf',$previa->id)}}" class="btn btn-primary">Imprimir</a></div>
+<a href="{{route('prueba_delegates_pdf',$previa->id)}}" class="btn btn-primary">Imprimir</a></div>
 </body>
     @endsection

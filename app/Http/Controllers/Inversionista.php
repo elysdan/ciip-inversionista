@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
+Use PDF;
 
 use App\Models\User;
 use App\Models\inversionistanatural;
@@ -798,10 +799,249 @@ public function add_web($id)
 
 
             return view('previews' ,['instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
+   
         }
         else
         return $this->index();
     }
+
+    public function prueba_pdf($id)
+    {
+        $previa = datosempresa::findorFail($id);
+
+         $twitter=db::table('datos_empresas')
+            ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('rrss','rrss.id','=','redes_sociales_empresas.site')->where('datos_empresas.id',$id)->where('red','twitter')
+            ->select('redes_sociales_empresas.username as twitter')->first();
+
+           
+
+             $facebook=db::table('datos_empresas')
+            ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('rrss','rrss.id','=','redes_sociales_empresas.site')
+            ->select('redes_sociales_empresas.username as facebook')->where('datos_empresas.id',$id)->where('red','facebook')->first();
+
+             $instagram=db::table('datos_empresas')
+            ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('rrss','rrss.id','=','redes_sociales_empresas.site')
+            ->select('redes_sociales_empresas.username as instagram')->where('datos_empresas.id',$id)->where('red','instagram')->first();
+
+             $linkedin=db::table('datos_empresas')
+            ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('rrss','rrss.id','=','redes_sociales_empresas.site')
+            ->select('redes_sociales_empresas.username as linkedin')->where('datos_empresas.id',$id)->where('red','linkedin')->first();
+
+             $telefono=db::table('datos_empresas')
+            ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('rrss','rrss.id','=','redes_sociales_empresas.site')
+            ->select('redes_sociales_empresas.username as telefono')->where('datos_empresas.id',$id)->where('red','telefono')->first();
+
+              $correo=db::table('datos_empresas')
+            ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('rrss','rrss.id','=','redes_sociales_empresas.site')
+            ->select('redes_sociales_empresas.username as correo')->where('datos_empresas.id',$id)->where('red','correo')->first();
+
+        
+
+            if($twitter==null)
+            {
+                $twitter=0;
+            }
+            if($instagram==null)
+            {
+                $instagram= 0;
+            }
+            if($linkedin==null)
+            {
+                $linkedin=0;
+            }
+            if($telefono==null)
+            {
+                $telefono=0;
+            }
+            if($correo==null)
+            {
+                $correo=0;
+            }
+            if($facebook==null)
+            {
+                $facebook=0;
+            }
+
+  /*  $data = ['title' => 'domPDF in Laravel 10',
+             'twitter' => $twitter,
+             'facebook' => $facebook,
+             'instagram' => $instagram,
+             'linkedin' => $linkedin,
+             'telefono' => $telefono,
+             'correo' => $correo,
+             'previa' => $previa
+];*/
+       // $pdf = PDF::loadView('prueba_pdf', $data)->setOptions(['defaultFont' => 'arial','defaultPaperSize' => 'letter']);
+       // return $pdf->download('prueba_pdf.pdf');
+     return view('prueba_pdf' ,['instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
+    }
+
+
+public function previews_delegates($id)
+    {
+        if(session('usuario')){
+
+            $previa=inversionistanatural::findorFail($id);
+
+            $twitter=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')->where('inversionista_naturals.id',$id)->where('red','twitter')
+            ->select('redes_sociales_delegados.username as twitter')->first();
+
+           
+
+             $facebook=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as facebook')->where('inversionista_naturals.id',$id)->where('red','facebook')->first();
+
+             $instagram=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as instagram')->where('inversionista_naturals.id',$id)->where('red','instagram')->first();
+
+             $linkedin=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as linkedin')->where('inversionista_naturals.id',$id)->where('red','linkedin')->first();
+
+             $telefono=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as telefono')->where('inversionista_naturals.id',$id)->where('red','telefono')->first();
+
+              $correo=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as correo')->where('inversionista_naturals.id',$id)->where('red','correo')->first();
+
+        
+
+            if($twitter==null)
+            {
+                $twitter=0;
+            }
+            if($instagram==null)
+            {
+                $instagram= 0;
+            }
+            if($linkedin==null)
+            {
+                $linkedin=0;
+            }
+            if($telefono==null)
+            {
+                $telefono=0;
+            }
+            if($correo==null)
+            {
+                $correo=0;
+            }
+            if($facebook==null)
+            {
+                $facebook=0;
+            }
+
+
+
+  //dd($twitter);
+
+
+
+
+            return view('previews_delegates' ,['instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
+   
+        }
+        else
+        return $this->index();
+    }
+
+    public function prueba_delegates_pdf($id)
+    {
+        if(session('usuario')){
+
+            $previa=inversionistanatural::findorFail($id);
+
+            $twitter=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')->where('inversionista_naturals.id',$id)->where('red','twitter')
+            ->select('redes_sociales_delegados.username as twitter')->first();
+
+           
+
+             $facebook=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as facebook')->where('inversionista_naturals.id',$id)->where('red','facebook')->first();
+
+             $instagram=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as instagram')->where('inversionista_naturals.id',$id)->where('red','instagram')->first();
+
+             $linkedin=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as linkedin')->where('inversionista_naturals.id',$id)->where('red','linkedin')->first();
+
+             $telefono=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as telefono')->where('inversionista_naturals.id',$id)->where('red','telefono')->first();
+
+              $correo=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as correo')->where('inversionista_naturals.id',$id)->where('red','correo')->first();
+
+        
+
+            if($twitter==null)
+            {
+                $twitter=0;
+            }
+            if($instagram==null)
+            {
+                $instagram= 0;
+            }
+            if($linkedin==null)
+            {
+                $linkedin=0;
+            }
+            if($telefono==null)
+            {
+                $telefono=0;
+            }
+            if($correo==null)
+            {
+                $correo=0;
+            }
+            if($facebook==null)
+            {
+                $facebook=0;
+            }
+
+
+
+  //dd($twitter);
+
+
+
+
+            return view('prueba_delegates_pdf' ,['instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
+   
+        }
+        else
+        return $this->index();
+    }
+
+
 
     public function results()
     {

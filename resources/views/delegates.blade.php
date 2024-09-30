@@ -70,6 +70,7 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
               <th >Telefono</th>
               <th >Email</th>
               <th >Redes Sociales</th>
+               <th >Detalle</th>
               @if(session('usuario')->role==9 )
               <th  colspan="2"></th>
               @endif
@@ -108,6 +109,7 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
                
               </a>
               </td>
+              <td><a href="{{route('previews_delegates',$delegado->id)}}"><button class="btn btn-primary">Ver Detalle</button></a></td>
               @if(session('usuario')->role==9 )
               <td>
                 <a href="{{route('edit_delegates',$delegado->id)}}">
