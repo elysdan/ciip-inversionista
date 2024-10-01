@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('telefono');
             $table->string('email');
             $table->text('rrss')->nullable();
+            $table->bigInteger('status')->default(1);
             $table->timestamps();
         });
     }

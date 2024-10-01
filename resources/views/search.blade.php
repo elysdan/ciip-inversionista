@@ -36,13 +36,13 @@
 
                                                 <div class="inbox-head">
                                                   
-                                                   <form action="#" class="pull-left position search_inbox w-100 ">
-
+                                                   <form action="{{route('result')}}" class="pull-left position search_inbox w-100 ">
+                                                      @csrf
                                                       <div class="input-append w-100">
 
-                                                         <input type="text" class="sr-input w-75" placeholder="Busque por Cedula, Rif o Correo">
+                                                         <input type="text" class="sr-input w-75" name="busqueda" placeholder="Busque por Cedula, Rif o Correo">
 
-                                                         <button class="btn sr-btn" type="button"><i class="fa fa-search"></i></button>
+                                                         <button class="btn sr-btn" type="submit"><i class="fa fa-search"></i></button>
 
                                                       </div>
                                                    </form>

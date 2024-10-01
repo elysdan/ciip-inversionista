@@ -10,6 +10,7 @@
             <div class="modal-body">
               <form action="{{route('update_delegates',$delegado->id)}}" method="POST"  id="miFormulario">
                 @csrf
+                @method('put')
                 <div class="form-group">
                   <label for="campo1" class="col-form-label">Nombre:</label>
                   <input type="text" class="form-control" id="campo1" name="nombre" pattern="[A-Za-záÁéÉíÍóÓúÚñÑ' ']{2,100}" maxlength="100" value="{{$delegado->nombre}}" required>
@@ -26,25 +27,28 @@
                     <label for="campo4" class="col-form-label" >Nacionalidad:</label>
                     <select class="form-control" id="campo4" name="nacionalidad" required>
                         <option disabled>Seleccione una opcion</option>
-                        <option value="1" @if("1" === $delegado->nacionalidad) selected @endif >Venezolano</option>
-                        <option value="2" @if("2" === $delegado->nacionalidad) selected @endif >Extranjero</option>
+                         @foreach($nacionalidad as $n)
+                        <option value="{{$n->id}}" @if( $n->id === $delegado->nacionalidad) selected @endif >{{$n->PAIS_NAC}}</option>
+                        @endforeach
+                       
                       </select>
 
                       <label for="campo8" class="col-form-label" >Genero:</label>
                     <select class="form-control" id="campo8" name="genero" required>
                         <option disabled>Seleccione una opcion</option>
-                        <option value="1" @if("1" === $delegado->sexo) selected @endif >Masculino</option>
-                        <option value="2" @if("2" === $delegado->sexo) selected @endif>Femenino</option>
+                        
+                         @foreach($generos as $genero)
+                        <option value="{{$genero->id}}" @if($genero->id === $delegado->sexo) selected @endif >{{$genero->genero}}</option>
+                        @endforeach
                       </select>
                     
                       <label for="campo7" class="col-form-label" >Estado Civil:</label>
                     <select class="form-control" id="campo7" name="estado" required>
                         <option disabled>Seleccione una opcion</option>
-                        <option value="1" @if("1" === $delegado->estado_civil) selected @endif>Soltero</option>
-                        <option value="2" @if("2" === $delegado->estado_civil) selected @endif>Casado</option>
-                        <option value="3" @if("3" === $delegado->estado_civil) selected @endif>Viudo</option>
-                        <option value="4" @if("4" === $delegado->estado_civil) selected @endif>Divorciado</option>
-                        <option value="5" @if("5" === $delegado->estado_civil) selected @endif>En Concubinato</option>
+                      
+                       @foreach($estados_civiles as $estado_civil)
+                        <option value="{{$estado_civil->id}}" @if($estado_civil->id === $delegado->estado_civil) selected @endif>{{$estado_civil->estado}}</option>
+                        @endforeach
                       </select>
 
                       <label for="campo3" class="col-form-label">Correo Electronico:</label>

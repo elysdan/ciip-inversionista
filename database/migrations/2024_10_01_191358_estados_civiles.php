@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('cache', function (Blueprint $table) {
-            $table->string('key')->primary();
-            $table->text('value');
-            $table->integer('expiration');
+         Schema::create('estados_civiles', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->text('estado');
+            
+            $table->timestamps();
         });
     }
 
@@ -23,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('cache');
+        //
     }
 };

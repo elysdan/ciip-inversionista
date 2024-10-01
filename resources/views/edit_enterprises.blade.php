@@ -46,20 +46,20 @@
                     <label for="campo4" class="col-form-label" >Lugar de Origen:</label>
                     <select class="form-control" id="campo4" name="lorigen" required>
                         <option  disabled>Seleccione una opcion</option>
-                        <option value="1" @if("1" === $empresa->pais_origen) selected @endif >Venezuela</option>
-                        <option value="2" @if("2" === $empresa->pais_origen) selected @endif >Rusia</option>
-                        <option value="3" @if("3" === $empresa->pais_origen) selected @endif >China</option>
-                        <option value="4" @if("4" === $empresa->pais_origen) selected @endif >Estados unidos de America</option>
+                        @foreach ($pais as $p)
+                        <option value="{{$p->id}}" @if( $p->id === $empresa->pais_origen) selected @endif >{{$p->paisnombre}}</option>
+                        @endforeach
+                        
+                      
                       </select>
 
 
                     <label for="campo4" class="col-form-label" >Lugar de registro:</label>
                     <select class="form-control" id="campo4" name="lregistro" required>
                         <option disabled>Seleccione una opcion</option>
-                        <option value="1" @if("1" === $empresa->lregistro) selected @endif >Venezuela</option>
-                        <option value="2" @if("2" === $empresa->lregistro) selected @endif >Rusia</option>
-                        <option value="3" @if("3" === $empresa->lregistro) selected @endif >China</option>
-                        <option value="4" @if("4" === $empresa->lregistro) selected @endif >Estados unidos de America</option>
+                         @foreach ($pais as $p)
+                        <option value="{{$p->id}}" @if( $p->id === $empresa->pais_origen) selected @endif >{{$p->paisnombre}}</option>
+                        @endforeach
                       </select>
                
                     

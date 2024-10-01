@@ -72,6 +72,7 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
               <th >Redes Sociales</th>
                <th >Detalle</th>
               @if(session('usuario')->role==9 )
+              <th>Status</th>
               <th  colspan="2"></th>
               @endif
                                           </tr>
@@ -87,7 +88,10 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
               <td>{{$delegado->nombre}}</td>
               <td>{{$delegado->apellido}}</td>
               <td>{{$delegado->doc_identidad}}</td>
-              <td>{{$delegado->nacionalidad}}</td>
+              <td>
+               
+               {{$delegado->GENTILICIO_NAC}}
+                </td>
               <td>{{$delegado->fecha_nacimiento}}</td>
               <td>{{$delegado->edad}}</td>
               <td>{{$delegado->estado_civil}}</td>
@@ -111,6 +115,42 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
               </td>
               <td><a href="{{route('previews_delegates',$delegado->id)}}"><button class="btn btn-primary">Ver Detalle</button></a></td>
               @if(session('usuario')->role==9 )
+              <td>
+@if($delegado->status==1)
+<form method="POST" action="{{route('suspend_delegates',$delegado->id)}}">
+  @csrf
+  @method('PUT')
+<button type="submit" 
+                class="btn btn-outline-success mt-1 mb-1 p-0" 
+                
+                  style="border-radius: 1rem; display: flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;">
+                     <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+</svg>
+                </button>
+              </form>
+@endif
+
+@if($delegado->status==0)
+ <form method="POST" action="{{route('suspend_delegates',$delegado->id)}}">
+  @csrf
+  @method('PUT')
+
+<button type="submit" 
+                class="btn btn-outline-danger mt-1 mb-1 p-0" 
+                
+                  style="border-radius: 1rem; display: flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
+                 
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;">
+                      <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>
+</svg>
+                </button></form>
+                
+
+
+@endif
+
+</td>
               <td>
                 <a href="{{route('edit_delegates',$delegado->id)}}">
                 <button type="button" 
@@ -212,25 +252,25 @@ data-toggle="modal" data-target="#DelModal{{$delegado->id}}" data-whatever="@mdo
                     <label for="campo4" class="col-form-label" >Nacionalidad:</label>
                     <select class="form-control" id="campo4" name="nacionalidad" required>
                         <option selected disabled>Seleccione una opcion</option>
-                        <option value="1">Venezolano</option>
-                        <option value="2">Extranjero</option>
+                        @foreach($nacionalidad as $n)
+                        <option value="{{$n->id}}">{{$n->PAIS_NAC}}</option>
+                        @endforeach
                       </select>
 
                       <label for="campo8" class="col-form-label" >Genero:</label>
                     <select class="form-control" id="campo8" name="genero" required>
                         <option selected disabled>Seleccione una opcion</option>
-                        <option value="1">Masculino</option>
-                        <option value="2">Femenino</option>
+                         @foreach($generos as $genero)
+                        <option value="{{$genero->id}}">{{$genero->genero}}</option>
+                        @endforeach
                       </select>
                     
                       <label for="campo7" class="col-form-label" >Estado Civil:</label>
                     <select class="form-control" id="campo7" name="estado" required>
                         <option selected disabled>Seleccione una opcion</option>
-                        <option value="1">Soltero</option>
-                        <option value="2">Casado</option>
-                        <option value="3">Viudo</option>
-                        <option value="4">Divorciado</option>
-                        <option value="5">En Concubinato</option>
+                         @foreach($estados_civiles as $estado_civil)
+                        <option value="{{$estado_civil->id}}">{{$estado_civil->estado}}</option>
+                        @endforeach
                       </select>
 
                       <label for="campo3" class="col-form-label">Correo Electronico:</label>

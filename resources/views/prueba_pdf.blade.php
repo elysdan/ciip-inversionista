@@ -15,7 +15,7 @@
       <link rel="stylesheet" href="css/custom.css" />
       <link rel="stylesheet" type="text/css" href="js/print.min.css">
     <style>
-        body{
+      body{
             margin: 0;
             width: 100%;
         }
@@ -30,7 +30,7 @@
         }
         .consideraciones{
             text-align: justify;
-            height: 15rem;
+            height: 10rem;
           
 
         }
@@ -46,7 +46,7 @@
             padding: 8px;
             border: 1px solid #ddd;
             color: black;
-            font-size: 135%;
+            font-size: 100%;
 
 
         }
@@ -71,8 +71,8 @@
 
 <div class="previews m-3">
 
-
-            <h2 class="m-5 w-100" style="text-align:center">REPORTE DE VERIFICACIÓN DE PERSONAS</h2>
+<div style="win-width:100%; display:flex;justify-content:space-between;align-items: center"><div style="display: flex;align-items:center"><img src="{{asset('asset_original/logo_gbv.jpg')}}" style="width: 50%;"><div style="color:black;width:40%;text-align: left;font-size:120%">Vicepresidencia de la Republica Bolivariana de Venezuela</div></div><img class="mr-5" src="{{asset('asset_original/logo-ciip.png')}}" style="width: 25%;;height: 50%"></div>
+            <h2 class="m-5 w-100" style="text-align:center">REPORTE DE VERIFICACIÓN DE EMPRESAS</h2>
 <br>
 
                     <div class="row " >

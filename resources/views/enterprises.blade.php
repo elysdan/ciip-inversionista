@@ -359,20 +359,18 @@ data-toggle="modal" data-target="#DelModal{{$empresa->id}}" data-whatever="@mdo"
                     <label for="campo4" class="col-form-label" >Lugar de Origen:</label>
                     <select class="form-control" id="campo4" name="lorigen" required>
                         <option selected disabled>Seleccione una opcion</option>
-                        <option value="1">Venezuela</option>
-                        <option value="2">Rusia</option>
-                        <option value="3">China</option>
-                        <option value="4">Estados unidos de America</option>
+                        @foreach ($pais as $p)
+                        <option value="{{$p->id}}" >{{$p->paisnombre}}</option>
+                        @endforeach
                       </select>
 
 
                     <label for="campo4" class="col-form-label" >Lugar de registro:</label>
                     <select class="form-control" id="campo4" name="lregistro" required>
                         <option selected disabled>Seleccione una opcion</option>
-                        <option value="1">Venezuela</option>
-                        <option value="2">Rusia</option>
-                        <option value="3">China</option>
-                        <option value="4">Estados unidos de America</option>
+                        @foreach ($pais as $p)
+                        <option value="{{$p->id}}" >{{$p->paisnombre}}</option>
+                        @endforeach
                       </select>
                     
                     

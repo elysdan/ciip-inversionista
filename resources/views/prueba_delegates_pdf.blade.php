@@ -30,7 +30,7 @@
         }
         .consideraciones{
             text-align: justify;
-            height: 15rem;
+            height: 10rem;
           
 
         }
@@ -46,7 +46,7 @@
             padding: 8px;
             border: 1px solid #ddd;
             color: black;
-            font-size: 135%;
+            font-size: 100%;
 
 
         }
@@ -71,7 +71,7 @@
 
 <div class="previews m-4">
 
-
+<div style="win-width:100%; display:flex;justify-content:space-between;align-items: center"><div style="display: flex;align-items:center"><img src="{{asset('asset_original/logo_gbv.jpg')}}" style="width: 50%;"><div style="color:black;width:40%;text-align: left;font-size:120%">Vicepresidencia de la Republica Bolivariana de Venezuela</div></div><img class="mr-5" src="{{asset('asset_original/logo-ciip.png')}}" style="width: 25%;;height: 50%"></div>
             <h2 class="m-5 w-100" style="text-align:center">REPORTE DE VERIFICACIÓN DE PERSONAS</h2>
 
 
@@ -224,7 +224,7 @@ https://www.linkedin.com/in/guillermo-morgado-
                             <div style="win-width:100%;  display: flex;
   justify-content: center;">
                             <div class="d-flex m-3 p-2" style="width:15vw;height: 15vw;border:solid 1px black;justify-content: center;align-items: center;align-content: center;margin: 0 auto;">
-                                <img src="{{$previa->file}}" style="width:100%">
+                                <img src="" style="width:100%">
                             </div>
                             </div>
 
@@ -251,7 +251,7 @@ https://www.linkedin.com/in/guillermo-morgado-
                             
                                 <h4 style="text-align:CENTER">Nacionalidad</h4>
 
-                                <h5 style="text-align:CENTER">{{$previa->nacionalidad}}</h5>
+                                <h5 style="text-align:CENTER">{{$previa->GENTILICIO_NAC}}</h5>
 
                                      <br>
                             

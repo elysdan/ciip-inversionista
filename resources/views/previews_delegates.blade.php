@@ -59,7 +59,7 @@
 <div class="previews">
 
 
-            <h2 class="m-5 w-100" style="text-align:center">REPORTE DE VERIFICACIÓN DE EMPRESAS</h2>
+            <h2 class="m-5 w-100" style="text-align:center">REPORTE DE VERIFICACIÓN DE PERSONAS</h2>
 
 
                     <div class="row " >
@@ -211,7 +211,7 @@ https://www.linkedin.com/in/guillermo-morgado-
                             <div style="win-width:100%;  display: flex;
   justify-content: center;">
                             <div class="d-flex m-3 p-2" style="width:10vw;height: 10vw;border:solid 1px black;justify-content: center;align-items: center;align-content: center;margin: 0 auto;">
-                                <img src="{{$previa->file}}" style="width:100%">
+                                <img src="" style="width:100%">
                             </div>
                             </div>
 
@@ -238,7 +238,7 @@ https://www.linkedin.com/in/guillermo-morgado-
                             
                                 <h4 style="text-align:CENTER">Nacionalidad</h4>
 
-                                <h5 style="text-align:CENTER">{{$previa->nacionalidad}}</h5>
+                                <h5 style="text-align:CENTER">{{$previa->GENTILICIO_NAC}}</h5>
 
                                      <br>
                             

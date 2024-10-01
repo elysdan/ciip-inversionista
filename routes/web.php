@@ -26,6 +26,8 @@ Route::get('/dash_board', [inversionista::class, 'dashboard'])->name('dashboard'
 
 Route::get('/search', [inversionista::class, 'search'])->name('search');
 
+Route::get('/result', [inversionista::class, 'result'])->name('result');
+
 Route::get('/users', [inversionista::class, 'users'])->name('users');
 
 
@@ -70,7 +72,9 @@ Route::post('/delegates_register', [inversionista::class, 'delegates_register'])
 
 Route::get('/edit_delegates_{id}', [inversionista::class, 'edit_delegates'])->name('edit_delegates');
 
-Route::post('/update_delegates_{id}', [inversionista::class, 'update_delegates'])->name('update_delegates');
+Route::put('/update_delegates_{id}', [inversionista::class, 'update_delegates'])->name('update_delegates');
+
+Route::put('/suspend_delegates_{id}', [inversionista::class, 'suspend_delegates'])->name('suspend_delegates');
 
 
 

@@ -24,7 +24,8 @@ use App\Models\inversionistanatural;
 use App\Models\redessocialesdelegado;
 use App\Models\RedesSocialesempresa;
 use App\Models\datosempresa;
-
+use App\Models\nacionalidad;
+use App\Models\pais;
 
 
 class Inversionista extends Controller
@@ -81,12 +82,239 @@ class Inversionista extends Controller
         return view('index');
     }
 
+
+      public function result(request $request)
+    {// dd(db::table('inversionista_naturals')->where('email',$request->busqueda)->first() == null);
+        if(db::table('inversionista_naturals')->where('email',$request->busqueda)->first()!=null)
+
+{
+    $resultado=db::table('inversionista_naturals')->where('email',$request->busqueda)->join('nacionalidad','nacionalidad.id','=','inversionista_naturals.nacionalidad')->select(
+            'inversionista_naturals.*',
+            'nacionalidad.GENTILICIO_NAC as GENTILICIO_NAC')->first();
+
+$twitter=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')->where('inversionista_naturals.email',$request->busqueda)->where('red','twitter')
+            ->select('redes_sociales_delegados.username as twitter')->first();
+
+           
+
+             $facebook=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as facebook')->where('inversionista_naturals.email',$request->busqueda)->where('red','facebook')->first();
+
+             $instagram=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as instagram')->where('inversionista_naturals.email',$request->busqueda)->where('red','instagram')->first();
+
+             $linkedin=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as linkedin')->where('inversionista_naturals.email',$request->busqueda)->where('red','linkedin')->first();
+
+             $telefono=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as telefono')->where('inversionista_naturals.email',$request->busqueda)->where('red','telefono')->first();
+
+              $correo=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as correo')->where('inversionista_naturals.email',$request->busqueda)->where('red','correo')->first();
+
+        
+
+            if($twitter==null)
+            {
+                $twitter=0;
+            }
+            if($instagram==null)
+            {
+                $instagram= 0;
+            }
+            if($linkedin==null)
+            {
+                $linkedin=0;
+            }
+            if($telefono==null)
+            {
+                $telefono=0;
+            }
+            if($correo==null)
+            {
+                $correo=0;
+            }
+            if($facebook==null)
+            {
+                $facebook=0;
+            }
+
+
+
+        //dd($resultado);
+        return view('previews_delegates',['previa'=> $resultado,'instagram' =>$instagram,'twitter' =>$twitter,'facebook' =>$facebook ,'linkedin' =>$linkedin,'correo' =>$correo,'telefono' =>$telefono]);
+}       
+elseif (db::table('inversionista_naturals')->where('doc_identidad',$request->busqueda)->first()!=null) {
+$resultado=db::table('inversionista_naturals')->where('doc_identidad',$request->busqueda)->join('nacionalidad','nacionalidad.id','=','inversionista_naturals.nacionalidad')->select(
+            'inversionista_naturals.*',
+            'nacionalidad.GENTILICIO_NAC as GENTILICIO_NAC')->first();
+
+$twitter=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')->where('inversionista_naturals.doc_identidad',$request->busqueda)->where('red','twitter')
+            ->select('redes_sociales_delegados.username as twitter')->first();
+
+           
+
+             $facebook=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as facebook')->where('inversionista_naturals.doc_identidad',$request->busqueda)->where('red','facebook')->first();
+
+             $instagram=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as instagram')->where('inversionista_naturals.doc_identidad',$request->busqueda)->where('red','instagram')->first();
+
+             $linkedin=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as linkedin')->where('inversionista_naturals.doc_identidad',$request->busqueda)->where('red','linkedin')->first();
+
+             $telefono=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as telefono')->where('inversionista_naturals.doc_identidad',$request->busqueda)->where('red','telefono')->first();
+
+              $correo=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as correo')->where('inversionista_naturals.doc_identidad',$request->busqueda)->where('red','correo')->first();
+
+        
+
+            if($twitter==null)
+            {
+                $twitter=0;
+            }
+            if($instagram==null)
+            {
+                $instagram= 0;
+            }
+            if($linkedin==null)
+            {
+                $linkedin=0;
+            }
+            if($telefono==null)
+            {
+                $telefono=0;
+            }
+            if($correo==null)
+            {
+                $correo=0;
+            }
+            if($facebook==null)
+            {
+                $facebook=0;
+            }
+
+
+
+        //dd($resultado);
+        return view('previews_delegates',['previa'=> $resultado,'instagram' =>$instagram,'twitter' =>$twitter,'facebook' =>$facebook ,'linkedin' =>$linkedin,'correo' =>$correo,'telefono' =>$telefono]);
+}
+elseif(db::table('datos_empresas')->where('rif',$request->busqueda)->first()!=null)
+{
+    $previa=DB::table('datos_empresas') ->where('datos_empresas.rif',$request->busqueda)
+            ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
+            ->join('pais as registro','datos_empresas.lregistro','=','registro.id')
+            ->select(
+            'datos_empresas.*',
+            'origen.paisnombre as pais_origen',
+            'registro.paisnombre as lregistro')
+           ->first();
+            //dd($previa);
+            $twitter=db::table('datos_empresas')
+            ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('rrss','rrss.id','=','redes_sociales_empresas.site')->where('datos_empresas.rif',$request->busqueda)->where('red','twitter')
+            ->select('redes_sociales_empresas.username as twitter')->first();
+
+           
+
+             $facebook=db::table('datos_empresas')
+            ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('rrss','rrss.id','=','redes_sociales_empresas.site')
+            ->select('redes_sociales_empresas.username as facebook')->where('datos_empresas.rif',$request->busqueda)->where('red','facebook')->first();
+
+             $instagram=db::table('datos_empresas')
+            ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('rrss','rrss.id','=','redes_sociales_empresas.site')
+            ->select('redes_sociales_empresas.username as instagram')->where('datos_empresas.rif',$request->busqueda)->where('red','instagram')->first();
+
+             $linkedin=db::table('datos_empresas')
+            ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('rrss','rrss.id','=','redes_sociales_empresas.site')
+            ->select('redes_sociales_empresas.username as linkedin')->where('datos_empresas.rif',$request->busqueda)->where('red','linkedin')->first();
+
+             $telefono=db::table('datos_empresas')
+            ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('rrss','rrss.id','=','redes_sociales_empresas.site')
+            ->select('redes_sociales_empresas.username as telefono')->where('datos_empresas.rif',$request->busqueda)->where('red','telefono')->first();
+
+              $correo=db::table('datos_empresas')
+            ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('rrss','rrss.id','=','redes_sociales_empresas.site')
+            ->select('redes_sociales_empresas.username as correo')->where('datos_empresas.rif',$request->busqueda)->where('red','correo')->first();
+
+        
+
+            if($twitter==null)
+            {
+                $twitter=0;
+            }
+            if($instagram==null)
+            {
+                $instagram= 0;
+            }
+            if($linkedin==null)
+            {
+                $linkedin=0;
+            }
+            if($telefono==null)
+            {
+                $telefono=0;
+            }
+            if($correo==null)
+            {
+                $correo=0;
+            }
+            if($facebook==null)
+            {
+                $facebook=0;
+            }
+
+
+
+  //dd($twitter);
+
+
+
+
+            return view('previews' ,['instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
+}
+else
+    return back()->with('status','Dato no encontrado');
+    }
+
     public function users()
     {
         if(session('usuario')){
         $usuarios=db::table('users')->get();
+        $nacionalidad=db::table('nacionalidad')->get();
         
-            return view('users')->with(compact('usuarios'));
+            return view('users',['usuarios' => $usuarios],['nacionalidad' => $nacionalidad]);
         }
         else
         return view('index');
@@ -252,8 +480,20 @@ class Inversionista extends Controller
     public function delegates()
     {
         if(session('usuario') && session('usuario')->role==9 || session('usuario') && session('usuario')->role==2 ){
-       $delegados=db::table('inversionista_naturals')->get();
-            return view('delegates')->with(compact('delegados'));
+       $delegados=db::table('inversionista_naturals')->join('nacionalidad','inversionista_naturals.nacionalidad','=','nacionalidad.id')
+       ->join('generos','inversionista_naturals.sexo','=','generos.id')
+       ->join('estados_civiles','inversionista_naturals.estado_civil','=','estados_civiles.id')
+       ->select(
+            'inversionista_naturals.*',
+            'nacionalidad.GENTILICIO_NAC as GENTILICIO_NAC',
+            'generos.genero as sexo',
+            'estados_civiles.estado as estado_civil')->get();
+      
+       $nacionalidad=db::table('nacionalidad')->get();
+       $estados_civiles=db::table('estados_civiles')->get();
+       $generos=db::table('generos')->get();
+        //dd($delegados);
+            return view('delegates',['delegados' => $delegados,'nacionalidad' => $nacionalidad,'estados_civiles' => $estados_civiles,'generos' => $generos]);
         }
         else
         return view('index');
@@ -292,9 +532,37 @@ $registry->edad = $edad;
     public function edit_delegates($id)
     {
         $delegado = inversionistanatural::findorfail($id);
+        $nacionalidad=db::table('nacionalidad')->get();
+
+       $estados_civiles=db::table('estados_civiles')->get();
+       $generos=db::table('generos')->get();
         
         //dd($delegado);
-            return view('edit_delegates',['delegado' => $delegado]);
+            return view('edit_delegates',['delegado' => $delegado,'nacionalidad' => $nacionalidad,'estados_civiles'=>$estados_civiles,'generos'=>$generos]);
+        
+    }
+
+    public function suspend_delegates($id)
+    {
+        $delegados = inversionistanatural::findorfail($id);
+
+            //dd($request);
+             //dd($peticion);
+if($delegados->status==1)
+{
+         $delegados->update(['status' => '0']);
+         return back()->with('status','Representante Modificado');
+    }
+    elseif($delegados->status==0)
+{
+         $delegados->update(['status' => '1']);
+         return back()->with('status','Representante Modificado');
+    }
+    
+        //dd($empresa);
+
+            
+    
         
     }
 
@@ -303,8 +571,9 @@ $registry->edad = $edad;
        
         
         $delegados = inversionistanatural::findOrFail($id);
-        $users = user::findorfail($id);
-        //dd($delegados);
+
+        $users = user::find($id);
+        //dd($users);
         if($request->nombre != $delegados->nombre && $request->nombre!="" ||  $request->nombre != $delegados->nombre && $request->nombre!=" " ||  $request->nombre != $delegados->nombre && $request->nombre!=null)
         {  
                 //dd("a");
@@ -378,7 +647,7 @@ $edad = $fechaNacimientoCarbon->age;
 
   
         
-            return redirect()->to('delegates')->with('status','Datos Modificado');
+            return $this->delegates()->with('status','Datos Modificado');
         
     }
 
@@ -388,7 +657,7 @@ $edad = $fechaNacimientoCarbon->age;
         $user = inversionistanatural::findOrFail($id);
 
     // Update the id_status column
-    $user->delete();
+    $user->update(['status' => '0']);
 
         
             return back()->with('status','Usuario Suspendido');
@@ -406,9 +675,10 @@ $edad = $fechaNacimientoCarbon->age;
               'rrss.red as red',
 
     )->where('delegate_id',$id)->get();
+        $sitios=db::table('rrss')->get();
         
-        //dd($red);
-            return view('add_socialweb',['delegado' => $delegado],['redes' => $redes]);
+      //  dd($sitios);
+            return view('add_socialweb',['delegado' => $delegado,'redes' => $redes,'sitios' => $sitios]);
         
     }
     public function web_register(request $request)
@@ -490,8 +760,17 @@ $edad = $fechaNacimientoCarbon->age;
     {
         if(session('usuario') && session('usuario')->role==9 || session('usuario') && session('usuario')->role==2 ){
 
-            $empresas=db::table('datos_empresas')->get();
-            return view('enterprises',['empresas'=>$empresas]);
+            $empresas=DB::table('datos_empresas')
+            ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
+            ->join('pais as registro','datos_empresas.lregistro','=','registro.id')
+            ->select(
+            'datos_empresas.*',
+            'origen.paisnombre as pais_origen',
+            'registro.paisnombre as lregistro')
+           ->get();
+
+            $pais=db::table('pais')->OrderBy('paisnombre')->get();
+            return view('enterprises',['empresas'=>$empresas],['pais'=>$pais]);
         }
         else
         return $this->dashboard();
@@ -537,10 +816,10 @@ $edad = $fechaNacimientoCarbon->age;
     public function edit_enterprises($id)
     {
         $empresa = datosempresa::findorfail($id);
-
+        $pais=db::table('pais')->OrderBy('paisnombre')->get();
         
         //dd($red);
-            return view('edit_enterprises',['empresa' => $empresa]);
+            return view('edit_enterprises',['empresa' => $empresa],['pais' => $pais]);
         
     }
 
@@ -646,9 +925,9 @@ public function add_web($id)
               'rrss.red as red',
 
     )->where('enterprise_id',$id)->get();
-        
+         $sitios=db::table('rrss')->get();
         //dd($red);
-            return view('add_social_enterprises',['empresa' => $empresa],['redes' => $redes]);
+            return view('add_social_enterprises',['empresa' => $empresa,'redes' => $redes,'sitios' => $sitios]);
         
     }
 
@@ -730,8 +1009,15 @@ public function add_web($id)
     {
         if(session('usuario')){
 
-            $previa=datosempresa::findorFail($id);
-
+            $previa=DB::table('datos_empresas') ->where('datos_empresas.id',$id)
+            ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
+            ->join('pais as registro','datos_empresas.lregistro','=','registro.id')
+            ->select(
+            'datos_empresas.*',
+            'origen.paisnombre as pais_origen',
+            'registro.paisnombre as lregistro')
+           ->first();
+            //dd($previa);
             $twitter=db::table('datos_empresas')
             ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
             ->join('rrss','rrss.id','=','redes_sociales_empresas.site')->where('datos_empresas.id',$id)->where('red','twitter')
@@ -807,7 +1093,14 @@ public function add_web($id)
 
     public function prueba_pdf($id)
     {
-        $previa = datosempresa::findorFail($id);
+        $previa=DB::table('datos_empresas') ->where('datos_empresas.id',$id)
+            ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
+            ->join('pais as registro','datos_empresas.lregistro','=','registro.id')
+            ->select(
+            'datos_empresas.*',
+            'origen.paisnombre as pais_origen',
+            'registro.paisnombre as lregistro')
+           ->first();
 
          $twitter=db::table('datos_empresas')
             ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
@@ -887,7 +1180,10 @@ public function previews_delegates($id)
     {
         if(session('usuario')){
 
-            $previa=inversionistanatural::findorFail($id);
+            $previa=db::table('inversionista_naturals')->join('nacionalidad','nacionalidad.id','=','inversionista_naturals.nacionalidad')->where('inversionista_naturals.id',$id)->select(
+            'inversionista_naturals.*',
+            'nacionalidad.GENTILICIO_NAC as GENTILICIO_NAC')->first();
+            //DD($previa);
 
             $twitter=db::table('inversionista_naturals')
             ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
@@ -955,7 +1251,7 @@ public function previews_delegates($id)
 
 
 
-            return view('previews_delegates' ,['instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
+            return view('previews_delegates' ,['previa' => $previa,'instagram' => $instagram,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
    
         }
         else
@@ -966,7 +1262,9 @@ public function previews_delegates($id)
     {
         if(session('usuario')){
 
-            $previa=inversionistanatural::findorFail($id);
+              $previa=db::table('inversionista_naturals')->join('nacionalidad','nacionalidad.id','=','inversionista_naturals.nacionalidad')->where('inversionista_naturals.id',$id)->select(
+            'inversionista_naturals.*',
+            'nacionalidad.GENTILICIO_NAC as GENTILICIO_NAC')->first();
 
             $twitter=db::table('inversionista_naturals')
             ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
