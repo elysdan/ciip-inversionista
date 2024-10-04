@@ -488,7 +488,7 @@ else
             'nacionalidad.GENTILICIO_NAC as GENTILICIO_NAC',
             'generos.genero as sexo',
             'estados_civiles.estado as estado_civil')->get();
-      
+     // dd($delegados);
        $nacionalidad=db::table('nacionalidad')->get();
        $estados_civiles=db::table('estados_civiles')->get();
        $generos=db::table('generos')->get();
@@ -502,10 +502,21 @@ else
 
     public function delegates_register(request $request)
     {
-                //dd($request);
+                //dd($request->hasfile("foto"));
+
                 $busqueda=db::table('users')->where('email',$request->correo)->select('id')->first();
                 //dd($busqueda);
                 $registry = new inversionistanatural;
+
+                if($request->File("foto")){
+
+                        $imagen = $request->file("foto");                        
+                        $nombreimagen = $request->cedula;
+                        $ruta = "images/usuario/fotos/";            
+                        $imagen->move($ruta,$nombreimagen);   
+                        $registry-> foto = $ruta.$nombreimagen;
+                        
+                    }
                 $registry -> user_id = $busqueda->id;
                 $registry -> nombre = $request -> nombre;
                 $registry -> apellido = $request -> apellido;
@@ -639,7 +650,16 @@ $edad = $fechaNacimientoCarbon->age;
         }
         
         
-       
+       if($request->file("foto") != $delegados->foto && $request->file("foto") != "" || $request->file("foto") != $delegados->foto && $request->file("foto") != null)
+        {
+              //  dd("g");
+                $imagen = $request->file("foto");                        
+                        $nombreimagen = $request->cedula;
+                        $ruta = "images/usuario/fotos/";            
+                        $imagen->move($ruta,$nombreimagen);   
+                        
+                $delegados->update(['foto' => $ruta.$nombreimagen]);
+        }
        
         
         
@@ -767,6 +787,7 @@ $edad = $fechaNacimientoCarbon->age;
             'datos_empresas.*',
             'origen.paisnombre as pais_origen',
             'registro.paisnombre as lregistro')
+            ->OrderBy('id')
            ->get();
 
             $pais=db::table('pais')->OrderBy('paisnombre')->get();
@@ -795,6 +816,8 @@ $edad = $fechaNacimientoCarbon->age;
         $registry -> pais_origen = $request->lorigen;
         $registry -> lregistro = $request->lregistro;
         $registry -> direccion = $request->direccion;
+         $registry -> correo = $request->correo;
+          $registry -> telefono = $request->telefono;
         $registry ->save();
         //dd($registry);
         return back()->with('status','Empresa Registrada');
@@ -870,6 +893,18 @@ if($empresas->status==1)
         {  
                // dd("f");
                 $empresas->update(['direccion' => $request->direccion]);
+            }
+
+             if($request->correo != $empresas->correo && $request->correo!="" ||  $request->correo != $empresas->correo && $request->correo!=" " ||  $request->correo != $empresas->correo && $request->correo!=null)
+        {  
+               // dd("f");
+                $empresas->update(['correo' => $request->correo]);
+            }
+
+             if($request->telefono != $empresas->telefono && $request->telefono!="" ||  $request->telefono != $empresas->telefono && $request->telefono!=" " ||  $request->telefono != $empresas->telefono && $request->telefono!=null)
+        {  
+               // dd("f");
+                $empresas->update(['telefono' => $request->telefono]);
             }
 
              if($request->file("foto") != $empresas->foto && $request->file("foto") != "" || $request->file("foto") != $empresas->foto && $request->file("foto") != null)

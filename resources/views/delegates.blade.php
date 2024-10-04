@@ -69,6 +69,7 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
               <th >Direccion</th>
               <th >Telefono</th>
               <th >Email</th>
+              <th>Foto</th>
               <th >Redes Sociales</th>
                <th >Detalle</th>
               @if(session('usuario')->role==9 )
@@ -99,7 +100,13 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
               <td>{{$delegado->direccion}}</td>
               <td>{{$delegado->telefono}}</td>
               <td>{{$delegado->email}}</td>
-              
+               <td style="vertical-align: top;align-items: center;
+  justify-content: center;
+  align-content: center;"> <img src="{{$delegado->foto}}" style="border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  width: 3vw;"></td>
              <td style="vertical-align: top;align-items: center;
   justify-content: center;
   align-content: center;">
@@ -212,8 +219,9 @@ data-toggle="modal" data-target="#DelModal{{$delegado->id}}" data-whatever="@mdo
               </td>
               @endif
             </tr>
+             @php $n++; @endphp
             @endforeach
-            @php $n++; @endphp
+           
                                        </tbody>
                                     </table>
                                  </div>
@@ -234,7 +242,7 @@ data-toggle="modal" data-target="#DelModal{{$delegado->id}}" data-whatever="@mdo
             </div>
             
             <div class="modal-body">
-              <form action="{{route('delegates_register')}}" method="POST"  id="miFormulario">
+              <form action="{{route('delegates_register')}}" method="POST"  id="miFormulario" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                   <label for="campo1" class="col-form-label">Nombre:</label>
@@ -286,7 +294,18 @@ data-toggle="modal" data-target="#DelModal{{$delegado->id}}" data-whatever="@mdo
                         <label for="campo10" class="col-form-label">Direccion:</label>
                         <textarea class="form-control" id="campo10" name="direccion" placeholder="Direccion de Habitacion" minlength="4" maxlength="1000" required>
                         </textarea>
-                    
+
+                         <label for="fileInput" class="col-form-label">Foto de Perfil:</label>
+                    <input type="file" class="form-control" name="foto" id="fileInput" accept="image/*">
+
+                     <div id="preview" class="w-25"></div>
+                        <div class="alert alert-danger" role="alert" id="fileError">
+                            Por Favor Seleccione una imagen no mayor a 20 mb, de no tener el sistema pondra una predeterminada.
+                        </div>
+                  
+              
+            </div>
+            
               
             </div>
             <div class="modal-footer">
@@ -379,7 +398,45 @@ window.onload = setFechaLimites;
       validarCampos();
   });
 
-  
+  document.getElementById('fileInput').addEventListener('change', function(event) {
+      var files = event.target.files;
+      var preview = document.getElementById('preview');
+      var fileError = document.getElementById('fileError');
+      preview.innerHTML = '';
+      fileError.style.display = 'none';
+      var validFiles = true;
+
+      Array.from(files).forEach(file => {
+          if (file.type.startsWith('image/')) {
+              var reader = new FileReader();
+              reader.onload = function(e) {
+                  var container = document.createElement('div');
+                  container.classList.add('preview-container');
+                  var img = document.createElement('img');
+                  img.src = e.target.result;
+                  img.addEventListener('click', function() {
+                      img.classList.toggle('maximized');
+                  });
+                  var span = document.createElement('span');
+                  span.textContent = file.name.length > 20 ? file.name.substring(0, 20) + '...' : file.name;
+                  container.appendChild(img);
+                  container.appendChild(span);
+                  preview.appendChild(container);
+              };
+              reader.readAsDataURL(file);
+          } else {
+              validFiles = false;
+          }
+      });
+
+      if (!validFiles) {
+          fileError.style.display = 'block';
+          event.target.value = '';
+      }
+
+      validarCampos();
+  });
+
 
   document.getElementById('miFormulario').addEventListener('submit', function(event) {
       var campo1 = document.getElementById('campo1');

@@ -20,6 +20,8 @@ class datosempresa extends Model
         'direccion',
         'foto',
         'status',
+        'correo',
+        'telefono',
         
     ];
 

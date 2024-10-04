@@ -26,6 +26,7 @@ class inversionistanatural extends Model
         'email',
         'rrss',
         'status',
+        'foto',
         
     ];
 

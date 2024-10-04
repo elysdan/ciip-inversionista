@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('lregistro');
             $table->string('status')->default('1');
             $table->text('direccion');
+            $table->text('correo');
+            $table->text('telefono');
             $table->text('foto')->nullable();
             $table->timestamps();
         });

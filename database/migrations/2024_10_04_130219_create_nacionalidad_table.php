@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-         Schema::create('estados_civiles', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->text('estado');
-            
-            $table->timestamps();
+        Schema::create('nacionalidad', function (Blueprint $table) {
+            $table->bigInteger('id')->primary();
+            $table->string('PAIS_NAC')->nullable();
+            $table->string('GENTILICIO_NAC')->nullable();
+            $table->string('ISO_NAC')->nullable();
         });
     }
 
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('nacionalidad');
     }
 };

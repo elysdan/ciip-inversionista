@@ -53,8 +53,11 @@
 <th >Pais de Origen</th>
 <th >Lugar de Registro</th>
 <th >Direccion</th>
+<th >Correo</th>
+<th >Telefono</th>
 <th >Redes Sociales</th>
 <th >Detalle</th>
+
 <th>Foto</th>
 @if(session('usuario')->role==9 )
 <th>Status</th>
@@ -82,6 +85,8 @@ align-content: center;" >
 <td>{{$empresa->lregistro}}</td>
 
 <td>{{$empresa->direccion}}</td>
+<td>{{$empresa->correo}}</td>
+<td>{{$empresa->telefono}}</td>
 
 <td><a href="{{route('add_web',$empresa->id)}}" class="btn btn-outline-primary mt-1 mb-1 p-0"  style="border-radius: 1rem; display: flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;text-align: center;">
                 
@@ -377,6 +382,12 @@ data-toggle="modal" data-target="#DelModal{{$empresa->id}}" data-whatever="@mdo"
                         <label for="campo10" class="col-form-label">Direccion:</label>
                         <textarea class="form-control" id="campo10" name="direccion" placeholder="Direccion de Habitacion" minlength="4" maxlength="1000" required>
                         </textarea>
+
+                         <label for="campo12" class="col-form-label">Telefono:</label>
+                  <input type="text" class="form-control" id="campo12" name="telefono" pattern="[0-9]{10,20}" maxlength="20" required>
+
+                   <label for="campo11" class="col-form-label">correo:</label>
+                  <input type="text" class="form-control" id="campo11" name="correo" pattern="[A-Za-z0@-9áÁéÉíÍóÓúÚñÑ®©.' ']{10,100}" maxlength="100" required>
                   
                     <label for="fileInput" class="col-form-label">Foto de Perfil:</label>
                     <input type="file" class="form-control" name="foto" id="fileInput" accept="image/*">
@@ -419,11 +430,13 @@ campo10.innerHTML=''
       var campo2 = document.getElementById('campo2');
       var campo3 = document.getElementById('campo3');
       var campo4 = document.getElementById('campo4');
+      var campo4 = document.getElementById('campo11');
+      var campo4 = document.getElementById('campo12');
       
     
       var fileInput = document.getElementById('fileInput');
       var submitBtn = document.getElementById('submitBtn');
-      var valido = campo1.checkValidity() && campo10.checkValidity() && campo3.selectedIndex != 0  && campo4.selectedIndex != 0 && campo2.selectedIndex != 0 ;
+      var valido = campo1.checkValidity() && campo10.checkValidity() && campo11.checkValidity() && campo12.checkValidity() && campo3.selectedIndex != 0  && campo4.selectedIndex != 0 && campo2.selectedIndex != 0 ;
 
       submitBtn.disabled = !valido;
   }
@@ -439,6 +452,12 @@ campo10.innerHTML=''
       }
       if (campo.id === 'campo10') {
           campo.value = campo.value.replace(/[^A-Za-z0-9' ',.#áÁéÉíÍóÓúÚñÑ]/g, '');
+      }
+       if (campo.id === 'campo11') {
+          campo.value = campo.value.replace(/[^A-Za-z0-9@' ',.#áÁéÉíÍóÓúÚñÑ]/g, '');
+      }
+       if (campo.id === 'campo12') {
+          campo.value = campo.value.replace(/[^0-9]/g, '');
       }
      
       validarCampos();

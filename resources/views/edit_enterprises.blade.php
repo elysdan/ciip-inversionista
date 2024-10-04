@@ -67,6 +67,13 @@
                         <textarea class="form-control" id="campo10" name="direccion" placeholder="Direccion de Habitacion" minlength="4" maxlength="1000" required>
                         </textarea>
 
+
+                         <label for="campo12" class="col-form-label">Telefono:</label>
+                  <input type="text" class="form-control" id="campo12" name="telefono" value="{{$empresa->telefono}}" pattern="[0-9]{10,20}" maxlength="20" required>
+
+                   <label for="campo11" class="col-form-label">correo:</label>
+                  <input type="text" class="form-control" id="campo11" name="correo" value="{{$empresa->correo}}" pattern="[A-Za-z0@-9áÁéÉíÍóÓúÚñÑ®©.' ']{10,100}" maxlength="100" required>
+
                            
                   
                     <label for="fileInput" class="col-form-label">Foto de Perfil:</label>
@@ -107,11 +114,12 @@ campo10.innerHTML='{{$empresa->direccion}}';
       var campo2 = document.getElementById('campo2');
       var campo3 = document.getElementById('campo3');
       var campo4 = document.getElementById('campo4');
-      
+            var campo4 = document.getElementById('campo11');
+                  var campo4 = document.getElementById('campo12');
     
       var fileInput = document.getElementById('fileInput');
       var submitBtn = document.getElementById('submitBtn');
-      var valido = campo1.checkValidity() && campo10.checkValidity() && campo3.selectedIndex != 0  && campo4.selectedIndex != 0 && campo2.selectedIndex != 0 ;
+      var valido = campo1.checkValidity() && campo10.checkValidity() && campo11.checkValidity() && campo12.checkValidity() && campo3.selectedIndex != 0  && campo4.selectedIndex != 0 && campo2.selectedIndex != 0 ;
 
       submitBtn.disabled = !valido;
   }
@@ -127,6 +135,13 @@ campo10.innerHTML='{{$empresa->direccion}}';
       }
       if (campo.id === 'campo10') {
           campo.value = campo.value.replace(/[^A-Za-z0-9' ',.#áÁéÉíÍóÓúÚñÑ]/g, '');
+      }
+
+       if (campo.id === 'campo11') {
+          campo.value = campo.value.replace(/[^A-Za-z0-9@' ',.#áÁéÉíÍóÓúÚñÑ]/g, '');
+      }
+       if (campo.id === 'campo12') {
+          campo.value = campo.value.replace(/[^0-9]/g, '');
       }
      
       validarCampos();
