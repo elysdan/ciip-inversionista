@@ -17,11 +17,11 @@ return new class extends Migration
             $table->string('nombre');
             $table->string('apellido');
             $table->string('doc_identidad')->unique();
-            $table->string('nacionalidad');
+            $table->bigInteger('nacionalidad');
             $table->date('fecha_nacimiento');
             $table->integer('edad');
-            $table->string('estado_civil');
-            $table->string('sexo');
+            $table->bigInteger('estado_civil');
+            $table->bigInteger('sexo');
             $table->text('direccion');
             $table->string('telefono');
             $table->string('email');

@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('razonsocial');
             $table->string('rif');
              $table->string('identificador');
-            $table->string('pais_origen');
-            $table->string('lregistro');
+            $table->bigInteger('pais_origen');
+            $table->bigInteger('lregistro');
             $table->string('status')->default('1');
             $table->text('direccion');
             $table->text('correo');

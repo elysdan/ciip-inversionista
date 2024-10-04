@@ -312,10 +312,12 @@ else
     {
         if(session('usuario')){
         $usuarios=db::table('users')->get();
+        $uc=db::table('users')->count();
         $nacionalidad=db::table('nacionalidad')->get();
+
         
-            return view('users',['usuarios' => $usuarios],['nacionalidad' => $nacionalidad]);
-        }
+            return view('users',['usuarios' => $usuarios,'nacionalidad' => $nacionalidad,'uc' => $uc]);
+       }
         else
         return view('index');
     }
@@ -480,6 +482,8 @@ else
     public function delegates()
     {
         if(session('usuario') && session('usuario')->role==9 || session('usuario') && session('usuario')->role==2 ){
+            $dc=db::table('inversionista_naturals')->count();
+          
        $delegados=db::table('inversionista_naturals')->join('nacionalidad','inversionista_naturals.nacionalidad','=','nacionalidad.id')
        ->join('generos','inversionista_naturals.sexo','=','generos.id')
        ->join('estados_civiles','inversionista_naturals.estado_civil','=','estados_civiles.id')
@@ -488,12 +492,15 @@ else
             'nacionalidad.GENTILICIO_NAC as GENTILICIO_NAC',
             'generos.genero as sexo',
             'estados_civiles.estado as estado_civil')->get();
+
      // dd($delegados);
+   
+       
        $nacionalidad=db::table('nacionalidad')->get();
        $estados_civiles=db::table('estados_civiles')->get();
        $generos=db::table('generos')->get();
         //dd($delegados);
-            return view('delegates',['delegados' => $delegados,'nacionalidad' => $nacionalidad,'estados_civiles' => $estados_civiles,'generos' => $generos]);
+            return view('delegates',['delegados' => $delegados,'nacionalidad' => $nacionalidad,'estados_civiles' => $estados_civiles,'generos' => $generos,'dc' => $dc]);
         }
         else
         return view('index');

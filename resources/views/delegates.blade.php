@@ -43,7 +43,7 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
     
     </svg>
 </button>
-
+@if($dc>0)
                            <div class="white_shd full margin_bottom_30">
 
 
@@ -229,7 +229,7 @@ data-toggle="modal" data-target="#DelModal{{$delegado->id}}" data-whatever="@mdo
                            </div>
                         </div>
       
-
+  @endif
 
       <div class="modal fade" id="RegModal" tabindex="-1" role="dialog" aria-labelledby="RegModal" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -317,7 +317,7 @@ data-toggle="modal" data-target="#DelModal{{$delegado->id}}" data-whatever="@mdo
       
         </div>
       </div>
-      
+    
 <script>
   var campo10 = document.getElementById('campo10'); //direccion
 campo10.innerHTML=''

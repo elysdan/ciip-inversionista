@@ -105,6 +105,7 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
       
         </div>
       </div>
+      @if($uc>0)
                            <div class="white_shd full margin_bottom_30">
 
 
@@ -403,6 +404,7 @@ data-toggle="modal" data-target="#DelModal{{$usuario->id}}" data-whatever="@mdo"
                            </div>
                         </div>
       
+      @endif
 
 
 
