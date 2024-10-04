@@ -55,8 +55,7 @@
         }
     </style>
     <body>
-<form method="POST" action="{{route('elaborar')}}">
-@csrf
+
 <div class="previews">
 
 
@@ -78,7 +77,7 @@
                                             
                                             <tr style="height:auto">
                                                 
-                                                    <td class="consideraciones" style="padding: 0;"><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 15rem;max-height: 15rem;font-family: arial;" placeholder="Tiene por objeto realizar a través de la contratación de personal especializado, la prestación de servicios acuáticos y portuarios Propios del Negocio y del transaporte Maritimo. tales como compra y venta de buques, accesorios de navegacion, plataformas de perforacion, de produccion y/o explotacion de buques propios o fletados, sea por tiempo, por viaje o mixto, llamados Contracto of Affreighment (COA), arrendados a cascos denusdos o bajo arrendamiento financiero de cualquier clase, tipo, porte o utilidad; asi como transaporte maritimo Fluivial, lascustre, bien sea nacional, se cabotaje y navegacion domestica, o inmternacional. (Expediente)" name="oci"></textarea></td>
+                                                    <td class="consideraciones" style="padding: 0;">{{$previa->oci}}</td>
                                             </tr>
                                     </table>
     <br>
@@ -102,35 +101,35 @@
                                                    
                                                     <tr>
                                                        <td>FBI</td>
-                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="fbi"></textarea></td>
+                                                        <td>{{$previa->fbi}}</td>
                                                     </tr>
                                                      <tr>
                                                        <td>OFAC</td>
-                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="ofac"></textarea></td>
+                                                        <td>{{$previa->ofac}}</td>
                                                     </tr>
                                                      <tr>
                                                        <td>UNION EUROPEA</td>
-                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="ue"></textarea></td>
+                                                        <td>{{$previa->ue}}</td>
                                                     </tr>
                                                      <tr>
                                                        <td>CONSEJO DE SEGURIDAD DE LA ONU (CSO)</td>
-                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="cso"></textarea></td>
+                                                        <td>{{$previa->cso}}</td>
                                                     </tr>
                                                      <tr>
                                                        <td>INTERPOL</td>
-                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="ip"></textarea></td>
+                                                        <td>{{$previa->ip}}</td>
                                                     </tr>
                                                      <tr>
                                                        <td>ICIJ</td>
-                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="icij"></textarea></td>
+                                                        <td>{{$previa->icij}}</td>
                                                     </tr>
                                                      <tr>
                                                        <td>TSJ</td>
-                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="tsj"></textarea></td>
+                                                        <td>{{$previa->tsj}}</td>
                                                     </tr>
                                                      <tr>
                                                        <td>RNC</td>
-                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="rnc"></textarea></td>
+                                                        <td>{{$previa->rnc}}</td>
                                                     </tr>
                                     </table>
 
@@ -143,7 +142,7 @@
                                                 </tr>
                                                
                                                 <tr>
-                                                   <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin resultados" name="ef"></textarea></td>
+                                                   <td>{{$previa->ef}}</td>
                                                     
                                                 </tr>
                                                 </table>
@@ -157,7 +156,7 @@
                                                 </tr>
                                                
                                                 <tr>
-                                                   <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin resultados" name="ex"></textarea></td>
+                                                   <td>{{$previa->ex}}</textarea></td>
                                                     
                                                 </tr>
                                                 </table>
@@ -176,10 +175,10 @@
                                                 </tr>
                                                
                                                 <tr  style="height: 8rem;font-size: 70%;">
-                                                   <td  style="vertical-align: bottom;">{{session('usuario')->name}} {{session('usuario')->surname}}</td>
+                                                   <td  style="vertical-align: bottom;">{{$previa->name}} {{$previa->surname}}</td>
                                                    <td  style="vertical-align: bottom;">GERMAN GERARDINO</td>
                                                    <td  style="vertical-align: bottom;">MARIA PIA SAVOIA</td>
-                                                   <td  style="vertical-align: bottom;">LAILA TAJELDINE</td>
+                                                   <td  style="vertical-align: bottom;">{{$previa->aprobado}}</td>
                                                     
                                                 </tr>
                                                 </table>
@@ -242,7 +241,8 @@
                             
                                 <h4 style="text-align:CENTER">Fecha de Consulta</h4>
 
-                                <h5 style="text-align:CENTER">{{ date('d-m-y') }}</h5>
+                                <h5 style="text-align:CENTER">{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',  $previa->fecha)->format('d-m-Y') }}
+        </h5>
 
                                    <br>
                                 <div class="d-flex m-3 p-1" style="justify-content: center;font-size: auto;">
@@ -327,9 +327,14 @@
 </div>
 
 </div>
-<input type="hidden" name="enterprise_id" value="{{$previa->id}}">
-<input type="hidden" name="elaborado" value="{{session('usuario')->id}}">
-<button class="mt-5 btn btn-primary" style="text-align:center;width: 100%;" type="submit">Elaborar</button>
+<form method="POST" action="{{route('revisar',$previa->ide)}}">
+@csrf
+@method('PUT')
+@if($previa->estatuscontent==1)
+<button class="mt-5 btn btn-primary" style="text-align:center;width: 100%;" type="submit">revisar</button>
+@elseif($previa->estatuscontent==2)
+<button class="mt-5 btn btn-primary" style="text-align:center;width: 100%;" type="submit">certificar</button>
+@endif
 </form>
 
 <!--

@@ -101,6 +101,13 @@ Route::get('/previews_{id}', [inversionista::class, 'previews'])->name('previews
 
 Route::get('/prueba_pdf_{id}', [inversionista::class, 'prueba_pdf'])->name('prueba_pdf');
 
+Route::post('/elaborar', [inversionista::class, 'elaborar'])->name('elaborar');
+
+Route::get('/elaborador_{id}', [inversionista::class, 'elaborador'])->name('elaborador');
+
+Route::put('/revisar_{id}', [inversionista::class, 'revisar'])->name('revisar');
+
+Route::put('/certificar_{id}', [inversionista::class, 'certificar'])->name('certificar');
 
 
 

@@ -57,6 +57,7 @@
 <th >Telefono</th>
 <th >Redes Sociales</th>
 <th >Detalle</th>
+<th >Elaborado</th>
 
 <th>Foto</th>
 @if(session('usuario')->role==9 )
@@ -99,6 +100,7 @@ align-content: center;" >
               </a></td>
 
               <td><a href="{{route('previews',$empresa->id)}}"><button class="btn btn-primary">Ver Detalle</button></a></td>
+              <td><a href="{{route('elaborador',$empresa->id)}}"><button class="btn btn-primary">Ver elaborado</button></a></td>
               <td style="vertical-align: top;align-items: center;
   justify-content: center;
   align-content: center;"> <img src="{{$empresa->foto}}" style="border-radius: 50%;

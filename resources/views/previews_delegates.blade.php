@@ -71,7 +71,7 @@
                                             
                                             <tr>
                                                 
-                                                  <th>OBJETO Y CONSIDERACIONES DE INTERÉS</th>
+                                                  <th>INFORMACIÓN PROFESIONAL</th>
        
                                             </tr>
                                             

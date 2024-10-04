@@ -26,6 +26,8 @@ use App\Models\RedesSocialesempresa;
 use App\Models\datosempresa;
 use App\Models\nacionalidad;
 use App\Models\pais;
+use App\Models\contenidoempresa;
+use App\Models\contenidorepresentante;
 
 
 class Inversionista extends Controller
@@ -1381,7 +1383,146 @@ public function previews_delegates($id)
         return $this->index();
     }
 
+    public function elaborar(request $request)
+    {
 
+                
+                $registry = new contenidoempresa;
+                
+                $registry -> enterprise_id = $request->enterprise_id;
+                $registry -> elaborado = $request->elaborado;
+                $registry -> oci = $request->oci;
+                $registry -> fbi = $request->fbi;
+                $registry -> ofac = $request->ofac;
+                $registry -> ue = $request->ue;
+                $registry -> cso = $request->cso;
+                $registry -> ip = $request->ip;
+                $registry -> icij = $request->icij;
+                $registry -> tsj = $request->tsj;
+                $registry -> rnc = $request->rnc;
+                $registry -> ef = $request->ef;
+                $registry -> ex = $request->ex;
+                //dd($registry);
+                $registry -> save();
+                
+        
+        //dd($request);
+            return back()->with('status','funciona');
+        
+    }
+
+     public function revisar($id)
+    {
+
+                
+                 $empresas = contenidoempresa::findorfail($id);
+                 //dD($empresas);
+                if($empresas->status==2)
+                $empresas->update(['status' => '3']);
+                elseif($empresas->status==1)
+                {   $empresas->update(['status' => '2']);
+        }
+                
+        
+        //dd($request);
+            return $this->enterprises()->with('status','funciona');
+        
+    }
+
+
+public function elaborador($id)
+    {
+        if(session('usuario')){
+
+            $previa=DB::table('datos_empresas') ->where('datos_empresas.id',$id)
+            ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
+            ->join('pais as registro','datos_empresas.lregistro','=','registro.id')
+            ->join('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('users as elaborado','elaborado.id','=','contenido_empresas.elaborado')
+            ->select(
+            'datos_empresas.*',
+            'contenido_empresas.*',
+            'contenido_empresas.id as ide',
+              'contenido_empresas.status as estatuscontent',
+            'elaborado.name as name',
+            'elaborado.surname as surname',
+            'contenido_empresas.updated_at as fecha',
+            'origen.paisnombre as pais_origen',
+            'registro.paisnombre as lregistro')
+           ->first();
+            //dd($previa);
+            $twitter=db::table('datos_empresas')
+            ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('rrss','rrss.id','=','redes_sociales_empresas.site')->where('datos_empresas.id',$id)->where('red','twitter')
+            ->select('redes_sociales_empresas.username as twitter')->first();
+
+           
+
+             $facebook=db::table('datos_empresas')
+            ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('rrss','rrss.id','=','redes_sociales_empresas.site')
+            ->select('redes_sociales_empresas.username as facebook')->where('datos_empresas.id',$id)->where('red','facebook')->first();
+
+             $instagram=db::table('datos_empresas')
+            ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('rrss','rrss.id','=','redes_sociales_empresas.site')
+            ->select('redes_sociales_empresas.username as instagram')->where('datos_empresas.id',$id)->where('red','instagram')->first();
+
+             $linkedin=db::table('datos_empresas')
+            ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('rrss','rrss.id','=','redes_sociales_empresas.site')
+            ->select('redes_sociales_empresas.username as linkedin')->where('datos_empresas.id',$id)->where('red','linkedin')->first();
+
+             $telefono=db::table('datos_empresas')
+            ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('rrss','rrss.id','=','redes_sociales_empresas.site')
+            ->select('redes_sociales_empresas.username as telefono')->where('datos_empresas.id',$id)->where('red','telefono')->first();
+
+              $correo=db::table('datos_empresas')
+            ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('rrss','rrss.id','=','redes_sociales_empresas.site')
+            ->select('redes_sociales_empresas.username as correo')->where('datos_empresas.id',$id)->where('red','correo')->first();
+
+        
+
+            if($twitter==null)
+            {
+                $twitter=0;
+            }
+            if($instagram==null)
+            {
+                $instagram= 0;
+            }
+            if($linkedin==null)
+            {
+                $linkedin=0;
+            }
+            if($telefono==null)
+            {
+                $telefono=0;
+            }
+            if($correo==null)
+            {
+                $correo=0;
+            }
+            if($facebook==null)
+            {
+                $facebook=0;
+            }
+
+
+
+  //dd($twitter);
+
+
+
+
+            return view('elaborador' ,['instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
+   
+        }
+        else
+        return $this->index();
+    }
 
     public function results()
     {
