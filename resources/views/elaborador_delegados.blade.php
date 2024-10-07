@@ -1,21 +1,8 @@
-<link rel="icon" href="images/fevicon.png" type="image/png" />
-      <!-- bootstrap css -->
-      <link rel="stylesheet" href="css/bootstrap.min.css" />
-      <!-- site css -->
-      <link rel="stylesheet" href="style.css" />
-      <!-- responsive css -->
-      <link rel="stylesheet" href="css/responsive.css" />
-      <!-- color css -->
-      <link rel="stylesheet" href="css/colors.css" />
-      <!-- select bootstrap -->
-      <link rel="stylesheet" href="css/bootstrap-select.css" />
-      <!-- scrollbar css -->
-      <link rel="stylesheet" href="css/perfect-scrollbar.css" />
-      <!-- custom css -->
-      <link rel="stylesheet" href="css/custom.css" />
-      <link rel="stylesheet" type="text/css" href="js/print.min.css">
+@extends('layouts.panel')
+@section('content')
+
     <style>
-      body{
+        body{
             margin: 0;
             width: 100%;
         }
@@ -30,7 +17,7 @@
         }
         .consideraciones{
             text-align: justify;
-            height: 10rem;
+            height: 15rem;
           
 
         }
@@ -46,7 +33,7 @@
             padding: 8px;
             border: 1px solid #ddd;
             color: black;
-            font-size: 100%;
+            font-size: 140%;
 
 
         }
@@ -57,9 +44,10 @@
 
         td{
             height: 3rem;
+            padding: 0;
         }
         .anexo{
-            height:  10rem;
+            height:  15rem;
         }
 
         th, tr,td{
@@ -69,11 +57,11 @@
     <body>
 
 
-<div class="previews m-3">
+<div class="previews">
 
-<div style="win-width:100%; display:flex;justify-content:space-between;align-items: center"><div style="display: flex;align-items:center"><img src="{{asset('asset_original/logo_gbv.jpg')}}" style="width: 50%;"><div style="color:black;width:40%;text-align: left;font-size:120%">Vicepresidencia de la Republica Bolivariana de Venezuela</div></div><img class="mr-5" src="{{asset('asset_original/logo-ciip.png')}}" style="width: 25%;;height: 50%"></div>
-            <h2 class="m-5 w-100" style="text-align:center">REPORTE DE VERIFICACIÓN DE EMPRESAS</h2>
-<br>
+
+            <h2 class="m-5 w-100" style="text-align:center">REPORTE DE VERIFICACIÓN DE PERSONAS</h2>
+
 
                     <div class="row " >
 
@@ -84,14 +72,32 @@
                                             
                                             <tr>
                                                 
-                                                  <th>OBJETO Y CONSIDERACIONES DE INTERÉS</th>
+                                                  <th>INFORMACIÓN PROFESIONAL</th>
        
                                             </tr>
                                             
                                             <tr style="height:auto">
                                                 
-                                                    <td class="consideraciones " >{{$previa->oci}}</td>
+                                                    <td class="consideraciones" style="padding: 0;">
+                                                        @php  
+                                                        echo nl2br($previa->oci) ; 
+                                                    @endphp</td>
                                             </tr>
+                                    </table>
+
+                                      <br>
+                                    
+                                    <table>
+                                            
+                                            <tr>
+                                                    <th>INFORMACION POLITICA</th>
+       
+                                            </tr>
+                                             <tr style="height:auto">
+                                                
+                                                    <td >{{$previa->ipol}}</td>
+                                            </tr>
+  
                                     </table>
     <br>
                                     
@@ -169,7 +175,7 @@
                                                 </tr>
                                                
                                                 <tr>
-                                                   <td>{{$previa->ex}}</td>
+                                                   <td>{{$previa->ex}}</textarea></td>
                                                     
                                                 </tr>
                                                 </table>
@@ -204,7 +210,7 @@
                         <div class="ml-5" style="background-color:LIGHTGREY;width: 35%;height: auto;align-items: center;justify-content: center;font-size: 100%;">
                             <div style="win-width:100%;  display: flex;
   justify-content: center;">
-                            <div class="d-flex m-3 p-2" style="width:15vw;height: 15vw;border:solid 1px black;justify-content: center;align-items: center;align-content: center;margin: 0 auto;">
+                            <div class="d-flex m-3 p-2" style="width:10vw;height: 10vw;border:solid 1px black;justify-content: center;align-items: center;align-content: center;margin: 0 auto;">
                                 <img src="{{$previa->foto}}" style="width:100%">
                             </div>
                             </div>
@@ -212,53 +218,44 @@
                                          
 
                             
-                                <h5 style="text-align:CENTER;width:100%">INFORMACIÓN GENERAL</h5>
+                                <h3 style="text-align:CENTER">INFORMACIÓN PERSONAL</h3>
 
                                      <br>
                             
-                                <h4 style="text-align:CENTER;width:100%">Razón Social</h4>
+                                <h4 style="text-align:CENTER">Nombres y Apellidos</h4>
 
-                                <h5 style="text-align:CENTER;width:100%">{{$previa->razonsocial}}</h5>
+                                <h4 style="text-align:CENTER">{{$previa->nombre}}</h4>
 
-                                     <br>
-                            
-                                <h4 style="text-align:CENTER;width:100%">País de Origen</h4>
-
-                                <h5 style="text-align:CENTER;width:100%">{{$previa->pais_origen}}</h5>
+                                <h4 style="text-align:CENTER">{{$previa->apellido}}</h4>
 
                                      <br>
                             
-                                <h4 style="text-align:CENTER;width:100%">Registro Fizcal</h4>
+                                <h4 style="text-align:CENTER">Numero de Cedula</h4>
 
-                                <h5 style="text-align:CENTER;width:100%">{{$previa->identificador}}-{{$previa->rif}}</h5>
-
-                                     <br>
-                            
-                                <h4 style="text-align:CENTER;width:100%">Lugar de Registro</h4>
-
-                                <h5 style="text-align:CENTER;width:100%">{{$previa->lregistro}}</h5>
+                                <h5 style="text-align:CENTER">{{$previa->doc_identidad}}</h5>
 
                                      <br>
                             
-                                <h4 style="text-align:CENTER";width:100%>Direccion Fiscal</h4>
+                                <h4 style="text-align:CENTER">Nacionalidad</h4>
 
-                                <h5 style="text-align:CENTER;width:100%">{{$previa->direccion}}</h5>
-
-                                     <br>
-                            
-                                <h4 style="text-align:CENTER;width:100%">Representante Legal</h4>
-
-                                <h5 style="text-align:CENTER;width:100%">no hay</h5>
+                                <h5 style="text-align:CENTER">{{$previa->GENTILICIO_NAC}}</h5>
 
                                      <br>
                             
-                                <h4 style="text-align:CENTER;width:100%">Fecha de Consulta</h4>
+                                <h4 style="text-align:CENTER">Fecha de Nacimiento</h4>
 
-                                <h5 style="text-align:CENTER;width:100%">{{ date('d-m-y') }}</h5>
+                                <h5 style="text-align:CENTER">{{$previa->fecha_nacimiento}}</h5>
+
+                                     <br>
+                            
+                                                        
+                                <h4 style="text-align:CENTER">Fecha de Consulta</h4>
+
+                                <h5 style="text-align:CENTER">{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',  $previa->fecha)->format('d-m-Y') }}</h5>
 
                                    <br>
-                                <div class="d-flex m-5 p-1" style="justify-content: center;widht:100%;font-size: auto;">
-                                <table style="win-width:100%">
+                                <div class="d-flex m-3 p-1" style="justify-content: center;font-size: auto;">
+                                <table>
                                     <tr>
                                         <td >
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">
@@ -306,9 +303,9 @@
   <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"/>
 </svg></td>
                                     <td>
-
+  @if($previa!= '0')
                                         {{$previa->telefono}}
-
+   @endif 
                                     </td>
                                 </tr>
                                 <tr>
@@ -316,9 +313,9 @@
   <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z"/>
 </svg></td>
                                     <td>
-
-                                        {{$previa->correo}}
-
+  @if($previa!= '0')
+                                        {{$previa->email}}
+   @endif 
                                     </td>
                                 </tr>
                                     
@@ -333,18 +330,69 @@
                     </div>
                  
                     <div class="mt-5" style="text-align:center;width: 100%;">
-   <h4>Av.Venezuela Torre CIIP, Sector el Rosal.Chacao, Caracas, Venezuela</h4>
-<h4>Contactos@ciip.com.ve</h4>
-<h5>www.ciip.com.ve</h5>
+   <h4>Av. Venezuela, Municipio Chacao, Urb. El Rosal, Torre Epsilon, Caracas - Venezuela </h4>
+   <h4>Caracas 1060-Venezuela web: www.clip.com.ve</h4>
+
+<h5>Correo: presidencia@clipven.com teléfono de contacto: 0414-3903989</h5>
+
+<br>
+<table class="m-1 w-100">
+                                                    <tr >
+                                                        <th>Version</th>
+                                                          <th>Status</th>
+                                                         <th><div>Modificar</div></th>
+                                                        
+                                                    </tr>
+                                                   @foreach($versiones as $version)
+                                                    <tr>
+                                                       <td class="col-md-5">{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',  $version->created_at)->format('d-m-Y') }}</td>
+                                                       <td class="col-md-1">{{$version->status}}</td>
+                                                        <td><a href="{{route('modificar_elaborador_delegados',$version->id)}}"><div class=" w-75 btn btn-warning" >Modificar</div></a></td>
+                                                    </tr>
+                                                    @endforeach
+                                                    
+                                    </table>
 </div>
 
+
 </div>
 
 
+@if($previa->estatuscontent==1)
+<form method="POST" action="{{route('revisar_delegados',$previa->ide)}}">
+@csrf
+@method('PUT')
+<button class="mt-5 btn btn-primary" style="text-align:center;width: 100%;" type="submit">revisar</button>
+</form>
+@elseif($previa->estatuscontent==2)
+<form method="POST" action="{{route('revisar_delegados',$previa->ide)}}">
+@csrf
+@method('PUT')
+<button class="mt-5 btn btn-primary" style="text-align:center;width: 100%;" type="submit">certificar</button>
+</form>
+@elseif($previa->estatuscontent==3)
+<form method="POST" action="{{route('revisar_delegados',$previa->ide)}}">
+@csrf
+@method('PUT')
 
+ <div class="mt-5" style="text-align:center;width: 100%;">
+<input href="" type="submit" class="btn btn-primary" value="Aprobar E Imprimir"></input>
+</div>
+
+</form>
+
+@elseif($previa->estatuscontent==4)
+<form method="POST" action="{{route('revisar_delegados',$previa->ide)}}">
+@csrf
+@method('PUT')
+ <div class="mt-5" style="text-align:center;width: 100%;">
+<input href="" type="submit" class="btn btn-primary" value="Imprimir"></input>
+</div>
+
+
+</form>
+@endif
+
+ 
 </body>
-<script type="text/javascript">window.print();</script>
-<script type="text/javascript"> window.onafterprint = (event) => {
-       window.history.go(-1);
-       
-    };</script>
+    @endsection

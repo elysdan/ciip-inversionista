@@ -62,19 +62,17 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
               <th >Apellido</th>
               <th >Cedula</th>
               <th >Nacionalidad</th>
-              <th >Fecha de Nacimiento</th>
               <th >edad</th>
               <th >Estado Civil</th>
               <th >Genero</th>
               <th >Direccion</th>
-              <th >Telefono</th>
               <th >Email</th>
-              <th>Foto</th>
               <th >Redes Sociales</th>
-               <th >Detalle</th>
+              
+               <th colspan="2">Reporte</th>
               @if(session('usuario')->role==9 )
               <th>Status</th>
-              <th  colspan="2"></th>
+              <th  colspan="2">Gestion Administrativa</th>
               @endif
                                           </tr>
                                        </thead>
@@ -93,24 +91,16 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
                
                {{$delegado->GENTILICIO_NAC}}
                 </td>
-              <td>{{$delegado->fecha_nacimiento}}</td>
               <td>{{$delegado->edad}}</td>
               <td>{{$delegado->estado_civil}}</td>
               <td>{{$delegado->sexo}}</td>
               <td>{{$delegado->direccion}}</td>
-              <td>{{$delegado->telefono}}</td>
               <td>{{$delegado->email}}</td>
-               <td style="vertical-align: top;align-items: center;
-  justify-content: center;
-  align-content: center;"> <img src="{{$delegado->foto}}" style="border-radius: 50%;
-  align-items: center;
-  justify-content: center;
-  align-content: center;
-  width: 3vw;"></td>
+              
              <td style="vertical-align: top;align-items: center;
   justify-content: center;
   align-content: center;">
-              <a href="{{route('add_socialweb',$delegado->id)}}" class="btn btn-outline-primary mt-1 mb-1 p-0"  style="border-radius: 1rem; display: flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;text-align: center;">
+              <a href="{{route('add_socialweb',$delegado->id)}}" class="btn btn-outline-primary mt-1 mb-1 p-0"  style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;text-align: center;">
                 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;text-align: center;
     align-items: center;
@@ -120,7 +110,10 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
                
               </a>
               </td>
-              <td><a href="{{route('previews_delegates',$delegado->id)}}"><button class="btn btn-primary">Ver Detalle</button></a></td>
+              <td><a href="{{route('previews_delegates',$delegado->id)}}"><button class="btn btn-primary">Generar</button></a></td>
+              @if($generador > 0)
+              <td><a href="{{route('elaborador_delegados',$delegado->id)}}"><button class="btn btn-primary">Visualizar</button></a></td>
+              @endif
               @if(session('usuario')->role==9 )
               <td>
 @if($delegado->status==1)

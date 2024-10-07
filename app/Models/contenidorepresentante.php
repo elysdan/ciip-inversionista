@@ -9,4 +9,25 @@ class contenidorepresentante extends Model
 {
     use HasFactory;
      protected $table = 'contenido_representantes';
+
+      protected $fillable = [
+        'status',
+         'elaborado',
+          'revisado',
+           'certificado',
+            'aprobado',
+            'oci',
+            'ipol',
+            'fbi',
+            'ofac',
+            'ue',
+            'cso',
+            'ip',
+            'icij',
+            'tsj',
+            'rnc',
+            'ef',
+            'ex',
+        
+    ];
 }

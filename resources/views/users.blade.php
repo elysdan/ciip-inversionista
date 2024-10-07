@@ -41,7 +41,7 @@
                          <button type="button" 
 class="btn btn-outline-success mt-3 mb-3 p-0" 
 
- style="border-radius: 1rem; display: flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;"  
+ style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;"  
 data-toggle="modal" data-target="#RegModal" data-whatever="@mdo"> 
     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-fill-add" align="center" viewBox="0 0 16 16" style="width: 2vw;height:2vw">
     
@@ -79,7 +79,13 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
                     <select class="form-control" id="campo4" name="rol" required>
                         <option selected disabled>Seleccione una opcion</option>
                         <option value="1">Ordinario</option>
-                        <option value="2">Administrador</option>
+                        <option value="2">Invitado</option>
+                        <option value="3">Ayudante</option>
+                        <option value="4">Tecnico</option>
+                        <option value="5">Licenciado</option>
+                        <option value="6">Coordinador</option>
+                        <option value="7">Gerente</option>
+                        <option value="8">Administrador</option>
                         <option value="9">Super Usuario</option>
                       </select>
                     
@@ -129,6 +135,8 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
                                              <th>Foto de Perfil</th>
                                             @if(session('usuario')->role==9 )
                                               <th>Status</th>
+                                              @endif
+                                               @if(session('usuario')->role==9 ||  session('usuario')->role==8)
                                              <th colspan="2">Gestion de administradores</th>
                                             @endif
                                           </tr>
@@ -139,16 +147,23 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
                                            
             @foreach($usuarios as $usuario)
             
-            <tr style="vertical-align: none;text-align: center;align-items: center;
-  justify-content: center;
-  align-content: center;" >
+            <tr style="align-items:center;text-align:center;justify-content: center;">
               <td>@php echo $n; @endphp</td>
               <td>{{$usuario->name}}</td>
               <td>{{$usuario->surname}}</td>
               <td>{{$usuario->email}}</td>
               @if(session('usuario')->role==9)
               
-              <td>{{$usuario->role}}</td>
+              <td>@if($usuario->role == 1) Ordinario
+              @elseif($usuario->role == 2) Visitante
+              @elseif($usuario->role == 3) Ayudante
+              @elseif($usuario->role == 4) Tecnico
+              @elseif($usuario->role == 5) Licenciado
+              @elseif($usuario->role == 6) Coordinador
+              @elseif($usuario->role == 7) Gerente
+              @elseif($usuario->role == 8) Administrador
+              @elseif($usuario->role == 9) Super Usuario
+              @endif</td>
               @endif
               
               <td style="vertical-align: top;align-items: center;
@@ -159,14 +174,15 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
   align-content: center;
   width: 3vw;"></td>
    @if(session('usuario')->role==9)
-              <td>@if($usuario->status==1)
+              <td>
+                @if($usuario->status==1)
 <form method="POST" action="{{route('suspend_users',$usuario->id)}}">
   @csrf
   @method('PUT')
 <button type="submit" 
                 class="btn btn-outline-success mt-1 mb-1 p-0" 
                 
-                  style="border-radius: 1rem; display: flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
+                  style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;">
                      <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
 </svg>
@@ -182,7 +198,7 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
 <button type="submit" 
                 class="btn btn-outline-danger mt-1 mb-1 p-0" 
                 
-                  style="border-radius: 1rem; display: flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
+                  style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
                  
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;">
                       <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>
@@ -194,12 +210,12 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
 @endif</td>
              
               @endif
-              @if(session('usuario')->role==9)
+              @if(session('usuario')->role==9 || session('usuario')->role==8)
               <td><a href="{{route('edit_users',$usuario->id)}}">
                 <button type="button" 
                 class="btn btn-outline-warning mt-3 mb-3 p-0" 
                 
-                style="border-radius: 1rem; display: flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
+                style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;"> 
                       <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4m9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>
 
@@ -216,7 +232,7 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
                 <button type="button" 
 class="btn btn-outline-danger mt-3 mb-3 p-0" 
 
- style="border-radius: 1rem; display: flex; align-items: center; justify-content: center;width: 3vw;height:3vw" 
+ style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height:3vw" 
 data-toggle="modal" data-target="#DelModal{{$usuario->id}}" data-whatever="@mdo"> 
     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-dash " align="center" viewBox="0 0 16 16" style="width: 2vw;">
       <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M11 12h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1m0-7a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>

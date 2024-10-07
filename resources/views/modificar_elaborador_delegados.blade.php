@@ -1,21 +1,8 @@
-<link rel="icon" href="images/fevicon.png" type="image/png" />
-      <!-- bootstrap css -->
-      <link rel="stylesheet" href="css/bootstrap.min.css" />
-      <!-- site css -->
-      <link rel="stylesheet" href="style.css" />
-      <!-- responsive css -->
-      <link rel="stylesheet" href="css/responsive.css" />
-      <!-- color css -->
-      <link rel="stylesheet" href="css/colors.css" />
-      <!-- select bootstrap -->
-      <link rel="stylesheet" href="css/bootstrap-select.css" />
-      <!-- scrollbar css -->
-      <link rel="stylesheet" href="css/perfect-scrollbar.css" />
-      <!-- custom css -->
-      <link rel="stylesheet" href="css/custom.css" />
-      <link rel="stylesheet" type="text/css" href="js/print.min.css">
+@extends('layouts.panel')
+@section('content')
+
     <style>
-      body{
+        body{
             margin: 0;
             width: 100%;
         }
@@ -30,7 +17,7 @@
         }
         .consideraciones{
             text-align: justify;
-            height: 10rem;
+            height: 15rem;
           
 
         }
@@ -46,7 +33,7 @@
             padding: 8px;
             border: 1px solid #ddd;
             color: black;
-            font-size: 100%;
+            font-size: 140%;
 
 
         }
@@ -57,9 +44,10 @@
 
         td{
             height: 3rem;
+            padding: 0;
         }
         .anexo{
-            height:  10rem;
+            height:  15rem;
         }
 
         th, tr,td{
@@ -67,13 +55,14 @@
         }
     </style>
     <body>
+<form method="POST" action="{{route('modificar_elaborar_delegados')}}">
+@csrf
+@method('PUT')
+<div class="previews">
 
 
-<div class="previews m-3">
+            <h2 class="m-5 w-100" style="text-align:center">REPORTE DE VERIFICACIÓN DE PERSONAS</h2>
 
-<div style="win-width:100%; display:flex;justify-content:space-between;align-items: center"><div style="display: flex;align-items:center"><img src="{{asset('asset_original/logo_gbv.jpg')}}" style="width: 50%;"><div style="color:black;width:40%;text-align: left;font-size:120%">Vicepresidencia de la Republica Bolivariana de Venezuela</div></div><img class="mr-5" src="{{asset('asset_original/logo-ciip.png')}}" style="width: 25%;;height: 50%"></div>
-            <h2 class="m-5 w-100" style="text-align:center">REPORTE DE VERIFICACIÓN DE EMPRESAS</h2>
-<br>
 
                     <div class="row " >
 
@@ -84,14 +73,29 @@
                                             
                                             <tr>
                                                 
-                                                  <th>OBJETO Y CONSIDERACIONES DE INTERÉS</th>
+                                                  <th>INFORMACIÓN PROFESIONAL</th>
        
                                             </tr>
                                             
                                             <tr style="height:auto">
                                                 
-                                                    <td class="consideraciones " >{{$previa->oci}}</td>
+                                                    <td class="consideraciones " style="padding:0"><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 15rem;max-height: 15rem;font-family: arial;" placeholder="" name="oci">{{ $previa->oci; }}</textarea></td>
                                             </tr>
+                                    </table>
+
+                                      <br>
+                                    
+                                    <table>
+                                            
+                                            <tr>
+                                                    <th>INFORMACION POLITICA</th>
+       
+                                            </tr>
+                                             <tr>
+                                                    <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="ipol">{{ $previa->ipol; }}</textarea></td>
+       
+                                            </tr>
+  
                                     </table>
     <br>
                                     
@@ -114,35 +118,35 @@
                                                    
                                                     <tr>
                                                        <td>FBI</td>
-                                                        <td>{{$previa->fbi}}</td>
+                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="fbi">{{ $previa->fbi; }}</textarea></td>
                                                     </tr>
                                                      <tr>
                                                        <td>OFAC</td>
-                                                        <td>{{$previa->ofac}}</td>
+                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="ofac">{{ $previa->ofac; }}</textarea></td>
                                                     </tr>
                                                      <tr>
                                                        <td>UNION EUROPEA</td>
-                                                        <td>{{$previa->ue}}</td>
+                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="ue">{{ $previa->ue; }}</textarea></td>
                                                     </tr>
                                                      <tr>
                                                        <td>CONSEJO DE SEGURIDAD DE LA ONU (CSO)</td>
-                                                        <td>{{$previa->cso}}</td>
+                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="cso">{{ $previa->cso; }}</textarea></td>
                                                     </tr>
                                                      <tr>
                                                        <td>INTERPOL</td>
-                                                        <td>{{$previa->ip}}</td>
+                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="ip">{{ $previa->ip; }}</textarea></td>
                                                     </tr>
                                                      <tr>
                                                        <td>ICIJ</td>
-                                                        <td>{{$previa->icij}}</td>
+                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="icij">{{ $previa->icij; }}</textarea></td>
                                                     </tr>
                                                      <tr>
                                                        <td>TSJ</td>
-                                                        <td>{{$previa->tsj}}</td>
+                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="tsj">{{ $previa->tsj; }}</textarea></td>
                                                     </tr>
                                                      <tr>
                                                        <td>RNC</td>
-                                                        <td>{{$previa->rnc}}</td>
+                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="rnc">{{ $previa->rnc; }}</textarea></td>
                                                     </tr>
                                     </table>
 
@@ -155,7 +159,7 @@
                                                 </tr>
                                                
                                                 <tr>
-                                                   <td>{{$previa->ef}}</td>
+                                                   <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="ef">{{ $previa->ef; }}</textarea></td>
                                                     
                                                 </tr>
                                                 </table>
@@ -169,7 +173,7 @@
                                                 </tr>
                                                
                                                 <tr>
-                                                   <td>{{$previa->ex}}</td>
+                                                   <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="ex">{{ $previa->ex; }}</textarea></td>
                                                     
                                                 </tr>
                                                 </table>
@@ -188,11 +192,10 @@
                                                 </tr>
                                                
                                                 <tr  style="height: 8rem;font-size: 70%;">
-                                                   <td  style="vertical-align: bottom;">{{$previa->name}} {{$previa->surname}}</td>
-                                                   <td  style="vertical-align: bottom;">{{$previa->namerev}} {{$previa->surnamerev}}</td>
-                                                   <td  style="vertical-align: bottom;">{{$previa->namecert}} {{$previa->surnamecert}}</td>
-                                                   <td  style="vertical-align: bottom;">{{$previa->nameapro}} {{$previa->surnameapro}}</td>
-                                                    
+                                                    <td  style="vertical-align: bottom;">{{session('usuario')->name}} {{session('usuario')->surname}}</td>
+                                                   <td  style="vertical-align: bottom;"></td>
+                                                   <td  style="vertical-align: bottom;"></td>
+                                                   <td  style="vertical-align: bottom;"></td>
                                                 </tr>
                                                 </table>
 
@@ -204,7 +207,7 @@
                         <div class="ml-5" style="background-color:LIGHTGREY;width: 35%;height: auto;align-items: center;justify-content: center;font-size: 100%;">
                             <div style="win-width:100%;  display: flex;
   justify-content: center;">
-                            <div class="d-flex m-3 p-2" style="width:15vw;height: 15vw;border:solid 1px black;justify-content: center;align-items: center;align-content: center;margin: 0 auto;">
+                            <div class="d-flex m-3 p-2" style="width:10vw;height: 10vw;border:solid 1px black;justify-content: center;align-items: center;align-content: center;margin: 0 auto;">
                                 <img src="{{$previa->foto}}" style="width:100%">
                             </div>
                             </div>
@@ -212,53 +215,44 @@
                                          
 
                             
-                                <h5 style="text-align:CENTER;width:100%">INFORMACIÓN GENERAL</h5>
+                                <h3 style="text-align:CENTER">INFORMACIÓN PERSONAL</h3>
 
                                      <br>
                             
-                                <h4 style="text-align:CENTER;width:100%">Razón Social</h4>
+                                <h4 style="text-align:CENTER">Nombres y Apellidos</h4>
 
-                                <h5 style="text-align:CENTER;width:100%">{{$previa->razonsocial}}</h5>
+                                <h4 style="text-align:CENTER">{{$previa->nombre}}</h4>
 
-                                     <br>
-                            
-                                <h4 style="text-align:CENTER;width:100%">País de Origen</h4>
-
-                                <h5 style="text-align:CENTER;width:100%">{{$previa->pais_origen}}</h5>
+                                <h4 style="text-align:CENTER">{{$previa->apellido}}</h4>
 
                                      <br>
                             
-                                <h4 style="text-align:CENTER;width:100%">Registro Fizcal</h4>
+                                <h4 style="text-align:CENTER">Numero de Cedula</h4>
 
-                                <h5 style="text-align:CENTER;width:100%">{{$previa->identificador}}-{{$previa->rif}}</h5>
-
-                                     <br>
-                            
-                                <h4 style="text-align:CENTER;width:100%">Lugar de Registro</h4>
-
-                                <h5 style="text-align:CENTER;width:100%">{{$previa->lregistro}}</h5>
+                                <h5 style="text-align:CENTER">{{$previa->doc_identidad}}</h5>
 
                                      <br>
                             
-                                <h4 style="text-align:CENTER";width:100%>Direccion Fiscal</h4>
+                                <h4 style="text-align:CENTER">Nacionalidad</h4>
 
-                                <h5 style="text-align:CENTER;width:100%">{{$previa->direccion}}</h5>
-
-                                     <br>
-                            
-                                <h4 style="text-align:CENTER;width:100%">Representante Legal</h4>
-
-                                <h5 style="text-align:CENTER;width:100%">no hay</h5>
+                                <h5 style="text-align:CENTER">{{$previa->GENTILICIO_NAC}}</h5>
 
                                      <br>
                             
-                                <h4 style="text-align:CENTER;width:100%">Fecha de Consulta</h4>
+                                <h4 style="text-align:CENTER">Fecha de Nacimiento</h4>
 
-                                <h5 style="text-align:CENTER;width:100%">{{ date('d-m-y') }}</h5>
+                                <h5 style="text-align:CENTER">{{$previa->fecha_nacimiento}}</h5>
+
+                                     <br>
+                            
+                                                        
+                                <h4 style="text-align:CENTER">Fecha de Consulta</h4>
+
+                                <h5 style="text-align:CENTER">{{ date('d-m-y') }}</h5>
 
                                    <br>
-                                <div class="d-flex m-5 p-1" style="justify-content: center;widht:100%;font-size: auto;">
-                                <table style="win-width:100%">
+                                <div class="d-flex m-3 p-1" style="justify-content: center;font-size: auto;">
+                                <table>
                                     <tr>
                                         <td >
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">
@@ -306,9 +300,9 @@
   <path fill-rule="evenodd" d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"/>
 </svg></td>
                                     <td>
-
+  @if($previa!= '0')
                                         {{$previa->telefono}}
-
+   @endif 
                                     </td>
                                 </tr>
                                 <tr>
@@ -316,9 +310,9 @@
   <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z"/>
 </svg></td>
                                     <td>
-
-                                        {{$previa->correo}}
-
+  @if($previa!= '0')
+                                        {{$previa->email}}
+   @endif 
                                     </td>
                                 </tr>
                                     
@@ -333,18 +327,24 @@
                     </div>
                  
                     <div class="mt-5" style="text-align:center;width: 100%;">
-   <h4>Av.Venezuela Torre CIIP, Sector el Rosal.Chacao, Caracas, Venezuela</h4>
-<h4>Contactos@ciip.com.ve</h4>
-<h5>www.ciip.com.ve</h5>
+   <h4>Av. Venezuela, Municipio Chacao, Urb. El Rosal, Torre Epsilon, Caracas - Venezuela </h4>
+   <h4>Caracas 1060-Venezuela web: www.clip.com.ve</h4>
+
+<h5>Correo: presidencia@clipven.com teléfono de contacto: 0414-3903989</h5>
 </div>
 
 </div>
 
+<input type="hidden" name="delegate_id" value="{{$previa->id}}">
+<input type="hidden" name="elaborado" value="{{session('usuario')->id}}">
+<input type="hidden" name="ide" value="{{$previa->ide}}">
+<button class="mt-5 btn btn-primary" style="text-align:center;width: 100%;" type="submit">Modificar</button>
+</form>
 
-
+<!--
+    <div class="mt-5" style="text-align:center;width: 100%;">
+<a href="{{route('prueba_delegates_pdf',$previa->id)}}" class="btn btn-primary">Imprimir</a></div>-->
 </body>
-<script type="text/javascript">window.print();</script>
-<script type="text/javascript"> window.onafterprint = (event) => {
-       window.history.go(-1);
-       
-    };</script>
+
+
+    @endsection

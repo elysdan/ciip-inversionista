@@ -43,7 +43,7 @@ class Inversionista extends Controller
   
     if($user && password_verify($request->contrasena, $user->password)) {
         session()->put('usuario', $user);
-        if(session('usuario')->role==9 || session('usuario')->role==2)
+        if(session('usuario')->role==9 || session('usuario')->role > 3)
         {
             return view('dashboard');
         }
@@ -68,7 +68,7 @@ class Inversionista extends Controller
 
     public function dashboard()
     {
-       if(session('usuario') && session('usuario')->role==9 || session('usuario') && session('usuario')->role==2 ){
+       if(session('usuario') && session('usuario')->role==9 || session('usuario') && session('usuario')->role > 3 ){
             return view('dashboard');
         }
         else
@@ -313,7 +313,7 @@ else
     public function users()
     {
         if(session('usuario')){
-        $usuarios=db::table('users')->get();
+        $usuarios=db::table('users')->OrderBy('id')->get();
         $uc=db::table('users')->count();
         $nacionalidad=db::table('nacionalidad')->get();
 
@@ -483,7 +483,7 @@ else
 
     public function delegates()
     {
-        if(session('usuario') && session('usuario')->role==9 || session('usuario') && session('usuario')->role==2 ){
+        if(session('usuario') && session('usuario')->role==9 || session('usuario') && session('usuario')->role > 3 ){
             $dc=db::table('inversionista_naturals')->count();
           
        $delegados=db::table('inversionista_naturals')->join('nacionalidad','inversionista_naturals.nacionalidad','=','nacionalidad.id')
@@ -496,13 +496,20 @@ else
             'estados_civiles.estado as estado_civil')->get();
 
      // dd($delegados);
+       $generador=DB::table('inversionista_naturals')
+            ->join('contenido_representantes','contenido_representantes.delegate_id','=','inversionista_naturals.id')
+            
+            
+            ->count()
+           ;
+
    
        
        $nacionalidad=db::table('nacionalidad')->get();
        $estados_civiles=db::table('estados_civiles')->get();
        $generos=db::table('generos')->get();
         //dd($delegados);
-            return view('delegates',['delegados' => $delegados,'nacionalidad' => $nacionalidad,'estados_civiles' => $estados_civiles,'generos' => $generos,'dc' => $dc]);
+            return view('delegates',['delegados' => $delegados,'nacionalidad' => $nacionalidad,'generador' => $generador,'estados_civiles' => $estados_civiles,'generos' => $generos,'dc' => $dc]);
         }
         else
         return view('index');
@@ -787,7 +794,7 @@ $edad = $fechaNacimientoCarbon->age;
     }
     public function enterprises()
     {
-        if(session('usuario') && session('usuario')->role==9 || session('usuario') && session('usuario')->role==2 ){
+        if(session('usuario') && session('usuario')->role==9 || session('usuario') && session('usuario')->role > 3 ){
 
             $empresas=DB::table('datos_empresas')
             ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
@@ -799,8 +806,16 @@ $edad = $fechaNacimientoCarbon->age;
             ->OrderBy('id')
            ->get();
 
+           $generador=DB::table('datos_empresas')
+            ->join('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
+            
+            
+            ->count()
+           ;
+
             $pais=db::table('pais')->OrderBy('paisnombre')->get();
-            return view('enterprises',['empresas'=>$empresas],['pais'=>$pais]);
+            //dd($generador);
+            return view('enterprises',['empresas'=>$empresas,'pais'=>$pais,'generador'=>$generador]);
         }
         else
         return $this->dashboard();
@@ -1137,14 +1152,36 @@ public function add_web($id)
 
     public function prueba_pdf($id)
     {
-        $previa=DB::table('datos_empresas') ->where('datos_empresas.id',$id)
+         $previa=DB::table('datos_empresas') ->where('datos_empresas.id',$id)
             ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
             ->join('pais as registro','datos_empresas.lregistro','=','registro.id')
+            ->join('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('users as elaborado','elaborado.id','=','contenido_empresas.elaborado')
+            ->leftjoin('users as revisado','revisado.id','=','contenido_empresas.revisado')
+            ->leftjoin('users as certificado','certificado.id','=','contenido_empresas.certificado')
+            ->leftjoin('users as aprobado','aprobado.id','=','contenido_empresas.aprobado')
             ->select(
             'datos_empresas.*',
+            'contenido_empresas.*',
+            'contenido_empresas.id as ide',
+              'contenido_empresas.status as estatuscontent',
+            'elaborado.name as name',
+            'elaborado.surname as surname',
+            'revisado.name as namerev',
+            'revisado.surname as surnamerev',
+            'certificado.name as namecert',
+            'certificado.surname as surnamecert',
+            'aprobado.name as nameapro',
+            'aprobado.surname as surnameapro',
+            'contenido_empresas.updated_at as fecha',
             'origen.paisnombre as pais_origen',
             'registro.paisnombre as lregistro')
-           ->first();
+           ->OrderBy('ide')->first();
+            //dd($previa);
+            $twitter=db::table('datos_empresas')
+            ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('rrss','rrss.id','=','redes_sociales_empresas.site')->where('datos_empresas.id',$id)->where('red','twitter')
+            ->select('redes_sociales_empresas.username as twitter')->first();
 
          $twitter=db::table('datos_empresas')
             ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
@@ -1306,9 +1343,35 @@ public function previews_delegates($id)
     {
         if(session('usuario')){
 
-              $previa=db::table('inversionista_naturals')->join('nacionalidad','nacionalidad.id','=','inversionista_naturals.nacionalidad')->where('inversionista_naturals.id',$id)->select(
+             $previa=db::table('inversionista_naturals')
+             ->where('inversionista_naturals.id',$id)
+            ->join('nacionalidad','nacionalidad.id','=','inversionista_naturals.nacionalidad')
+            ->join('contenido_representantes','contenido_representantes.delegate_id','=','inversionista_naturals.id')
+           ->join('users as elaborado','elaborado.id','=','contenido_representantes.elaborado')
+           ->leftjoin('users as revisado','revisado.id','=','contenido_representantes.revisado')
+           ->leftjoin('users as certificado','certificado.id','=','contenido_representantes.certificado')
+           ->leftjoin('users as aprobado','aprobado.id','=','contenido_representantes.aprobado')
+             
+             ->select(
             'inversionista_naturals.*',
-            'nacionalidad.GENTILICIO_NAC as GENTILICIO_NAC')->first();
+            'nacionalidad.GENTILICIO_NAC as GENTILICIO_NAC',
+             'inversionista_naturals.*',
+            'contenido_representantes.*',
+            'contenido_representantes.id as ide',
+              'contenido_representantes.status as estatuscontent',
+            'elaborado.name as name',
+            'elaborado.surname as surname',
+            'revisado.name as namerev',
+            'revisado.surname as surnamerev',
+            'certificado.name as namecert',
+            'certificado.surname as surnamecert',
+            'aprobado.name as nameapro',
+            'aprobado.surname as surnameapro',
+            'contenido_representantes.updated_at as fecha'
+        )
+             
+           ->OrderBy('ide')
+             ->first();
 
             $twitter=db::table('inversionista_naturals')
             ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
@@ -1407,7 +1470,36 @@ public function previews_delegates($id)
                 
         
         //dd($request);
-            return back()->with('status','funciona');
+            return $this->enterprises()->with('status','funciona');
+        
+    }
+
+     public function elaborar_delegates(request $request)
+    {
+
+                //dd($request);
+                $registry = new contenidorepresentante;
+                
+                $registry -> delegate_id = $request->delegate_id;
+                $registry -> elaborado = $request->elaborado;
+                $registry -> ipol = $request->ipol;
+                $registry -> oci = $request->oci;
+                $registry -> fbi = $request->fbi;
+                $registry -> ofac = $request->ofac;
+                $registry -> ue = $request->ue;
+                $registry -> cso = $request->cso;
+                $registry -> ip = $request->ip;
+                $registry -> icij = $request->icij;
+                $registry -> tsj = $request->tsj;
+                $registry -> rnc = $request->rnc;
+                $registry -> ef = $request->ef;
+                $registry -> ex = $request->ex;
+                
+                $registry -> save();
+                
+        
+        //dd($request);
+            return $this->delegates()->with('status','funciona');
         
     }
 
@@ -1418,14 +1510,74 @@ public function previews_delegates($id)
                  $empresas = contenidoempresa::findorfail($id);
                  //dD($empresas);
                 if($empresas->status==2)
-                $empresas->update(['status' => '3']);
+                {
+                    //dd($empresas->status);
+                    $empresas->update(['status' => '3']);
+                $empresas->update(['certificado' => session('usuario')->id]);
+                 return $this->enterprises()->with('status','funciona');
+                }
+                
                 elseif($empresas->status==1)
-                {   $empresas->update(['status' => '2']);
+                {    //dd(session('usuario')->id);
+                    $empresas->update(['status' => '2']);
+                    $empresas->update(['revisado' => session('usuario')->id]);
+                     return $this->enterprises()->with('status','funciona');
+        } 
+                elseif($empresas->status==3)
+                {    //dd(session('usuario')->id);
+                    $empresas->update(['status' => '4']);
+                    $empresas->update(['aprobado' => session('usuario')->id]);
+                     return $this->prueba_pdf($empresas->enterprise_id)->with('status','funciona');
         }
+        elseif($empresas->status==4)
+                {    //dd(session('usuario')->id);
+                 
+                     return $this->prueba_pdf($empresas->enterprise_id)->with('status','funciona');
+        }
+
                 
         
         //dd($request);
-            return $this->enterprises()->with('status','funciona');
+         
+        
+    }
+
+     public function revisar_delegados($id)
+    {
+
+                
+                 $empresas = contenidorepresentante::findorfail($id);
+                 //dD($empresas);
+                if($empresas->status==2)
+                {
+                    //dd($empresas->status);
+                    $empresas->update(['status' => '3']);
+                $empresas->update(['certificado' => session('usuario')->id]);
+                 return $this->delegates()->with('status','funciona');
+                }
+                
+                elseif($empresas->status==1)
+                {    //dd(session('usuario')->id);
+                    $empresas->update(['status' => '2']);
+                    $empresas->update(['revisado' => session('usuario')->id]);
+                     return $this->delegates()->with('status','funciona');
+        } 
+                elseif($empresas->status==3)
+                {    //dd(session('usuario')->id);
+                    $empresas->update(['status' => '4']);
+                    $empresas->update(['aprobado' => session('usuario')->id]);
+                     return $this->prueba_delegates_pdf($empresas->delegate_id)->with('status','funciona');
+        }
+        elseif($empresas->status==4)
+                {    //dd(session('usuario')->id);
+                 
+                     return $this->prueba_delegates_pdf($empresas->delegate_id)->with('status','funciona');
+        }
+
+                
+        
+        //dd($request);
+         
         
     }
 
@@ -1435,10 +1587,13 @@ public function elaborador($id)
         if(session('usuario')){
 
             $previa=DB::table('datos_empresas') ->where('datos_empresas.id',$id)
-            ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
-            ->join('pais as registro','datos_empresas.lregistro','=','registro.id')
-            ->join('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
-            ->join('users as elaborado','elaborado.id','=','contenido_empresas.elaborado')
+            ->leftjoin('pais as origen','datos_empresas.pais_origen','=','origen.id')
+            ->leftjoin('pais as registro','datos_empresas.lregistro','=','registro.id')
+            ->leftjoin('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
+            ->LEFTjoin('users as elaborado','elaborado.id','=','contenido_empresas.elaborado')
+            ->leftjoin('users as revisado','revisado.id','=','contenido_empresas.revisado')
+            ->leftjoin('users as certificado','certificado.id','=','contenido_empresas.certificado')
+            ->leftjoin('users as aprobado','aprobado.id','=','contenido_empresas.aprobado')
             ->select(
             'datos_empresas.*',
             'contenido_empresas.*',
@@ -1446,10 +1601,16 @@ public function elaborador($id)
               'contenido_empresas.status as estatuscontent',
             'elaborado.name as name',
             'elaborado.surname as surname',
+            'revisado.name as namerev',
+            'revisado.surname as surnamerev',
+            'certificado.name as namecert',
+            'certificado.surname as surnamecert',
+            'aprobado.name as nameapro',
+            'aprobado.surname as surnameapro',
             'contenido_empresas.updated_at as fecha',
             'origen.paisnombre as pais_origen',
             'registro.paisnombre as lregistro')
-           ->first();
+           ->OrderBy('ide')->first();
             //dd($previa);
             $twitter=db::table('datos_empresas')
             ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
@@ -1524,6 +1685,323 @@ public function elaborador($id)
         return $this->index();
     }
 
+public function elaborador_delegados($id)
+    {   
+        if(session('usuario')){
+
+             $previa=db::table('inversionista_naturals')
+             ->where('inversionista_naturals.id',$id)
+            ->join('nacionalidad','nacionalidad.id','=','inversionista_naturals.nacionalidad')
+            ->join('contenido_representantes','contenido_representantes.delegate_id','=','inversionista_naturals.id')
+           ->join('users as elaborado','elaborado.id','=','contenido_representantes.elaborado')
+           ->leftjoin('users as revisado','revisado.id','=','contenido_representantes.revisado')
+           ->leftjoin('users as certificado','certificado.id','=','contenido_representantes.certificado')
+           ->leftjoin('users as aprobado','aprobado.id','=','contenido_representantes.aprobado')
+             
+             ->select(
+            'inversionista_naturals.*',
+            'nacionalidad.GENTILICIO_NAC as GENTILICIO_NAC',
+             'inversionista_naturals.*',
+            'contenido_representantes.*',
+            'contenido_representantes.id as ide',
+              'contenido_representantes.status as estatuscontent',
+            'elaborado.name as name',
+            'elaborado.surname as surname',
+            'revisado.name as namerev',
+            'revisado.surname as surnamerev',
+            'certificado.name as namecert',
+            'certificado.surname as surnamecert',
+            'aprobado.name as nameapro',
+            'aprobado.surname as surnameapro',
+            'contenido_representantes.updated_at as fecha'
+        )
+             
+           ->OrderBy('ide')
+             ->first();
+            //dd($previa);
+
+             $versiones=db::table('contenido_representantes')
+             ->where('contenido_representantes.delegate_id',$id)->get();
+
+
+            $twitter=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')->where('inversionista_naturals.id',$id)->where('red','twitter')
+            ->select('redes_sociales_delegados.username as twitter')->first();
+
+           
+
+             $facebook=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as facebook')->where('inversionista_naturals.id',$id)->where('red','facebook')->first();
+
+             $instagram=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as instagram')->where('inversionista_naturals.id',$id)->where('red','instagram')->first();
+
+             $linkedin=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as linkedin')->where('inversionista_naturals.id',$id)->where('red','linkedin')->first();
+
+             $telefono=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as telefono')->where('inversionista_naturals.id',$id)->where('red','telefono')->first();
+
+              $correo=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as correo')->where('inversionista_naturals.id',$id)->where('red','correo')->first();
+
+        
+
+            if($twitter==null)
+            {
+                $twitter=0;
+            }
+            if($instagram==null)
+            {
+                $instagram= 0;
+            }
+            if($linkedin==null)
+            {
+                $linkedin=0;
+            }
+            if($telefono==null)
+            {
+                $telefono=0;
+            }
+            if($correo==null)
+            {
+                $correo=0;
+            }
+            if($facebook==null)
+            {
+                $facebook=0;
+            }
+
+
+  //dd($twitter);
+
+
+
+
+            return view('elaborador_delegados' ,['versiones' => $versiones,'instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
+   
+        }
+        else
+        return $this->index();
+    }
+
+
+    public function modificar_elaborador_delegados($id)
+    {   
+        if(session('usuario')){
+
+             $previa=db::table('inversionista_naturals')
+            
+            ->join('nacionalidad','nacionalidad.id','=','inversionista_naturals.nacionalidad')
+            ->join('contenido_representantes','contenido_representantes.delegate_id','=','inversionista_naturals.id')
+           ->join('users as elaborado','elaborado.id','=','contenido_representantes.elaborado')
+           ->leftjoin('users as revisado','revisado.id','=','contenido_representantes.revisado')
+           ->leftjoin('users as certificado','certificado.id','=','contenido_representantes.certificado')
+           ->leftjoin('users as aprobado','aprobado.id','=','contenido_representantes.aprobado')
+             ->where('contenido_representantes.id',$id) 
+             ->select(
+            'inversionista_naturals.*',
+            'nacionalidad.GENTILICIO_NAC as GENTILICIO_NAC',
+             'inversionista_naturals.*',
+            'contenido_representantes.*',
+            'contenido_representantes.id as ide',
+              'contenido_representantes.status as estatuscontent',
+            'elaborado.name as name',
+            'elaborado.surname as surname',
+            'revisado.name as namerev',
+            'revisado.surname as surnamerev',
+            'certificado.name as namecert',
+            'certificado.surname as surnamecert',
+            'aprobado.name as nameapro',
+            'aprobado.surname as surnameapro',
+            'contenido_representantes.updated_at as fecha'
+        )
+             
+           ->OrderBy('ide')
+             ->first();
+            //dd($previa);
+
+             $versiones=db::table('contenido_representantes')
+             ->where('contenido_representantes.delegate_id',$id)->get();
+
+
+            $twitter=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')->where('inversionista_naturals.id',$id)->where('red','twitter')
+            ->select('redes_sociales_delegados.username as twitter')->first();
+
+           
+
+             $facebook=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as facebook')->where('inversionista_naturals.id',$id)->where('red','facebook')->first();
+
+             $instagram=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as instagram')->where('inversionista_naturals.id',$id)->where('red','instagram')->first();
+
+             $linkedin=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as linkedin')->where('inversionista_naturals.id',$id)->where('red','linkedin')->first();
+
+             $telefono=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as telefono')->where('inversionista_naturals.id',$id)->where('red','telefono')->first();
+
+              $correo=db::table('inversionista_naturals')
+            ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
+            ->join('rrss','rrss.id','=','redes_sociales_delegados.site')
+            ->select('redes_sociales_delegados.username as correo')->where('inversionista_naturals.id',$id)->where('red','correo')->first();
+
+        
+
+            if($twitter==null)
+            {
+                $twitter=0;
+            }
+            if($instagram==null)
+            {
+                $instagram= 0;
+            }
+            if($linkedin==null)
+            {
+                $linkedin=0;
+            }
+            if($telefono==null)
+            {
+                $telefono=0;
+            }
+            if($correo==null)
+            {
+                $correo=0;
+            }
+            if($facebook==null)
+            {
+                $facebook=0;
+            }
+
+
+  //dd($twitter);
+
+
+
+
+            return view('modificar_elaborador_delegados' ,['versiones' => $versiones,'instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
+   
+        }
+        else
+        return $this->index();
+    }
+
+    public function modificar_elaborar_delegados(request $request)
+    {   
+        //dd($request);
+
+         $empresas = contenidorepresentante::find($request->ide);
+//dd($request);
+ if($request->oci != $empresas->oci && $request->oci!="" ||  $request->oci != $empresas->oci && $request->oci!=" " ||  $request->oci != $empresas->oci && $request->oci!=null)
+        {  
+               // dd("a");
+                $empresas->update(['oci' => $request->oci]);
+            }
+
+ if($request->ipol != $empresas->ipol && $request->ipol!="" ||  $request->ipol != $empresas->ipol && $request->ipol!=" " ||  $request->ipol != $empresas->ipol && $request->ipol!=null)
+        {  
+              //  dd("B");
+                $empresas->update(['ipol' => $request->ipol]);
+            }
+
+
+ if($request->fbi != $empresas->fbi && $request->fbi!="" ||  $request->fbi != $empresas->fbi && $request->fbi!=" " ||  $request->fbi != $empresas->fbi && $request->fbi!=null)
+        {  
+                //dd("C");
+                $empresas->update(['fbi' => $request->fbi]);
+            }
+
+
+ if($request->ofac != $empresas->ofac && $request->ofac!="" ||  $request->ofac != $empresas->ofac && $request->ofac!=" " ||  $request->ofac != $empresas->ofac && $request->ofac!=null)
+        {  
+                //dd("D");
+                $empresas->update(['ofac' => $request->ofac]);
+            }
+
+
+ if($request->ue != $empresas->ue && $request->ue!="" ||  $request->ue != $empresas->ue && $request->ue!=" " ||  $request->ue != $empresas->ue && $request->ue!=null)
+        {  
+                //dd("E");
+                $empresas->update(['ue' => $request->ue]);
+            }
+
+
+ if($request->cso != $empresas->cso && $request->cso!="" ||  $request->cso != $empresas->cso && $request->cso!=" " ||  $request->cso != $empresas->cso && $request->cso!=null)
+        {  
+               // dd("F");
+                $empresas->update(['cso' => $request->cso]);
+            }
+
+
+             if($request->ip != $empresas->ip && $request->ip!="" ||  $request->ip != $empresas->ip && $request->ip!=" " ||  $request->ip != $empresas->ip && $request->ip!=null)
+        {  
+                //dd("G");
+                $empresas->update(['ip' => $request->ip]);
+            }
+
+
+             if($request->icij != $empresas->icij && $request->icij!="" ||  $request->icij != $empresas->icij && $request->icij!=" " ||  $request->icij != $empresas->icij && $request->icij!=null)
+        {  
+                //dd("H");
+                $empresas->update(['icij' => $request->icij]);
+            }
+
+
+             if($request->tsj != $empresas->tsj && $request->tsj!="" ||  $request->tsj != $empresas->tsj && $request->tsj!=" " ||  $request->tsj != $empresas->tsj && $request->tsj!=null)
+        {  
+               // dd("I");
+                $empresas->update(['tsj' => $request->tsj]);
+            }
+
+
+             if($request->rnc != $empresas->rnc && $request->rnc!="" ||  $request->rnc != $empresas->rnc && $request->rnc!=" " ||  $request->rnc != $empresas->rnc && $request->rnc!=null)
+        {  
+              //  dd("J");
+                $empresas->update(['rnc' => $request->rnc]);
+            }
+
+
+             if($request->ef != $empresas->ef && $request->ef!="" ||  $request->ef != $empresas->ef && $request->ef!=" " ||  $request->ef != $empresas->ef && $request->ef!=null)
+        {  
+               // dd("K");
+                $empresas->update(['ef' => $request->ef]);
+            }
+
+
+             if($request->ex != $empresas->ex && $request->ex!="" ||  $request->ex != $empresas->ex && $request->ex!=" " ||  $request->ex != $empresas->ex && $request->ex!=null)
+        {  
+             //   dd("L");
+                $empresas->update(['ex' => $request->ex]);
+            }
+
+            $empresas->update(['status' => 1]);
+
+            return $this->elaborador_delegados($empresas->delegate_id)->with('status','informe Modificado');
+    }
+
+
     public function results()
     {
         if(session('usuario')){
@@ -1534,7 +2012,7 @@ public function elaborador($id)
     }
     public function stadistics()
     {
-        if(session('usuario') && session('usuario')->role==9 || session('usuario') && session('usuario')->role==2){
+        if(session('usuario') && session('usuario')->role==9 || session('usuario') && session('usuario')->role > 3){
             return view('stadistics');
         }
         else

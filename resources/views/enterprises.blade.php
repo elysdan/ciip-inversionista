@@ -17,7 +17,7 @@
 
 <div class="col-md-12">
   <button type="button" class="btn btn-outline-success mt-3 mb-3 p-0"
-        style="border-radius: 1rem; display: flex; align-items: center; justify-content: center; width: 3vw; height: 3vw;"
+        style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center; width: 3vw; height: 3vw;"
         data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
   <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-person-fill-add" viewBox="0 0 16 16"
        style="width: 2vw; height: 2vw;">
@@ -56,8 +56,8 @@
 <th >Correo</th>
 <th >Telefono</th>
 <th >Redes Sociales</th>
-<th >Detalle</th>
-<th >Elaborado</th>
+<th colspan="2">Reporte</th>
+
 
 <th>Foto</th>
 @if(session('usuario')->role==9 )
@@ -89,7 +89,7 @@ align-content: center;" >
 <td>{{$empresa->correo}}</td>
 <td>{{$empresa->telefono}}</td>
 
-<td><a href="{{route('add_web',$empresa->id)}}" class="btn btn-outline-primary mt-1 mb-1 p-0"  style="border-radius: 1rem; display: flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;text-align: center;">
+<td><a href="{{route('add_web',$empresa->id)}}" class="btn btn-outline-primary mt-1 mb-1 p-0"  style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;text-align: center;">
                 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;text-align: center;
     align-items: center;
@@ -99,8 +99,10 @@ align-content: center;" >
                
               </a></td>
 
-              <td><a href="{{route('previews',$empresa->id)}}"><button class="btn btn-primary">Ver Detalle</button></a></td>
-              <td><a href="{{route('elaborador',$empresa->id)}}"><button class="btn btn-primary">Ver elaborado</button></a></td>
+              <td><a href="{{route('previews',$empresa->id)}}"><button class="btn btn-primary">Generar</button></a></td>
+                @if($generador > 0)
+              <td><a href="{{route('elaborador',$empresa->id)}}"><button class="btn btn-primary">Visualizar</button></a></td>
+              @endif
               <td style="vertical-align: top;align-items: center;
   justify-content: center;
   align-content: center;"> <img src="{{$empresa->foto}}" style="border-radius: 50%;
@@ -117,7 +119,7 @@ align-content: center;" >
 <button type="submit" 
                 class="btn btn-outline-success mt-1 mb-1 p-0" 
                 
-                  style="border-radius: 1rem; display: flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
+                  style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;">
                      <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
 </svg>
@@ -133,7 +135,7 @@ align-content: center;" >
 <button type="submit" 
                 class="btn btn-outline-danger mt-1 mb-1 p-0" 
                 
-                  style="border-radius: 1rem; display: flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
+                  style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
                  
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;">
                       <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>
@@ -150,7 +152,7 @@ align-content: center;" >
                 <button type="button" 
                 class="btn btn-outline-warning mt-1 mb-1 p-0" 
                 
-                  style="border-radius: 1rem; display: flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
+                  style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;">
                        <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6.5a.5.5 0 0 1-1 0V1H3v14h3v-2.5a.5.5 0 0 1 .5-.5H8v4H3a1 1 0 0 1-1-1z"/>
   <path d="M4.5 2a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm4.386 1.46c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>

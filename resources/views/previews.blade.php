@@ -177,9 +177,9 @@
                                                
                                                 <tr  style="height: 8rem;font-size: 70%;">
                                                    <td  style="vertical-align: bottom;">{{session('usuario')->name}} {{session('usuario')->surname}}</td>
-                                                   <td  style="vertical-align: bottom;">GERMAN GERARDINO</td>
-                                                   <td  style="vertical-align: bottom;">MARIA PIA SAVOIA</td>
-                                                   <td  style="vertical-align: bottom;">LAILA TAJELDINE</td>
+                                                   <td  style="vertical-align: bottom;"></td>
+                                                   <td  style="vertical-align: bottom;"></td>
+                                                   <td  style="vertical-align: bottom;"></td>
                                                     
                                                 </tr>
                                                 </table>
@@ -327,7 +327,7 @@
 </div>
 
 </div>
-<input type="hidden" name="enterprise_id" value="{{$previa->id}}">
+<input type="hidden" name="delegate_id" value="{{$previa->id}}">
 <input type="hidden" name="elaborado" value="{{session('usuario')->id}}">
 <button class="mt-5 btn btn-primary" style="text-align:center;width: 100%;" type="submit">Elaborar</button>
 </form>

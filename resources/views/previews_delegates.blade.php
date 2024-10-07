@@ -44,6 +44,7 @@
 
         td{
             height: 3rem;
+            padding: 0;
         }
         .anexo{
             height:  15rem;
@@ -54,7 +55,8 @@
         }
     </style>
     <body>
-
+<form method="POST" action="{{route('elaborar_delegates')}}">
+@csrf
 
 <div class="previews">
 
@@ -77,11 +79,7 @@
                                             
                                             <tr style="height:auto">
                                                 
-                                                    <td class="consideraciones " >
-Representante legal y presidente de la empresa SPM Maritime C.A. Es ingeniero en Petróleo egresado de la universidad de Oriente en 2005. Fue superintendente en Petróleos de Venezuela PDVSA. En el periodo 2008-2013.<br>
-Gestor de contratos en SERGEOPETROL en el periodo 2003-2007. Director ejecutivo internacional de PETROPAN world Panamá en 2016-2020.<br>
-https://www.linkedin.com/in/guillermo-morgado-
-7079aa75/?originalSubdomain=pa</td>
+                                                    <td class="consideraciones " style="padding:0"><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 15rem;max-height: 15rem;font-family: arial;" placeholder="" name="oci"></textarea></td>
                                             </tr>
                                     </table>
 
@@ -94,7 +92,7 @@ https://www.linkedin.com/in/guillermo-morgado-
        
                                             </tr>
                                              <tr>
-                                                    <td>Sin resultados </td>
+                                                    <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="ipol"></textarea></td>
        
                                             </tr>
   
@@ -120,35 +118,35 @@ https://www.linkedin.com/in/guillermo-morgado-
                                                    
                                                     <tr>
                                                        <td>FBI</td>
-                                                        <td>Sin Resultados</td>
+                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="fbi"></textarea></td>
                                                     </tr>
                                                      <tr>
                                                        <td>OFAC</td>
-                                                        <td>Sin Resultados</td>
+                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="ofac"></textarea></td>
                                                     </tr>
                                                      <tr>
                                                        <td>UNION EUROPEA</td>
-                                                        <td>Sin Resultados</td>
+                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="ue"></textarea></td>
                                                     </tr>
                                                      <tr>
                                                        <td>CONSEJO DE SEGURIDAD DE LA ONU (CSO)</td>
-                                                        <td>Sin Resultados</td>
+                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="cso"></textarea></td>
                                                     </tr>
                                                      <tr>
                                                        <td>INTERPOL</td>
-                                                        <td>Sin Resultados</td>
+                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="ip"></textarea></td>
                                                     </tr>
                                                      <tr>
                                                        <td>ICIJ</td>
-                                                        <td>Sin Resultados</td>
+                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="icij"></textarea></td>
                                                     </tr>
                                                      <tr>
                                                        <td>TSJ</td>
-                                                        <td>Sin Resultados</td>
+                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="tsj"></textarea></td>
                                                     </tr>
                                                      <tr>
                                                        <td>RNC</td>
-                                                        <td>Sin Resultados</td>
+                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="rnc"></textarea></td>
                                                     </tr>
                                     </table>
 
@@ -161,7 +159,7 @@ https://www.linkedin.com/in/guillermo-morgado-
                                                 </tr>
                                                
                                                 <tr>
-                                                   <td>Sin Resultados</td>
+                                                   <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="ef"></textarea></td>
                                                     
                                                 </tr>
                                                 </table>
@@ -175,7 +173,7 @@ https://www.linkedin.com/in/guillermo-morgado-
                                                 </tr>
                                                
                                                 <tr>
-                                                   <td>Sin Resultados</td>
+                                                   <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="ex"></textarea></td>
                                                     
                                                 </tr>
                                                 </table>
@@ -194,11 +192,10 @@ https://www.linkedin.com/in/guillermo-morgado-
                                                 </tr>
                                                
                                                 <tr  style="height: 8rem;font-size: 70%;">
-                                                   <td  style="vertical-align: bottom;">HEDWING GUTIERREZ</td>
-                                                   <td  style="vertical-align: bottom;">GERMAN GERARDINO</td>
-                                                   <td  style="vertical-align: bottom;">MARIA PIA SAVOIA</td>
-                                                   <td  style="vertical-align: bottom;">LAILA TAJELDINE</td>
-                                                    
+                                                    <td  style="vertical-align: bottom;">{{session('usuario')->name}} {{session('usuario')->surname}}</td>
+                                                   <td  style="vertical-align: bottom;"></td>
+                                                   <td  style="vertical-align: bottom;"></td>
+                                                   <td  style="vertical-align: bottom;"></td>
                                                 </tr>
                                                 </table>
 
@@ -338,7 +335,13 @@ https://www.linkedin.com/in/guillermo-morgado-
 
 </div>
 
+<input type="hidden" name="delegate_id" value="{{$previa->id}}">
+<input type="hidden" name="elaborado" value="{{session('usuario')->id}}">
+<button class="mt-5 btn btn-primary" style="text-align:center;width: 100%;" type="submit">Elaborar</button>
+</form>
+
+<!--
     <div class="mt-5" style="text-align:center;width: 100%;">
-<a href="{{route('prueba_delegates_pdf',$previa->id)}}" class="btn btn-primary">Imprimir</a></div>
+<a href="{{route('prueba_delegates_pdf',$previa->id)}}" class="btn btn-primary">Imprimir</a></div>-->
 </body>
     @endsection

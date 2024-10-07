@@ -18,6 +18,7 @@
         body{
             margin: 0;
             width: 100%;
+            font-size: 100%;
         }
         .previews
         {  
@@ -25,7 +26,7 @@
             width: 100%;
             height: auto;
             margin: 0;
-            font-size: auto;
+            ;
           
         }
         .consideraciones{
@@ -43,7 +44,7 @@
 
         th, td {
             text-align: center;
-            padding: 8px;
+            padding: 5px;
             border: 1px solid #ddd;
             color: black;
             font-size: 100%;
@@ -56,7 +57,7 @@
         }
 
         td{
-            height: 3rem;
+            height: 2rem;
         }
         .anexo{
             height:  10rem;
@@ -75,7 +76,7 @@
             <h2 class="m-5 w-100" style="text-align:center">REPORTE DE VERIFICACIÓN DE PERSONAS</h2>
 
 
-                    <div class="row " >
+                     <div class="row " >
 
 
                             <div style="height: auto;width: 60%;">
@@ -90,11 +91,9 @@
                                             
                                             <tr style="height:auto">
                                                 
-                                                    <td class="consideraciones " >
-Representante legal y presidente de la empresa SPM Maritime C.A. Es ingeniero en Petróleo egresado de la universidad de Oriente en 2005. Fue superintendente en Petróleos de Venezuela PDVSA. En el periodo 2008-2013.<br>
-Gestor de contratos en SERGEOPETROL en el periodo 2003-2007. Director ejecutivo internacional de PETROPAN world Panamá en 2016-2020.<br>
-https://www.linkedin.com/in/guillermo-morgado-
-7079aa75/?originalSubdomain=pa</td>
+                                                    <td class="consideraciones" style="padding: 1%">@php  
+                                                        echo nl2br($previa->oci) ; 
+                                                    @endphp</td>
                                             </tr>
                                     </table>
 
@@ -106,9 +105,9 @@ https://www.linkedin.com/in/guillermo-morgado-
                                                     <th>INFORMACION POLITICA</th>
        
                                             </tr>
-                                             <tr>
-                                                    <td>Sin resultados </td>
-       
+                                             <tr style="height:auto">
+                                                
+                                                    <td >{{$previa->ipol}}</td>
                                             </tr>
   
                                     </table>
@@ -133,35 +132,35 @@ https://www.linkedin.com/in/guillermo-morgado-
                                                    
                                                     <tr>
                                                        <td>FBI</td>
-                                                        <td>Sin Resultados</td>
+                                                        <td>{{$previa->fbi}}</td>
                                                     </tr>
                                                      <tr>
                                                        <td>OFAC</td>
-                                                        <td>Sin Resultados</td>
+                                                        <td>{{$previa->ofac}}</td>
                                                     </tr>
                                                      <tr>
                                                        <td>UNION EUROPEA</td>
-                                                        <td>Sin Resultados</td>
+                                                        <td>{{$previa->ue}}</td>
                                                     </tr>
                                                      <tr>
                                                        <td>CONSEJO DE SEGURIDAD DE LA ONU (CSO)</td>
-                                                        <td>Sin Resultados</td>
+                                                        <td>{{$previa->cso}}</td>
                                                     </tr>
                                                      <tr>
                                                        <td>INTERPOL</td>
-                                                        <td>Sin Resultados</td>
+                                                        <td>{{$previa->ip}}</td>
                                                     </tr>
                                                      <tr>
                                                        <td>ICIJ</td>
-                                                        <td>Sin Resultados</td>
+                                                        <td>{{$previa->icij}}</td>
                                                     </tr>
                                                      <tr>
                                                        <td>TSJ</td>
-                                                        <td>Sin Resultados</td>
+                                                        <td>{{$previa->tsj}}</td>
                                                     </tr>
                                                      <tr>
                                                        <td>RNC</td>
-                                                        <td>Sin Resultados</td>
+                                                        <td>{{$previa->rnc}}</td>
                                                     </tr>
                                     </table>
 
@@ -174,7 +173,7 @@ https://www.linkedin.com/in/guillermo-morgado-
                                                 </tr>
                                                
                                                 <tr>
-                                                   <td>Sin Resultados</td>
+                                                   <td>{{$previa->ef}}</td>
                                                     
                                                 </tr>
                                                 </table>
@@ -188,7 +187,7 @@ https://www.linkedin.com/in/guillermo-morgado-
                                                 </tr>
                                                
                                                 <tr>
-                                                   <td>Sin Resultados</td>
+                                                   <td>{{$previa->ex}}</textarea></td>
                                                     
                                                 </tr>
                                                 </table>
@@ -207,10 +206,10 @@ https://www.linkedin.com/in/guillermo-morgado-
                                                 </tr>
                                                
                                                 <tr  style="height: 8rem;font-size: 70%;">
-                                                   <td  style="vertical-align: bottom;">HEDWING GUTIERREZ</td>
-                                                   <td  style="vertical-align: bottom;">GERMAN GERARDINO</td>
-                                                   <td  style="vertical-align: bottom;">MARIA PIA SAVOIA</td>
-                                                   <td  style="vertical-align: bottom;">LAILA TAJELDINE</td>
+                                                   <td  style="vertical-align: bottom;">{{$previa->name}} {{$previa->surname}}</td>
+                                                   <td  style="vertical-align: bottom;">{{$previa->namerev}} {{$previa->surnamerev}}</td>
+                                                   <td  style="vertical-align: bottom;">{{$previa->namecert}} {{$previa->surnamecert}}</td>
+                                                   <td  style="vertical-align: bottom;">{{$previa->nameapro}} {{$previa->surnameapro}}</td>
                                                     
                                                 </tr>
                                                 </table>

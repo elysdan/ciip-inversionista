@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('contenido_representantes', function (Blueprint $table) {
            $table->bigIncrements('id');
-            $table->text('elaborado')->nullable();
-            $table->text('revisado')->nullable();
-            $table->text('certificado')->nullable();
-            $table->text('aprobado')->default('LAILA TAJELDINE');
-            $table->integer('delegate_id');
+            $table->bigInteger('elaborado')->nullable();
+            $table->bigInteger('revisado')->nullable();
+            $table->bigInteger('certificado')->nullable();
+            $table->bigInteger('aprobado');
+            $table->bigInteger('delegate_id');
              $table->text('ipol')->nullable();
             $table->text('oci')->nullable();
             $table->text('fbi')->nullable();

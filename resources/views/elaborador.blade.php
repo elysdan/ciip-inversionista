@@ -176,9 +176,9 @@
                                                
                                                 <tr  style="height: 8rem;font-size: 70%;">
                                                    <td  style="vertical-align: bottom;">{{$previa->name}} {{$previa->surname}}</td>
-                                                   <td  style="vertical-align: bottom;">GERMAN GERARDINO</td>
-                                                   <td  style="vertical-align: bottom;">MARIA PIA SAVOIA</td>
-                                                   <td  style="vertical-align: bottom;">{{$previa->aprobado}}</td>
+                                                   <td  style="vertical-align: bottom;">{{$previa->namerev}} {{$previa->surnamerev}}</td>
+                                                   <td  style="vertical-align: bottom;">{{$previa->namecert}} {{$previa->surnamecert}}</td>
+                                                   <td  style="vertical-align: bottom;">{{$previa->nameapro}} {{$previa->surnameapro}}</td>
                                                     
                                                 </tr>
                                                 </table>
@@ -327,20 +327,45 @@
 </div>
 
 </div>
+
+@if($previa->estatuscontent==1)
 <form method="POST" action="{{route('revisar',$previa->ide)}}">
 @csrf
 @method('PUT')
-@if($previa->estatuscontent==1)
 <button class="mt-5 btn btn-primary" style="text-align:center;width: 100%;" type="submit">revisar</button>
+</form>
 @elseif($previa->estatuscontent==2)
+<form method="POST" action="{{route('revisar',$previa->ide)}}">
+@csrf
+@method('PUT')
 <button class="mt-5 btn btn-primary" style="text-align:center;width: 100%;" type="submit">certificar</button>
-@endif
+</form>
+@elseif($previa->estatuscontent==3)
+<form method="POST" action="{{route('revisar',$previa->ide)}}">
+@csrf
+@method('PUT')
+
+ <div class="mt-5" style="text-align:center;width: 100%;">
+<input href="" type="submit" class="btn btn-primary" value="Aprobar E Imprimir"></input>
+</div>
+
 </form>
 
-<!--
-    <div class="mt-5" style="text-align:center;width: 100%;">
-<a href="{{route('prueba_pdf',$previa->id)}}" class="btn btn-primary">Imprimir</a>
+@elseif($previa->estatuscontent==4)
+<form method="POST" action="{{route('revisar',$previa->ide)}}">
+@csrf
+@method('PUT')
+ <div class="mt-5" style="text-align:center;width: 100%;">
+<input href="" type="submit" class="btn btn-primary" value="Imprimir"></input>
 </div>
+
+
+</form>
+@endif
+
+
+<!--
+   
 -->
 </body>
     @endsection
