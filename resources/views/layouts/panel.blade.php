@@ -13,6 +13,7 @@
       <meta name="description" content="">
       <meta name="author" content="">
       <!-- site icon -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
       <link rel="icon" href="images/fevicon.png" type="image/png" />
       <!-- bootstrap css -->
       <link rel="stylesheet" href="css/bootstrap.min.css" />
@@ -29,6 +30,7 @@
       <!-- custom css -->
       <link rel="stylesheet" href="css/custom.css" />
       <link rel="stylesheet" type="text/css" href="js/print.min.css">
+
       <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -37,6 +39,39 @@
    <style type="text/css">
       body{background-color: none;}
       th{text-align: center;}
+    /* HTML: <div class="loader"></div> */
+.loader {
+  width: 20px;
+  aspect-ratio: 1;
+  border: 5px solid none;
+  border-radius: 50%;
+  position: relative;
+  transform: rotate(220deg);
+}
+.loader::before {
+  content: "";
+  top: 100%;
+  position: absolute;
+  inset:-5px;
+  border-radius: 50%;
+  border: 5px solid #1a76b8;
+  animation: l18 3s linear;
+}
+@keyframes l18 {
+    0%   {clip-path:polygon(50% 50%,0 0,0    0,0    0   ,0    0   ,0    0   )}
+    25%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 0   ,100% 0   ,100% 0   )}
+    50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
+    75%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0    100%,0    100%)}
+    100% {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0    100%,0    0   )}
+}
+
+.stronger{
+ position: relative;}
+
+.stronger:before{
+    top: 100%;
+position: absolute;
+}
    </style>
    <body class="dashboard dashboard_1">
       <div class="full_container">
@@ -71,8 +106,20 @@
                       <li><a href="{{route('enterprises')}}"><i class="fa fa-building "></i> <span>Empresas</span></a></li>
                       <li><a href="{{route('delegates')}}"><i class="fa fa-user "></i> <span>Representantes</span></a></li>
                       <li><a href="{{route('stadistics')}}"><i class="fa fa-pie-chart "></i> <span>Estadisticas</span></a></li>
+                      <li> @if (session('status'))
+
+
+<div class="alert alert-primary fade show m-3" id="PRueba" style="text-align: center; justify-content: center; align-items: center;position: relative;" role="alert">
+
+
+    
+  <div class=" w-100" style="position: relative;"><div class=" loader "></div></div>
+      <strong class="stronger d-inline"style="text-align: center;">{{ session('status') }}</strong>
+</div>
+@endif   </li>
                     
                </div>
+              
             </nav>
             <!-- end sidebar -->
             <!-- right content -->
@@ -104,11 +151,15 @@
                </div>
                <!-- end topbar -->
 <div style="height:100%;width:100%;background-color:none;margin: 0;padding: 0;">
+
                  @yield('content')
   
 
     @yield('usuarios')
+
+
 </div>
+ 
               
             </div>
          </div>
@@ -117,7 +168,24 @@
       <script src="js/jquery.min.js"></script>
       <script src="js/popper.min.js"></script>
       <script src="js/bootstrap.min.js"></script>
-     
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>  
+      <script>
+        $(document).ready(function() {
+            $('.alert').fadeIn(100);
+            $('.alert').delay(2800);
+
+            // Start the progress bar animation
+            $('.loader').animate({
+               
+            }, 5000, 'linear', function() {
+                // Hide the alert after the animation completes
+                $('.alert').fadeOut(250);
+            });
+        });
+    </script>
       <!-- owl carousel -->
       
       <!-- nice scrollbar -->

@@ -254,7 +254,7 @@
                             
                                 <h4 style="text-align:CENTER;width:100%">Fecha de Consulta</h4>
 
-                                <h5 style="text-align:CENTER;width:100%">{{ date('d-m-y') }}</h5>
+                                <h5 style="text-align:CENTER;width:100%">{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',  $previa->fecha)->format('d-m-Y') }}</h5>
 
                                    <br>
                                 <div class="d-flex m-5 p-1" style="justify-content: center;widht:100%;font-size: auto;">
@@ -346,5 +346,6 @@
 <script type="text/javascript">window.print();</script>
 <script type="text/javascript"> window.onafterprint = (event) => {
        window.history.go(-1);
+       
        
     };</script>

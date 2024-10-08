@@ -324,6 +324,23 @@
    <h4>Av.Venezuela Torre CIIP, Sector el Rosal.Chacao, Caracas, Venezuela</h4>
 <h4>Contactos@ciip.com.ve</h4>
 <h5>www.ciip.com.ve</h5>
+
+<table class="m-1 w-100">
+                                                    <tr >
+                                                        <th>Version</th>
+                                                          <th>Status</th>
+                                                         <th><div>Modificar</div></th>
+                                                        
+                                                    </tr>
+                                                   @foreach($versiones as $version)
+                                                    <tr>
+                                                       <td class="col-md-5">{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',  $version->updated_at)->format('d-m-Y') }}</td>
+                                                       <td class="col-md-1">{{$version->status}}</td>
+                                                        <td><a href="{{route('modificar_elaborador_empresas',$version->id)}}"><div class=" w-75 btn btn-warning" >Modificar</div></a></td>
+                                                    </tr>
+                                                    @endforeach
+                                                    
+                                    </table>
 </div>
 
 </div>
@@ -346,7 +363,7 @@
 @method('PUT')
 
  <div class="mt-5" style="text-align:center;width: 100%;">
-<input href="" type="submit" class="btn btn-primary" value="Aprobar E Imprimir"></input>
+<input href="" type="submit" class="btn btn-primary" value="Aprobar E Imprimir" ></input>
 </div>
 
 </form>

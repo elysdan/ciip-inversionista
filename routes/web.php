@@ -115,13 +115,18 @@ Route::put('/certificar_{id}', [inversionista::class, 'certificar'])->name('cert
 
 Route::post('/elaborar_delegates', [inversionista::class, 'elaborar_delegates'])->name('elaborar_delegates');
 
+Route::get('/modificar_elaborador_empresas_{id}', [inversionista::class, 'modificar_elaborador_empresas'])->name('modificar_elaborador_empresas');
+
+
 Route::get('/modificar_elaborador_delegados_{id}', [inversionista::class, 'modificar_elaborador_delegados'])->name('modificar_elaborador_delegados');
+
+
+Route::put('/modificar_elaborar_empresas', [inversionista::class, 'modificar_elaborar_empresas'])->name('modificar_elaborar_empresas');
 
 
 Route::put('/modificar_elaborar_delegados', [inversionista::class, 'modificar_elaborar_delegados'])->name('modificar_elaborar_delegados');
 
 
-Route::get('/modificar_elaborador_empresas_{id}', [inversionista::class, 'modificar_elaborador_empresas'])->name('modificar_elaborador_empresas');
 
 
 Route::get('/userpanel', [inversionista::class, 'userpanel'])->name('userpanel');

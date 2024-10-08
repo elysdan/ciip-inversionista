@@ -345,7 +345,7 @@
                                                     </tr>
                                                    @foreach($versiones as $version)
                                                     <tr>
-                                                       <td class="col-md-5">{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',  $version->created_at)->format('d-m-Y') }}</td>
+                                                       <td class="col-md-5">{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',  $version->updated_at)->format('d-m-Y') }}</td>
                                                        <td class="col-md-1">{{$version->status}}</td>
                                                         <td><a href="{{route('modificar_elaborador_delegados',$version->id)}}"><div class=" w-75 btn btn-warning" >Modificar</div></a></td>
                                                     </tr>
