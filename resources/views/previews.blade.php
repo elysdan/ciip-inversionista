@@ -55,7 +55,7 @@
         }
     </style>
     <body>
-<form method="POST" action="{{route('elaborar')}}">
+<form method="POST" action="{{route('elaborar')}}" id="miFormulario">
 @csrf
 <div class="previews">
 
@@ -78,7 +78,7 @@
                                             
                                             <tr style="height:auto">
                                                 
-                                                    <td class="consideraciones" style="padding: 0;"><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 15rem;max-height: 15rem;font-family: arial;" placeholder="Tiene por objeto realizar a través de la contratación de personal especializado, la prestación de servicios acuáticos y portuarios Propios del Negocio y del transaporte Maritimo. tales como compra y venta de buques, accesorios de navegacion, plataformas de perforacion, de produccion y/o explotacion de buques propios o fletados, sea por tiempo, por viaje o mixto, llamados Contracto of Affreighment (COA), arrendados a cascos denusdos o bajo arrendamiento financiero de cualquier clase, tipo, porte o utilidad; asi como transaporte maritimo Fluivial, lascustre, bien sea nacional, se cabotaje y navegacion domestica, o inmternacional. (Expediente)" name="oci"></textarea></td>
+                                                    <td class="consideraciones" style="padding: 0;"><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 15rem;max-height: 15rem;font-family: arial;" placeholder="Sin Resultados" name="oci" id="Oci" pattern="[A-Za-z0-9-áÁéÉíÍóÓúÚñÑ.@,;:#$%&/()=?¡¿°!*/+' ']{4,500}" maxlength="500"  required></textarea></td>
                                             </tr>
                                     </table>
     <br>
@@ -102,35 +102,35 @@
                                                    
                                                     <tr>
                                                        <td>FBI</td>
-                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="fbi"></textarea></td>
+                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="fbi" id="Fbi" pattern="[A-Za-z0-9-áÁéÉíÍóÓúÚñÑ.@,;:#$%&/()=?¡¿°!*/+' ']{4,50}" required></textarea></td>
                                                     </tr>
                                                      <tr>
                                                        <td>OFAC</td>
-                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="ofac"></textarea></td>
+                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="ofac" id="Ofac" pattern="[A-Za-z0-9-áÁéÉíÍóÓúÚñÑ.@,;:#$%&/()=?¡¿°!*/+' ']{4,50}"  required></textarea></td>
                                                     </tr>
                                                      <tr>
                                                        <td>UNION EUROPEA</td>
-                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="ue"></textarea></td>
+                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="ue" id="Ue" pattern="[A-Za-z0-9-áÁéÉíÍóÓúÚñÑ.@,;:#$%&/()=?¡¿°!*/+' ']{4,50}"  required></textarea></td>
                                                     </tr>
                                                      <tr>
                                                        <td>CONSEJO DE SEGURIDAD DE LA ONU (CSO)</td>
-                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="cso"></textarea></td>
+                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="cso" id="Cso" pattern="[A-Za-z0-9-áÁéÉíÍóÓúÚñÑ.@,;:#$%&/()=?¡¿°!*/+' ']{4,50}"  required></textarea></td>
                                                     </tr>
                                                      <tr>
                                                        <td>INTERPOL</td>
-                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="ip"></textarea></td>
+                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="ip" id="Ip" pattern="[A-Za-z0-9-áÁéÉíÍóÓúÚñÑ.@,;:#$%&/()=?¡¿°!*/+' ']{4,50}"  required></textarea></td>
                                                     </tr>
                                                      <tr>
                                                        <td>ICIJ</td>
-                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="icij"></textarea></td>
+                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="icij" id="Icij"required pattern="[A-Za-z0-9-áÁéÉíÍóÓúÚñÑ.@,;:#$%&/()=?¡¿°!*/+' ']{4,50}" ></textarea></td>
                                                     </tr>
                                                      <tr>
                                                        <td>TSJ</td>
-                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="tsj"></textarea></td>
+                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="tsj" id="Tsj" pattern="[A-Za-z0-9-áÁéÉíÍóÓúÚñÑ.@,;:#$%&/()=?¡¿°!*/+' ']{4,50}"  required></textarea></td>
                                                     </tr>
                                                      <tr>
                                                        <td>RNC</td>
-                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="rnc"></textarea></td>
+                                                        <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin Resultados" name="rnc" id="Rnc" pattern="[A-Za-z0-9-áÁéÉíÍóÓúÚñÑ.@,;:#$%&/()=?¡¿°!*/+' ']{4,50}"  required></textarea></td>
                                                     </tr>
                                     </table>
 
@@ -143,7 +143,7 @@
                                                 </tr>
                                                
                                                 <tr>
-                                                   <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin resultados" name="ef"></textarea></td>
+                                                   <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin resultados" name="ef" id="Ef" pattern="[A-Za-z0-9-áÁéÉíÍóÓúÚñÑ.@,;:#$%&/()=?¡¿°!*/+' ']{4,50}"  required></textarea></td>
                                                     
                                                 </tr>
                                                 </table>
@@ -157,7 +157,7 @@
                                                 </tr>
                                                
                                                 <tr>
-                                                   <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin resultados" name="ex"></textarea></td>
+                                                   <td><textarea style="font-size: 100%;width:100%;height: 100%;margin: 0;padding:0;min-height: 3rem;max-height: 3rem;font-family: arial;" placeholder="Sin resultados" name="ex" id="Ex" pattern="[A-Za-z0-9-áÁéÉíÍóÓúÚñÑ.@,;:#$%&/()=?¡¿°!*/+' ']{4,50}"  required></textarea></td>
                                                     
                                                 </tr>
                                                 </table>
@@ -327,9 +327,9 @@
 </div>
 
 </div>
-<input type="hidden" name="delegate_id" value="{{$previa->id}}">
+<input type="hidden" name="enterprise_id" value="{{$previa->id}}">
 <input type="hidden" name="elaborado" value="{{session('usuario')->id}}">
-<button class="mt-5 btn btn-primary" style="text-align:center;width: 100%;" type="submit">Elaborar</button>
+<button class="mt-5 btn btn-primary" style="text-align:center;width: 100%;" id="submitBtn" type="submit" disabled>Elaborar</button>
 </form>
 
 <!--
@@ -338,4 +338,41 @@
 </div>
 -->
 </body>
+
+<script type="text/javascript">
+    var campo1= document.getElementById("Oci");
+
+    var campo2= document.getElementById("Fbi");
+    var campo3= document.getElementById("Ofac");
+    var campo4= document.getElementById("Ue");
+    var campo5= document.getElementById("Cso");
+    var campo6= document.getElementById("Ip");
+    var campo7= document.getElementById("Icij");
+    var campo8= document.getElementById("Tsj");
+    var campo9= document.getElementById("Rnc");
+    var campo10= document.getElementById("Ef");
+    var campo11= document.getElementById("Ex");
+    var campo12= document.getElementById("Ipol");
+    var submitBtn = document.getElementById('submitBtn');
+
+    function validarCampos() {
+     
+      
+      var valido = campo1.checkValidity() && campo2.checkValidity() && campo3.checkValidity() && campo4.checkValidity() && campo5.checkValidity() && campo6.checkValidity() && campo7.checkValidity() && campo8.checkValidity() && campo9.checkValidity() && campo10.checkValidity() && campo11.checkValidity() ;
+
+      submitBtn.disabled = !valido;
+  }
+
+document.getElementById('miFormulario').addEventListener('input', function(event) {
+   
+      var campo = event.target;
+      if (campo.id === 'Oci' || campo.id === 'Fbi' || campo.id === 'Ofac' || campo.id === 'Ue' || campo.id === 'Cso' || campo.id === 'Ip' || campo.id === 'Icij' || campo.id === 'Tsj' || campo.id === 'Rnc' || campo.id === 'Ef' || campo.id === 'Ex' ||   campo.id === 'Ipol' ) {
+          campo.value = campo.value.replace(/[^A-Za-z0-9-áÁéÉíÍóÓúÚñÑ.@,;:#$%&/()=?¡¿°!*/+" "]/g, '');
+      }
+      
+      
+      validarCampos();
+  });
+
+</script>
     @endsection

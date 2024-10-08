@@ -16,7 +16,7 @@ return new class extends Migration
             $table->bigInteger('elaborado')->nullable();
             $table->bigInteger('revisado')->nullable();
             $table->bigInteger('certificado')->nullable();
-            $table->bigInteger('aprobado');
+            $table->bigInteger('aprobado')->nullabe();
             $table->bigInteger('delegate_id');
              $table->text('ipol')->nullable();
             $table->text('oci')->nullable();

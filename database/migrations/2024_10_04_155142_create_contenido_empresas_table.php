@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('contenido_empresas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigIncrements('elaborado')->nullable();
-            $table->bigIncrements('revisado')->nullable();
-            $table->bigIncrements('certificado')->nullable();
-            $table->bigIncrements('aprobado')->default('LAILA TAJELDINE');
+            $table->bigInteger('elaborado')->nullable();
+            $table->bigInteger('revisado')->nullable();
+            $table->bigInteger('certificado')->nullable();
+            $table->bigInteger('aprobado')->nullable();
             $table->integer('enterprise_id');
             $table->text('oci')->nullable();
             $table->text('fbi')->nullable();
