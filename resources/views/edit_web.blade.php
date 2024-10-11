@@ -19,10 +19,10 @@
                   <input type="hidden" name="id" value="{{$delegado->id}}">
                     <label for="campo4" class="col-form-label" >Red Social:</label>
                     <select class="form-control" id="campo4" name="red" required>
-                        <option disabled>Seleccione una opcion</option>
-                        <option value="1"  @if("1" == $delegado->site) selected @endif >Twitter</option>
-                        <option value="2"  @if("2" == $delegado->site) selected @endif >Facebook</option>
-                        <option value="3"  @if("3" == $delegado->site) selected @endif >Instagram</option>
+                         <option selected disabled>Seleccione una opcion</option>
+                         @foreach ($sitios as $r)
+                        <option value="{{$r->id}}" @if($r->id == $delegado->site) selected @endif >{{$r->red}}</option>
+                       @endforeach
                       </select>
  
                   <label for="campo2" class="col-form-label">Nombre de Usuario:</label>

@@ -16,6 +16,7 @@
 
 
 <div class="col-md-12">
+  @if(session('usuario')->role >=4)
   <button type="button" class="btn btn-outline-success mt-3 mb-3 p-0"
         style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center; width: 3vw; height: 3vw;"
         data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
@@ -27,6 +28,7 @@
 
      </svg>
 </button>
+@endif
 
 
                            <div class="white_shd full margin_bottom_30">
@@ -50,8 +52,6 @@
 
 <th >Razon Social</th>
 <th >Rif</th>
-<th >Pais de Origen</th>
-<th >Lugar de Registro</th>
 <th >Direccion</th>
 <th >Correo</th>
 <th >Telefono</th>
@@ -59,9 +59,12 @@
 <th colspan="2">Reporte</th>
 
 
-<th>Foto</th>
-@if(session('usuario')->role==9 )
+
+@if(session('usuario')->role >=8 )
 <th>Status</th>
+@endif
+@if(session('usuario')->role >=5 )
+
 <th  colspan="2"> Administracion</th>
 @endif
             </tr>
@@ -82,9 +85,6 @@ align-content: center;" >
 <td>{{$empresa->razonsocial}}</td>
 <td>{{$empresa->identificador}}-{{$empresa->rif}}</td>
 
-<td>{{$empresa->pais_origen}}</td>
-<td>{{$empresa->lregistro}}</td>
-
 <td>{{$empresa->direccion}}</td>
 <td>{{$empresa->correo}}</td>
 <td>{{$empresa->telefono}}</td>
@@ -103,14 +103,8 @@ align-content: center;" >
                 @if($generador > 0)
               <td><a href="{{route('elaborador',$empresa->id)}}"><button class="btn btn-primary">Visualizar</button></a></td>
               @endif
-              <td style="vertical-align: top;align-items: center;
-  justify-content: center;
-  align-content: center;"> <img src="{{$empresa->foto}}" style="border-radius: 50%;
-  align-items: center;
-  justify-content: center;
-  align-content: center;
-  width: 3vw;"></td>
-@if(session('usuario')->role==9 )
+             
+@if(session('usuario')->role >=8 )
 <td>
 @if($empresa->status==1)
 <form method="POST" action="{{route('suspend_enterprises',$empresa->id)}}">
@@ -167,7 +161,7 @@ align-content: center;" >
                 <button type="button" 
 class="btn btn-outline-danger mt-1 mb-1 p-0" 
 
-  style="border-radius: 1rem; display: flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;"  
+  style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;"  
 data-toggle="modal" data-target="#DelModal{{$empresa->id}}" data-whatever="@mdo"> 
     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-dash" align="center" viewBox="0 0 16 16" style="width: 2vw;">
       <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6.5a.5.5 0 0 1-1 0V1H3v14h3v-2.5a.5.5 0 0 1 .5-.5H8v4H3a1 1 0 0 1-1-1z"/>
@@ -214,7 +208,7 @@ data-toggle="modal" data-target="#DelModal{{$empresa->id}}" data-whatever="@mdo"
               @else
               @php $n=1; @endphp
 @foreach($empresas as $empresa)
-@if($empresa->status==1)
+
 
 
 <tr style="vertical-align: none;text-align: center;align-items: center;
@@ -226,12 +220,12 @@ align-content: center;" >
 <td>{{$empresa->razonsocial}}</td>
 <td>{{$empresa->identificador}}-{{$empresa->rif}}</td>
 
-<td>{{$empresa->pais_origen}}</td>
-<td>{{$empresa->lregistro}}</td>
 
 <td>{{$empresa->direccion}}</td>
+<td>{{$empresa->correo}}</td>
+<td>{{$empresa->telefono}}</td>
 
-<td><a href="{{route('add_web',$empresa->id)}}" class="btn btn-outline-primary mt-1 mb-1 p-0"  style="border-radius: 1rem; display: flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;text-align: center;">
+<td><a href="{{route('add_web',$empresa->id)}}" class="btn btn-outline-primary mt-1 mb-1 p-0"  style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;text-align: center;">
                 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;text-align: center;
     align-items: center;
@@ -241,22 +235,59 @@ align-content: center;" >
                
               </a></td>
 
-              <td><a href="{{route('previews',$empresa->id)}}"><button class="btn btn-primary">Ver Detalle</button></a></td>
-              <td style="vertical-align: top;align-items: center;
-  justify-content: center;
-  align-content: center;"> <img src="{{$empresa->foto}}" style="border-radius: 50%;
-  align-items: center;
-  justify-content: center;
-  align-content: center;
-  width: 3vw;"></td>
-@if(session('usuario')->role==9 )
-<td>{{$empresa->status}}</td>
+           @if(session('usuario')->role >=5)
+              <td><a href="{{route('previews',$empresa->id)}}"><button class="btn btn-primary">Generar</button></a></td>
+              @endif
+                @if($generador > 0)
+
+              <td><a href="{{route('elaborador',$empresa->id)}}"><button class="btn btn-primary">Visualizar</button></a></td>
+              @endif
+             
+@if(session('usuario')->role >=8 )
+<td>
+@if($empresa->status==1)
+<form method="POST" action="{{route('suspend_enterprises',$empresa->id)}}">
+  @csrf
+  @method('PUT')
+<button type="submit" 
+                class="btn btn-outline-success mt-1 mb-1 p-0" 
+                
+                  style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;">
+                     <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+</svg>
+                </button>
+              </form>
+@endif
+
+@if($empresa->status==0)
+ <form method="POST" action="{{route('suspend_enterprises',$empresa->id)}}">
+  @csrf
+  @method('PUT')
+
+<button type="submit" 
+                class="btn btn-outline-danger mt-1 mb-1 p-0" 
+                
+                  style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
+                 
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;">
+                      <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>
+</svg>
+                </button></form>
+                
+
+
+@endif
+
+</td>
+@endif
+@if(session('usuario')->role >=5 )
               <td>
                 <a href="{{route('edit_enterprises',$empresa->id)}}">
                 <button type="button" 
                 class="btn btn-outline-warning mt-1 mb-1 p-0" 
                 
-                  style="border-radius: 1rem; display: flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
+                  style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;">
                        <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6.5a.5.5 0 0 1-1 0V1H3v14h3v-2.5a.5.5 0 0 1 .5-.5H8v4H3a1 1 0 0 1-1-1z"/>
   <path d="M4.5 2a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm4.386 1.46c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>
@@ -265,13 +296,14 @@ align-content: center;" >
                 
               </a>
             </td>
-
+@endif
+@if(session('usuario')->role >=6 )
               <td>
                 
                 <button type="button" 
 class="btn btn-outline-danger mt-1 mb-1 p-0" 
 
-  style="border-radius: 1rem; display: flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;"  
+  style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;"  
 data-toggle="modal" data-target="#DelModal{{$empresa->id}}" data-whatever="@mdo"> 
     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-dash" align="center" viewBox="0 0 16 16" style="width: 2vw;">
       <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6.5a.5.5 0 0 1-1 0V1H3v14h3v-2.5a.5.5 0 0 1 .5-.5H8v4H3a1 1 0 0 1-1-1z"/>
@@ -311,14 +343,15 @@ data-toggle="modal" data-target="#DelModal{{$empresa->id}}" data-whatever="@mdo"
               
               </td>
 
-              @endif
+            
               @endif
               @php $n++; @endphp
               @endforeach
               
               @endif
+              @if(session('status'))
 
-
+@endif
 
          </tbody>
       </table>
@@ -396,7 +429,7 @@ data-toggle="modal" data-target="#DelModal{{$empresa->id}}" data-whatever="@mdo"
                     <label for="fileInput" class="col-form-label">Foto de Perfil:</label>
                     <input type="file" class="form-control" name="foto" id="fileInput" accept="image/*">
                   </div>
-                  <div id="preview" class="w-25"></div>
+                  <div id="preview" class="w-100"></div>
                         <div class="alert alert-danger" role="alert" id="fileError">
                             Por Favor Seleccione una imagen no mayor a 20 mb, de no tener el sistema pondra una predeterminada.
                         </div>
@@ -412,9 +445,6 @@ data-toggle="modal" data-target="#DelModal{{$empresa->id}}" data-whatever="@mdo"
       
         </div>
       </div>
-
-
-
 
 
 

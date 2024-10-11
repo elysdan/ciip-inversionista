@@ -72,6 +72,15 @@
     top: 100%;
 position: absolute;
 }
+.preview{
+   width: 100%;
+   max-width: 100%;
+}
+.preview-container, .preview-container img{
+
+   width: 100%;
+   max-width: 100%;
+}
    </style>
    <body class="dashboard dashboard_1">
       <div class="full_container">
@@ -102,20 +111,43 @@ position: absolute;
                   <ul class="list-unstyled components">
                     
                      <li><a href="{{route('search')}}"><i class="fa fa-search "></i> <span>Busqueda</span></a></li>
+                     @if(session('usuario')->role > 2)
                       <li><a href="{{route('users')}}"><i class="fa fa-users "></i> <span>Usuarios</span></a></li>
                       <li><a href="{{route('enterprises')}}"><i class="fa fa-building "></i> <span>Empresas</span></a></li>
                       <li><a href="{{route('delegates')}}"><i class="fa fa-user "></i> <span>Representantes</span></a></li>
-                      <li><a href="{{route('stadistics')}}"><i class="fa fa-pie-chart "></i> <span>Estadisticas</span></a></li>
+                     @if(session('usuario')->role > 8) <li><a href="{{route('stadistics')}}"><i class="fa fa-pie-chart "></i> <span>Estadisticas</span></a></li>
+                     @endif
+                     @endif
                       <li> @if (session('status'))
 
 
-<div class="alert alert-primary fade show m-3" id="PRueba" style="text-align: center; justify-content: center; align-items: center;position: relative;" role="alert">
+<div class="container w-100">
+    <div id="alerta" class="alert alert-primary  fade show"  role="alert">
+        {{ session('status') }}
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%" aria-valuenow="0"   
+ aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>   
 
-
-    
-  <div class=" w-100" style="position: relative;"><div class=" loader "></div></div>
-      <strong class="stronger d-inline"style="text-align: center;">{{ session('status') }}</strong>
 </div>
+
+<script>
+    window.onload = function() {
+        var alerta = document.getElementById('alerta');
+        var progressBar = document.querySelector('.progress-bar');
+        var width = 0;
+
+        var interval = setInterval(function() {
+            width = width + 15;
+            progressBar.style.width = width + '%';
+            if (width >= 150) {
+                clearInterval(interval);
+                alerta.remove();
+            }
+        }, 200);
+    };
+</script>
 @endif   </li>
                     
                </div>
@@ -158,6 +190,7 @@ position: absolute;
     @yield('usuarios')
 
 
+
 </div>
  
               
@@ -169,9 +202,7 @@ position: absolute;
       <script src="js/popper.min.js"></script>
       <script src="js/bootstrap.min.js"></script>
 
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>  
+@if(session('status'))
       <script>
         $(document).ready(function() {
             $('.alert').fadeIn(100);
@@ -186,6 +217,7 @@ position: absolute;
             });
         });
     </script>
+    @endif
       <!-- owl carousel -->
       
       <!-- nice scrollbar -->

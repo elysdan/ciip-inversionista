@@ -74,7 +74,7 @@
             
                 <label for="campo3" class="col-form-label">Correo Electronico:</label>
                 <input type="email" class="form-control" id="campo3" name="correo" pattern="[A-Za-z0-9@.áÁéÉíÍóÓúÚ]{4,256}" maxlength="256" value="{{$usuario->email}}" required>
-             
+             @if(session('usuario')->role >=6)
                 <label for="campo4" class="col-form-label" >Rol:</label>
                 <select class="form-control" id="campo4" name="rol" required>
                     <option disabled>Seleccione una opcion</option>
@@ -82,16 +82,31 @@
                     <option value="2" @if( 2 == $usuario->role) selected @endif >Invitado</option>
                     <option value="3" @if( 3 == $usuario->role) selected @endif >Ayudante</option>
                     <option value="4" @if( 4 == $usuario->role) selected @endif >Tecnico</option>
+                   @if(session('usuario')->role >=5)
                     <option value="5" @if( 5 == $usuario->role) selected @endif >Licenciado</option>
+                @if(session('usuario')->role >=6)
                     <option value="6" @if( 6 == $usuario->role) selected @endif >Coordinador</option>
+                  @if(session('usuario')->role >=7)
                     <option value="7" @if( 7 == $usuario->role) selected @endif >Gerente</option>
+                    @if(session('usuario')->role >=8)
                     <option value="8" @if( 8 == $usuario->role) selected @endif >Administrador</option>
+                    @if(session('usuario')->role >=9)
                     <option value="9" @if( 9 == $usuario->role) selected @endif >Super Usuario</option>
-                  </select>
+                    @endif
                 
+                    @endif
+                    @endif
+                
+                    @endif
+                    @endif
+                
+                    
+                  </select>
+                  @endif
+                 @if(session('usuario')->role >=8)
                 <label for="campo5" class="col-form-label">Contraseña:</label>
                 <input type="password" class="form-control" id="campo5" name="contrasena" pattern="[A-Za-z0-9@.*_'-'+áÁéÉíÍóÓúÚ]{8,100}" maxlength="100">
-              
+                      @endif
                 <label for="fileInput" class="col-form-label">Foto de Perfil:</label>
                 <input type="file" class="form-control" name="foto" id="fileInput" accept="image/*">
               </div>

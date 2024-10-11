@@ -399,8 +399,17 @@ else
 
     public function users()
     {
-        if(session('usuario')){
-        $usuarios=db::table('users')->OrderBy('id')->get();
+        if(session('usuario') ){
+            if(session('usuario')->role >= 8)
+        {
+
+            $usuarios=db::table('users')->OrderBy('role','desc')->OrderBy('id','asc')->get();}
+    else
+      {
+
+        $usuarios=db::table('users')->where('role', '!=', 8)->where('role', '!=', 9)->where('status', '!=', 0)->OrderBy('role','desc')->OrderBy('id','asc')->get();
+           //dd(session('usuario')->role );
+}
         $uc=db::table('users')->count();
         $nacionalidad=db::table('nacionalidad')->get();
 
@@ -507,7 +516,7 @@ else
 
   
         
-            return redirect()->to('users')->with('status','Usuario Modificado');
+            return back()->with('status','Usuario Modificado');
         
     }
 
@@ -570,9 +579,12 @@ else
 
     public function delegates()
     {
-        if(session('usuario') && session('usuario')->role==9 || session('usuario') && session('usuario')->role > 3 ){
-            $dc=db::table('inversionista_naturals')->count();
-          
+        if(session('usuario')){
+           
+         // dd(session('usuario')->role);
+
+        if(session('usuario')->role >= 8)
+        {
        $delegados=db::table('inversionista_naturals')->join('nacionalidad','inversionista_naturals.nacionalidad','=','nacionalidad.id')
        ->join('generos','inversionista_naturals.sexo','=','generos.id')
        ->join('estados_civiles','inversionista_naturals.estado_civil','=','estados_civiles.id')
@@ -581,6 +593,21 @@ else
             'nacionalidad.GENTILICIO_NAC as GENTILICIO_NAC',
             'generos.genero as sexo',
             'estados_civiles.estado as estado_civil')->get();
+        $dc=db::table('inversionista_naturals')->count();
+
+   }
+       else
+       {
+        $delegados=db::table('inversionista_naturals')->join('nacionalidad','inversionista_naturals.nacionalidad','=','nacionalidad.id')
+       ->join('generos','inversionista_naturals.sexo','=','generos.id')
+       ->join('estados_civiles','inversionista_naturals.estado_civil','=','estados_civiles.id')
+       ->select(
+            'inversionista_naturals.*',
+            'nacionalidad.GENTILICIO_NAC as GENTILICIO_NAC',
+            'generos.genero as sexo',
+            'estados_civiles.estado as estado_civil')->where('status', 1)->get();
+        $dc=db::table('inversionista_naturals')->where('status', 1)->count();
+       }
 
      // dd($delegados);
        $generador=DB::table('inversionista_naturals')
@@ -665,17 +692,17 @@ $registry->edad = $edad;
 if($delegados->status==1)
 {
          $delegados->update(['status' => '0']);
-         return back()->with('status','Representante Modificado');
+        
     }
     elseif($delegados->status==0)
 {
          $delegados->update(['status' => '1']);
-         return back()->with('status','Representante Modificado');
+        
     }
     
         //dd($empresa);
 
-            
+             return back()->with('status','Representante Modificado');
     
         
     }
@@ -770,7 +797,7 @@ $edad = $fechaNacimientoCarbon->age;
 
   
         
-            return $this->delegates()->with('status','Datos Modificado');
+            return redirect()->route('delegates')->with('status','Datos Modificado');
         
     }
 
@@ -818,7 +845,7 @@ $edad = $fechaNacimientoCarbon->age;
                 
         
         //dd($request);
-            return back()->with('status','funciona');
+            return back()->with('status','Sitio Web Registrado');
         
     }
 
@@ -826,7 +853,8 @@ $edad = $fechaNacimientoCarbon->age;
     {
         $delegado = redessocialesdelegado::findorfail($id);
         //dd($delegado);
-            return view('edit_web',['delegado' => $delegado]);
+         $sitios=db::table('rrss')->get();
+            return view('edit_web',['delegado' => $delegado,'sitios' =>$sitios]);
         
     }
 
@@ -851,7 +879,7 @@ $edad = $fechaNacimientoCarbon->age;
             }
         //dd($delegado);
 
-            return $this->add_socialweb($peticion)->with('status','Red Social Modificada');
+            return redirect()->route('add_socialweb', $peticion)->with('status','Red Social Modificada');
         
     }
 
@@ -881,9 +909,11 @@ $edad = $fechaNacimientoCarbon->age;
     }
     public function enterprises()
     {
-        if(session('usuario') && session('usuario')->role==9 || session('usuario') && session('usuario')->role > 3 ){
+        if(session('usuario') && session('usuario')->role >= 3  ){
 
-            $empresas=DB::table('datos_empresas')
+            if(session('usuario')->role >= 8){
+
+                $empresas=DB::table('datos_empresas')
             ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
             ->join('pais as registro','datos_empresas.lregistro','=','registro.id')
             ->select(
@@ -899,7 +929,30 @@ $edad = $fechaNacimientoCarbon->age;
             
             ->count()
            ;
+           //dd($empresas);
 
+            }
+            else
+            {
+                 $empresas=DB::table('datos_empresas')
+            ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
+            ->join('pais as registro','datos_empresas.lregistro','=','registro.id')
+            ->select(
+            'datos_empresas.*',
+            'origen.paisnombre as pais_origen',
+            'registro.paisnombre as lregistro')
+            ->OrderBy('id')->where('datos_empresas.status',1)
+           ->get();
+
+           $generador=DB::table('datos_empresas')
+            ->join('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
+            ->where('datos_empresas.status',1)
+            
+            
+            ->count()
+           ;
+            }
+            
             $pais=db::table('pais')->OrderBy('paisnombre')->get();
             //dd($generador);
             return view('enterprises',['empresas'=>$empresas,'pais'=>$pais,'generador'=>$generador]);
@@ -1036,7 +1089,7 @@ if($empresas->status==1)
     }
         //dd($empresa);
 
-            return $this->enterprises()->with('status','Empresa Modificada');
+            return redirect()->route('enterprises')->with('status','Empresa Modificada');
     
         
     }
@@ -1047,14 +1100,19 @@ public function suspend_enterprises($id)
 
             //dd($request);
              //dd($peticion);
-if($empresas->status==1)
+        if($empresas->status==0)
+{
+         $empresas->update(['status' => '1']);
+    }
+elseif($empresas->status==1)
 {
          $empresas->update(['status' => '0']);
     }
     
+    
         //dd($empresa);
 
-            return $this->enterprises()->with('status','Empresa Modificada');
+            return back()->with('status','Empresa Modificada');
     
         
     }
@@ -1091,7 +1149,7 @@ public function add_web($id)
                 
         
         //dd($request);
-            return back()->with('status','funciona');
+            return back()->with('status','Pagina Web Registrada');
         
     }
 
@@ -1100,7 +1158,8 @@ public function add_web($id)
     {
         $delegado = redessocialesempresa::findorfail($id);
         //dd($delegado);
-            return view('edit_web_enterprise',['delegado' => $delegado]);
+          $sitios=db::table('rrss')->get();
+            return view('edit_web_enterprise',['delegado' => $delegado,'sitios' =>$sitios]);
         
     }
 
@@ -1128,7 +1187,7 @@ public function add_web($id)
             }
         //dd($empresa);
 
-            return $this->add_web($peticion)->with('status','Red Social Modificada');
+            return redirect()->route('add_web', $peticion)->with('status','Red Social Modificada');
         
     }
 
@@ -1144,7 +1203,7 @@ public function add_web($id)
     $red->delete();
 
         
-            return $this->add_web($peticion)->with('status','Red Social Eliminada');
+            return redirect()->route('add_web', $peticion)->with('status','Red Social Eliminada');
         
     }
 
@@ -1558,7 +1617,7 @@ public function previews_delegates($id)
                 
         
         //dd($request);
-            return $this->enterprises()->with('status','funciona');
+            return redirect()->route('enterprises')->with('status','Documento Elaborado');
         
     }
 
@@ -1587,7 +1646,7 @@ public function previews_delegates($id)
                 
         
         //dd($request);
-            return $this->delegates()->with('status','funciona');
+            return redirect()->route('delegates')->with('status','Documento Elaborado');
         
     }
 
@@ -1602,25 +1661,25 @@ public function previews_delegates($id)
                     //dd($empresas->status);
                     $empresas->update(['status' => '3']);
                 $empresas->update(['certificado' => session('usuario')->id]);
-                 return $this->enterprises()->with('status','funciona');
+                 return redirect()->route('enterprises')->with('status','Documento Certificado');
                 }
                 
                 elseif($empresas->status==1)
                 {    //dd(session('usuario')->id);
                     $empresas->update(['status' => '2']);
                     $empresas->update(['revisado' => session('usuario')->id]);
-                     return $this->enterprises()->with('status','funciona');
+                     return redirect()->route('enterprises')->with('status','Documento Revisado');
         } 
                 elseif($empresas->status==3)
                 {    //dd(session('usuario')->id);
                     $empresas->update(['status' => '4']);
                     $empresas->update(['aprobado' => session('usuario')->id]);
-                     return $this->prueba_pdf($empresas->id)->with('status','funciona');
+                     return redirect()->route('prueba_pdf', $empresas->id)->with('status','Documento Aprobado');
         }
         elseif($empresas->status==4)
                 {    //dd(session('usuario')->id);
                  
-                     return $this->prueba_pdf($empresas->id)->with('status','funciona');
+                     return redirect()->route('prueba_pdf', $empresas->id)->with('status','Impreso');
         }
 
                 
@@ -1641,25 +1700,25 @@ public function previews_delegates($id)
                     //dd($empresas->status);
                     $empresas->update(['status' => '3']);
                 $empresas->update(['certificado' => session('usuario')->id]);
-                 return $this->delegates()->with('status','funciona');
+                 return redirect()->route('delegates')->with('status','Documento Certificado');
                 }
                 
                 elseif($empresas->status==1)
                 {    //dd(session('usuario')->id);
                     $empresas->update(['status' => '2']);
                     $empresas->update(['revisado' => session('usuario')->id]);
-                     return $this->delegates()->with('status','funciona');
+                     return redirect()->route('delegates')->with('status','Documento Revisado');
         } 
                 elseif($empresas->status==3)
                 {    //dd(session('usuario')->id);
                     $empresas->update(['status' => '4']);
                     $empresas->update(['aprobado' => session('usuario')->id]);
-                     return $this->prueba_delegates_pdf($empresas->id)->with('status','funciona');
+                     return redirect()->route('prueba_delegates_pdf', $empresas->id)->with('status','Documento Aprobado');
         }
         elseif($empresas->status==4)
                 {    //dd(session('usuario')->id);
                  
-                     return $this->prueba_delegates_pdf($empresas->id)->with('status','funciona');
+                     return redirect()->route('prueba_delegates_pdf', $empresas->id)->with('status','Impreso');
         }
 
                 
@@ -1699,7 +1758,7 @@ public function elaborador($id)
             'contenido_empresas.updated_at as fecha',
             'origen.paisnombre as pais_origen',
             'registro.paisnombre as lregistro')
-           ->OrderBy('contenido_empresas.created_at','desc')->first();
+           ->OrderBy('contenido_empresas.created_at','desc')->OrderBy('contenido_empresas.status','asc')->first();
             //dd($previa);
             $twitter=db::table('datos_empresas')
             ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
@@ -1805,8 +1864,9 @@ public function elaborador_delegados($id)
             'aprobado.surname as surnameapro',
             'contenido_representantes.updated_at as fecha'
         )
-             
+            
            ->OrderBy('contenido_representantes.created_at','desc')
+           ->OrderBy('contenido_representantes.status','asc')
              ->first();
             //dd($previa);
 
@@ -2195,7 +2255,7 @@ public function elaborador_delegados($id)
 
             $empresas->update(['status' => 1]);
 
-            return $this->elaborador_delegados($empresas->delegate_id)->with('status','informe Modificado');
+            return redirect()->route('elaborador_delegados', $empresas->delegate_id)->with('status','informe Modificado');
     }
 
     public function modificar_elaborar_empresas(request $request)
@@ -2284,7 +2344,7 @@ public function elaborador_delegados($id)
 
             $empresas->update(['status' => 1]);
 
-            return $this->elaborador($empresas->enterprise_id)->with('status','informe Modificado');
+            return redirect()->route('elaborador', $empresas->enterprise_id)->with('status','informe Modificado');
     }
 
 

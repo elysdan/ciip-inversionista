@@ -29,7 +29,7 @@
                   
                      <!-- row -->
                     <div class="col-md-12">
-
+  @if(session('usuario')->role >=4)
                          <button type="button" 
 class="btn btn-outline-success mt-3 mb-3 p-0" 
 
@@ -42,7 +42,7 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
         <path d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"/>
     
     </svg>
-</button>
+</button>@endif
 @if($dc>0)
                            <div class="white_shd full margin_bottom_30">
 
@@ -62,16 +62,20 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
               <th >Apellido</th>
               <th >Cedula</th>
               <th >Nacionalidad</th>
-              <th >edad</th>
-              <th >Estado Civil</th>
               <th >Genero</th>
-              <th >Direccion</th>
               <th >Email</th>
+              <th >Telefono</th>
+              @if(session('usuario')->role >=3)
               <th >Redes Sociales</th>
-              
+              @endif
+               @if(session('usuario')->role >=3)
                <th colspan="2">Reporte</th>
-              @if(session('usuario')->role==9 )
+               @endif
+               @if(session('usuario')->role >= 8 )
               <th>Status</th>
+              @endif
+              @if(session('usuario')->role >= 5 )
+         
               <th  colspan="2">Gestion Administrativa</th>
               @endif
                                           </tr>
@@ -91,12 +95,10 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
                
                {{$delegado->GENTILICIO_NAC}}
                 </td>
-              <td>{{$delegado->edad}}</td>
-              <td>{{$delegado->estado_civil}}</td>
               <td>{{$delegado->sexo}}</td>
-              <td>{{$delegado->direccion}}</td>
               <td>{{$delegado->email}}</td>
-              
+              <td>{{$delegado->telefono}}</td>
+              @if(session('usuario')->role >=3)
              <td style="vertical-align: top;align-items: center;
   justify-content: center;
   align-content: center;">
@@ -110,11 +112,16 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
                
               </a>
               </td>
+              @endif
+               @if(session('usuario')->role >=3)
+               @if(session('usuario')->role >=4)
               <td><a href="{{route('previews_delegates',$delegado->id)}}"><button class="btn btn-primary">Generar</button></a></td>
+              @endif
               @if($generador > 0)
               <td><a href="{{route('elaborador_delegados',$delegado->id)}}"><button class="btn btn-primary">Visualizar</button></a></td>
+               @endif
               @endif
-              @if(session('usuario')->role==9 )
+              @if(session('usuario')->role >=8 )
               <td>
 @if($delegado->status==1)
 <form method="POST" action="{{route('suspend_delegates',$delegado->id)}}">
@@ -123,7 +130,7 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
 <button type="submit" 
                 class="btn btn-outline-success mt-1 mb-1 p-0" 
                 
-                  style="border-radius: 1rem; display: flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
+                  style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;">
                      <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
 </svg>
@@ -139,7 +146,7 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
 <button type="submit" 
                 class="btn btn-outline-danger mt-1 mb-1 p-0" 
                 
-                  style="border-radius: 1rem; display: flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
+                  style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
                  
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;">
                       <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>
@@ -151,12 +158,15 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
 @endif
 
 </td>
+@endif
+@if(session('usuario')->role >=5)
+  
               <td>
                 <a href="{{route('edit_delegates',$delegado->id)}}">
                 <button type="button" 
                 class="btn btn-outline-warning mt-1 mb-1 p-0" 
                 
-                 style="border-radius: 1rem; display: flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
+                 style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;">
                       <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4m9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>
 
@@ -165,6 +175,10 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
                 
               </a>
             </td>
+         
+        
+            @endif
+             @if(session('usuario')->role >=6)
               <td>
                 
                 <button type="button" 
@@ -209,7 +223,8 @@ data-toggle="modal" data-target="#DelModal{{$delegado->id}}" data-whatever="@mdo
 
                 
               
-              </td>
+              </td>   
+           
               @endif
             </tr>
              @php $n++; @endphp
@@ -291,7 +306,7 @@ data-toggle="modal" data-target="#DelModal{{$delegado->id}}" data-whatever="@mdo
                          <label for="fileInput" class="col-form-label">Foto de Perfil:</label>
                     <input type="file" class="form-control" name="foto" id="fileInput" accept="image/*">
 
-                     <div id="preview" class="w-25"></div>
+                     <div id="preview" class="w-100"></div>
                         <div class="alert alert-danger" role="alert" id="fileError">
                             Por Favor Seleccione una imagen no mayor a 20 mb, de no tener el sistema pondra una predeterminada.
                         </div>
@@ -310,6 +325,8 @@ data-toggle="modal" data-target="#DelModal{{$delegado->id}}" data-whatever="@mdo
       
         </div>
       </div>
+
+  
     
 <script>
   var campo10 = document.getElementById('campo10'); //direccion

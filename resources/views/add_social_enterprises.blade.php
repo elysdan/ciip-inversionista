@@ -59,8 +59,8 @@ class="btn btn-outline-secondary mt-3 mb-3 p-0" href="{{url('enterprises')}}"
               <th  >#</th>
 <th >Red Social</th>
 <th >Usuario</th>
-@if(session('usuario')->role==9 )
-<th  colspan="2"></th>
+@if(session('usuario')->role >= 3 )
+<th  colspan="2">Gestion</th>
 @endif
             </tr>
          </thead>
@@ -72,13 +72,13 @@ class="btn btn-outline-secondary mt-3 mb-3 p-0" href="{{url('enterprises')}}"
 <tr style="vertical-align: none;text-align: center;align-items: center;
 justify-content: center;
 align-content: center;" >
-<td >@php echo $n; @endphp</td>
+<td class="col-md-1">@php echo $n; @endphp</td>
 <td>{{$red->red}}</td>
 
 <td>{{$red->username}}</td>
 
-@if(session('usuario')->role==9 )
-              <td>
+@if(session('usuario')->role >=3 )
+              <td class="col-md-1">
                 <a href="{{route('edit_web_enterprise', $red->id)}}">
                 <button type="button" 
                 class="btn btn-outline-warning mt-1 mb-1 p-0" 
@@ -91,7 +91,7 @@ align-content: center;" >
                 
               </a>
             </td>
-              <td>
+              <td class="col-md-1">
                 
                 <button type="button" 
 class="btn btn-outline-danger mt-1 mb-1 p-0" 

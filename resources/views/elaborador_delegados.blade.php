@@ -338,19 +338,55 @@
 <br>
 <table class="m-1 w-100">
                                                     <tr >
-                                                        <th>Version</th>
+                                                      
+                                                        <th>Fecha de Elaboracion</th>
                                                           <th>Status</th>
-                                                         <th><div>Modificar</div></th>
+                                                          @if(session('usuario')->role >= 5)
+                                                         <th>Modificar</th>
+                                                         @endif
+                                                         <th>Imprimir</th>
                                                         
                                                     </tr>
                                                    @foreach($versiones as $version)
                                                     <tr>
-                                                       <td class="col-md-5">{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',  $version->updated_at)->format('d-m-Y') }}</td>
-                                                       <td class="col-md-1">{{$version->status}}</td>
-                                                        <td><a href="{{route('modificar_elaborador_delegados',$version->id)}}"><div class=" w-75 btn btn-warning" >Modificar</div></a></td>
+                                                      
+                                                       <td class="col-md-1">{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',  $version->updated_at)->format('D-d-M-Y') }}</td>
+                                                       <td class="col-md-1">
+                                                        @if($version->status == 0)
+                                                        Suspendido
+                                                        @endif
+                                                         @if($version->status == 1)
+                                                         Elaborado
+                                                        @endif
+                                                         @if($version->status == 2)
+                                                         Revisado
+                                                        @endif
+                                                         @if($version->status == 3)
+                                                         certificado
+                                                        @endif
+                                                         @if($version->status == 4)
+                                                         Aprobado
+                                                        @endif
+                                                        </td>
+                                                        @if(session('usuario')->role >= 5)
+                                                        @if($version->status!=4 && $version->status!=0)
+                                                        <td class="col-md-1"><a href="{{route('modificar_elaborador_delegados',$version->id)}}"><div class=" w-75 btn btn-warning" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down-fill" viewBox="0 0 16 16">
+  <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1m-1 4v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 11.293V7.5a.5.5 0 0 1 1 0"/>
+</svg></div></a></td>
+@else 
+
+ <td class="col-md-1"><div class=" w-75 btn btn-secondary" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-arrow-down-fill" viewBox="0 0 16 16">
+  <path d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1m-1 4v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 11.293V7.5a.5.5 0 0 1 1 0"/>
+</svg></div></td>
+
+@endif
+@endif
+                                                         <td class="col-md-1"><a href="{{route('prueba_delegates_pdf',$version->id)}}"><div class=" w-75 btn btn-primary" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
+  <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1"/>
+  <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
+</svg></div></a></td>
                                                     </tr>
                                                     @endforeach
-                                                    
                                     </table>
 </div>
 
@@ -359,29 +395,40 @@
 
 
 @if($previa->estatuscontent==1)
+@if(session('usuario')->role >= 5)
 <form method="POST" action="{{route('revisar_delegados',$previa->ide)}}">
+
 @csrf
 @method('PUT')
-<button class="mt-5 btn btn-primary" style="text-align:center;width: 100%;" type="submit">revisar</button>
+ <div class="mt-5" style="text-align:center;width: 100%;">
+<input href="" type="submit" class="btn btn-primary" value="Aprobar Revision" ></input>
+</div>
 </form>
+@endif
 @elseif($previa->estatuscontent==2)
+@if(session('usuario')->role >= 6)
 <form method="POST" action="{{route('revisar_delegados',$previa->ide)}}">
 @csrf
 @method('PUT')
-<button class="mt-5 btn btn-primary" style="text-align:center;width: 100%;" type="submit">certificar</button>
+ <div class="mt-5" style="text-align:center;width: 100%;">
+<input href="" type="submit" class="btn btn-primary" value="Aprovar Certificacion" ></input>
+</div>
 </form>
+@endif
 @elseif($previa->estatuscontent==3)
+@if(session('usuario')->role >= 7)
 <form method="POST" action="{{route('revisar_delegados',$previa->ide)}}">
 @csrf
 @method('PUT')
 
  <div class="mt-5" style="text-align:center;width: 100%;">
-<input href="" type="submit" class="btn btn-primary" value="Aprobar E Imprimir"></input>
+<input href="" type="submit" class="btn btn-primary" value="Aprovacion Final" ></input>
 </div>
 
 </form>
-
+@endif
 @elseif($previa->estatuscontent==4)
+
 <form method="POST" action="{{route('revisar_delegados',$previa->ide)}}">
 @csrf
 @method('PUT')
@@ -393,6 +440,10 @@
 </form>
 @endif
 
- 
+
+
+<!--
+   
+-->
 </body>
     @endsection

@@ -37,7 +37,7 @@
                   
                      <!-- row -->
                     <div class="col-md-12">
-
+  @if(session('usuario')->role >=4)
                          <button type="button" 
 class="btn btn-outline-success mt-3 mb-3 p-0" 
 
@@ -51,6 +51,7 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
     
     </svg>
 </button>
+@endif
 <div class="modal fade w-100" id="RegModal" tabindex="-1" role="dialog" aria-labelledby="RegModal" aria-hidden="true" style="align-items: center;
   justify-content: center;
   align-content: center;">  
@@ -74,19 +75,33 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
                 
                     <label for="campo3" class="col-form-label">Correo Electronico:</label>
                     <input type="email" class="form-control" id="campo3" name="correo" pattern="[A-Za-z0-9@.áÁéÉíÍóÓúÚ]{4,256}" maxlength="256" required>
-                 
+                 @if(session('usuario')->role >= 4)
                     <label for="campo4" class="col-form-label" >Rol:</label>
                     <select class="form-control" id="campo4" name="rol" required>
                         <option selected disabled>Seleccione una opcion</option>
                         <option value="1">Ordinario</option>
                         <option value="2">Invitado</option>
                         <option value="3">Ayudante</option>
+                       
                         <option value="4">Tecnico</option>
+                        @if(session('usuario')->role >= 5)
                         <option value="5">Licenciado</option>
+                        @endif
+                        @if(session('usuario')->role >= 6)
                         <option value="6">Coordinador</option>
+                        @endif
+                        @if(session('usuario')->role >= 7)
                         <option value="7">Gerente</option>
+                        @endif
+                        @if(session('usuario')->role >= 8)
                         <option value="8">Administrador</option>
+                        @endif
+                        @if(session('usuario')->role==9)
                         <option value="9">Super Usuario</option>
+                        @endif
+                        @endif
+                        
+                       
                       </select>
                     
                     <label for="campo5" class="col-form-label">Contraseña:</label>
@@ -95,7 +110,7 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
                     <label for="fileInput" class="col-form-label">Foto de Perfil:</label>
                     <input type="file" class="form-control" name="foto" id="fileInput" accept="image/*">
                   </div>
-                  <div id="preview" class="w-25"></div>
+                  <div id="preview" class="w-100"></div>
                         <div class="alert alert-danger" role="alert" id="fileError">
                             Por Favor Seleccione una imagen no mayor a 20 mb, de no tener el sistema pondra una predeterminada.
                         </div>
@@ -129,21 +144,21 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
                                              <th>Nombre</th>
                                              <th>Apellido</th>
                                              <th>Correo</th>
-@if(session('usuario')->role==9 )
+@if(session('usuario')->role >= 8 )
                                              <th>Rol</th>
                                               @endif
                                              <th>Foto de Perfil</th>
-                                            @if(session('usuario')->role==9 )
+                                            @if(session('usuario')->role >= 8 )
                                               <th>Status</th>
                                               @endif
-                                               @if(session('usuario')->role==9 ||  session('usuario')->role==8)
+                                               @if(session('usuario')->role >= 5 )
                                              <th colspan="2">Gestion de administradores</th>
                                             @endif
                                           </tr>
                                        </thead>
                                        <tbody style="color:black">
                                         @php $n=1; @endphp
-                                         @if(session('usuario')->role==9)
+                                         @if(session('usuario')->role >= 6)
                                            
             @foreach($usuarios as $usuario)
             
@@ -152,7 +167,7 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
               <td>{{$usuario->name}}</td>
               <td>{{$usuario->surname}}</td>
               <td>{{$usuario->email}}</td>
-              @if(session('usuario')->role==9)
+              @if(session('usuario')->role >= 8)
               
               <td>@if($usuario->role == 1) Ordinario
               @elseif($usuario->role == 2) Visitante
@@ -173,7 +188,7 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
   justify-content: center;
   align-content: center;
   width: 3vw;"></td>
-   @if(session('usuario')->role==9)
+   @if(session('usuario')->role >=8)
               <td>
                 @if($usuario->status==1)
 <form method="POST" action="{{route('suspend_users',$usuario->id)}}">
@@ -210,7 +225,7 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
 @endif</td>
              
               @endif
-              @if(session('usuario')->role==9 || session('usuario')->role==8)
+              @if(session('usuario')->role >= 5 && session('usuario')->role >= $usuario->role)
               <td><a href="{{route('edit_users',$usuario->id)}}">
                 <button type="button" 
                 class="btn btn-outline-warning mt-3 mb-3 p-0" 
@@ -225,8 +240,25 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
               </a>
               
             </td>
+            @else
+             <td>
+                <button type="button" 
+                class="btn btn-outline-secondary mt-3 mb-3 p-0" 
+                
+                style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;"> 
+                      <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4m9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>
+
+                    </svg>
+                </button>
+                
+              
+              
+            </td>
             @endif
-            @if(session('usuario')->role==9)
+
+                       @if(session('usuario')->role >= 6 )
+  @if(session('usuario')->role >= 6 && session('usuario')->role >= $usuario->role)
               <td>
                 
                 <button type="button" 
@@ -240,6 +272,7 @@ data-toggle="modal" data-target="#DelModal{{$usuario->id}}" data-whatever="@mdo"
     
     </svg>
 </button>
+
 <div class="modal fade" id="DelModal{{$usuario->id}}" tabindex="-1" role="dialog" aria-labelledby="RegModal" aria-hidden="true" style="align-items: center;
   justify-content: center;
   align-content: center;">
@@ -269,11 +302,37 @@ data-toggle="modal" data-target="#DelModal{{$usuario->id}}" data-whatever="@mdo"
 
   </div>
 </div>
-                
+
+
 
                 
               
               </td>
+              @else
+
+                <td>
+                
+                <button type="button" 
+class="btn btn-outline-secondary mt-3 mb-3 p-0" 
+
+ style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height:3vw" 
+> 
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-dash " align="center" viewBox="0 0 16 16" style="width: 2vw;">
+      <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M11 12h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1m0-7a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+      <path d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"/>
+    
+    </svg>
+</button>
+
+
+
+
+
+
+                
+              
+              </td>
+              @endif
               @endif
               
              
@@ -298,11 +357,13 @@ data-toggle="modal" data-target="#DelModal{{$usuario->id}}" data-whatever="@mdo"
               
               <td style="vertical-align: top;align-items: center;
   justify-content: center;
-  align-content: center;"> <img src="{{$usuario->file}}" style="border-radius: 50%;
+  align-content: center;"> 
+  <img src="{{$usuario->file}}" style="border-radius: 50%;
   align-items: center;
   justify-content: center;
   align-content: center;
-  width: 3vw;"></td>
+  width: 3vw;">
+</td>
    @if(session('usuario')->role==9)
               <td>@if($usuario->status==1)
 <form method="POST" action="{{route('suspend_users',$usuario->id)}}">
@@ -339,12 +400,15 @@ data-toggle="modal" data-target="#DelModal{{$usuario->id}}" data-whatever="@mdo"
 @endif</td>
              
               @endif
-              @if(session('usuario')->role==9)
+               @if(session('usuario')->role >= 5 )
+
+                           @if(session('usuario')->role >= 5 && session('usuario')->role >= $usuario->role)
+
               <td><a href="{{route('edit_users',$usuario->id)}}">
                 <button type="button" 
                 class="btn btn-outline-warning mt-3 mb-3 p-0" 
                 
-                style="border-radius: 1rem; display: flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
+                style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;"> 
                       <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4m9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>
 
@@ -354,14 +418,34 @@ data-toggle="modal" data-target="#DelModal{{$usuario->id}}" data-whatever="@mdo"
               </a>
               
             </td>
+            @else
+             <td>
+
+                <button type="button" 
+                class="btn btn-outline-secondary mt-3 mb-3 p-0" 
+                
+                style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;"> 
+                      <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4m9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>
+
+                    </svg>
+                </button>
+                
+              
+              
+            </td>
             @endif
-            @if(session('usuario')->role==9)
+            @endif
+
+                    
+                    @if(session('usuario')->role >= 6 )
+  @if(session('usuario')->role >= 6 && session('usuario')->role >= $usuario->role)
               <td>
                 
                 <button type="button" 
 class="btn btn-outline-danger mt-3 mb-3 p-0" 
 
- style="border-radius: 1rem; display: flex; align-items: center; justify-content: center;width: 3vw;height:3vw" 
+ style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height:3vw" 
 data-toggle="modal" data-target="#DelModal{{$usuario->id}}" data-whatever="@mdo"> 
     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-dash " align="center" viewBox="0 0 16 16" style="width: 2vw;">
       <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M11 12h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1m0-7a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
@@ -369,6 +453,7 @@ data-toggle="modal" data-target="#DelModal{{$usuario->id}}" data-whatever="@mdo"
     
     </svg>
 </button>
+
 <div class="modal fade" id="DelModal{{$usuario->id}}" tabindex="-1" role="dialog" aria-labelledby="RegModal" aria-hidden="true" style="align-items: center;
   justify-content: center;
   align-content: center;">
@@ -398,11 +483,36 @@ data-toggle="modal" data-target="#DelModal{{$usuario->id}}" data-whatever="@mdo"
 
   </div>
 </div>
-                
+
+
 
                 
               
               </td>
+              @else
+
+                <td>
+                
+                <button type="button" 
+class="btn btn-outline-danger mt-3 mb-3 p-0" 
+
+ style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height:3vw" > 
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-dash " align="center" viewBox="0 0 16 16" style="width: 2vw;">
+      <path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7M11 12h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1m0-7a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+      <path d="M2 13c0 1 1 1 1 1h5.256A4.5 4.5 0 0 1 8 12.5a4.5 4.5 0 0 1 1.544-3.393Q8.844 9.002 8 9c-5 0-6 3-6 4"/>
+    
+    </svg>
+</button>
+
+
+
+
+
+
+                
+              
+              </td>
+              @endif
               @endif
               
              
