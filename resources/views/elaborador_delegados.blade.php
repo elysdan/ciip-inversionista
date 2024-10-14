@@ -211,7 +211,7 @@
                             <div style="win-width:100%;  display: flex;
   justify-content: center;">
                             <div class="d-flex m-3 p-2" style="width:10vw;height: 10vw;border:solid 1px black;justify-content: center;align-items: center;align-content: center;margin: 0 auto;">
-                                <img src="{{$previa->foto}}" style="width:100%">
+                                <img src="{{$previa->foto}}" style="width:auto;max-height: 100%;">
                             </div>
                             </div>
 
@@ -345,12 +345,16 @@
                                                          <th>Modificar</th>
                                                          @endif
                                                          <th>Imprimir</th>
+                                                          @if(session('usuario')->role >=8)
+                                                         <th>Eliminar</th>
+                                                         @endif
                                                         
                                                     </tr>
                                                    @foreach($versiones as $version)
                                                     <tr>
                                                       
-                                                       <td class="col-md-1">{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',  $version->updated_at)->format('D-d-M-Y') }}</td>
+                                                       <td class="col-md-1">{{ \Carbon\Carbon::parse($version->updated_at)->locale('es_ES')
+                                                        ->isoFormat('dddd DD [de] MMMM [de] YYYY [a las] hh:mm') }}</td>
                                                        <td class="col-md-1">
                                                         @if($version->status == 0)
                                                         Suspendido
@@ -362,7 +366,7 @@
                                                          Revisado
                                                         @endif
                                                          @if($version->status == 3)
-                                                         certificado
+                                                         Certificado
                                                         @endif
                                                          @if($version->status == 4)
                                                          Aprobado
@@ -381,10 +385,39 @@
 
 @endif
 @endif
+@if($version->status == 4)
                                                          <td class="col-md-1"><a href="{{route('prueba_delegates_pdf',$version->id)}}"><div class=" w-75 btn btn-primary" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
   <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1"/>
   <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
 </svg></div></a></td>
+@else
+ <td class="col-md-1"><a ><div class=" w-75 btn btn-secondary" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-printer-fill" viewBox="0 0 16 16">
+  <path d="M5 1a2 2 0 0 0-2 2v1h10V3a2 2 0 0 0-2-2zm6 8H5a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1"/>
+  <path d="M0 7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-1v-2a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v2H2a2 2 0 0 1-2-2zm2.5 1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"/>
+</svg></div></a></td>
+@endif
+@if(session('usuario')->role >=8)
+  @if($version->status != 0)
+
+                                                        <td class="col-md-1">
+                                                            <form  method="POST" action="{{route('suspender_pdf_delegados',$version->id)}}">
+                                                                @csrf
+@method('PUT')
+<button class=" w-75 btn btn-danger" type="submit">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+  <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+</svg></button></form></td>
+@else
+
+                                                         <td class="col-md-1">
+                                                       <form  method="POST" action="{{route('suspender_pdf_delegados',$version->id)}}">
+                                                                @csrf
+@method('PUT')
+<button class=" w-75 btn btn-success" type="submit">
+ Activar</button></form></td>
+
+                                                         @endif
+                                                         @endif
                                                     </tr>
                                                     @endforeach
                                     </table>
@@ -411,7 +444,7 @@
 @csrf
 @method('PUT')
  <div class="mt-5" style="text-align:center;width: 100%;">
-<input href="" type="submit" class="btn btn-primary" value="Aprovar Certificacion" ></input>
+<input href="" type="submit" class="btn btn-primary" value="Certificar" ></input>
 </div>
 </form>
 @endif
@@ -422,7 +455,7 @@
 @method('PUT')
 
  <div class="mt-5" style="text-align:center;width: 100%;">
-<input href="" type="submit" class="btn btn-primary" value="Aprovacion Final" ></input>
+<input href="" type="submit" class="btn btn-primary" value="Aprobar" ></input>
 </div>
 
 </form>

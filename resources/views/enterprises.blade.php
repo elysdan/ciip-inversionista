@@ -100,8 +100,10 @@ align-content: center;" >
               </a></td>
 
               <td><a href="{{route('previews',$empresa->id)}}"><button class="btn btn-primary">Generar</button></a></td>
-                @if($generador > 0)
+                @if($empresa->visualizar > 0)
               <td><a href="{{route('elaborador',$empresa->id)}}"><button class="btn btn-primary">Visualizar</button></a></td>
+              @else
+              <td><a ><button class="btn btn-secondary">Visualizar</button></a></td>
               @endif
              
 @if(session('usuario')->role >=8 )
@@ -238,9 +240,11 @@ align-content: center;" >
            @if(session('usuario')->role >=5)
               <td><a href="{{route('previews',$empresa->id)}}"><button class="btn btn-primary">Generar</button></a></td>
               @endif
-                @if($generador > 0)
+                @if($empresa->visualizar > 0)
 
               <td><a href="{{route('elaborador',$empresa->id)}}"><button class="btn btn-primary">Visualizar</button></a></td>
+              @else
+                   <td><a ><button class="btn btn-secondary">Visualizar</button></a></td>
               @endif
              
 @if(session('usuario')->role >=8 )

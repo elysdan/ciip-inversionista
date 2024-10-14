@@ -585,14 +585,23 @@ else
 
         if(session('usuario')->role >= 8)
         {
-       $delegados=db::table('inversionista_naturals')->join('nacionalidad','inversionista_naturals.nacionalidad','=','nacionalidad.id')
+       $delegados=db::table('inversionista_naturals')
+       ->join('nacionalidad','inversionista_naturals.nacionalidad','=','nacionalidad.id')
        ->join('generos','inversionista_naturals.sexo','=','generos.id')
        ->join('estados_civiles','inversionista_naturals.estado_civil','=','estados_civiles.id')
+       ->leftjoin('contenido_representantes','inversionista_naturals.id','=','contenido_representantes.delegate_id')
+       
        ->select(
             'inversionista_naturals.*',
             'nacionalidad.GENTILICIO_NAC as GENTILICIO_NAC',
             'generos.genero as sexo',
-            'estados_civiles.estado as estado_civil')->get();
+           DB::raw('count(case when contenido_representantes.status <> 0 then 1 else null end) as visualizar'),
+            'estados_civiles.estado as estado_civil')
+       ->groupBy(
+        'inversionista_naturals.id',
+        'nacionalidad.GENTILICIO_NAC',
+        'generos.genero',
+        'estados_civiles.estado')->get();
         $dc=db::table('inversionista_naturals')->count();
 
    }
@@ -601,12 +610,19 @@ else
         $delegados=db::table('inversionista_naturals')->join('nacionalidad','inversionista_naturals.nacionalidad','=','nacionalidad.id')
        ->join('generos','inversionista_naturals.sexo','=','generos.id')
        ->join('estados_civiles','inversionista_naturals.estado_civil','=','estados_civiles.id')
+       ->leftjoin('contenido_representantes','inversionista_naturals.id','=','contenido_representantes.delegate_id')
+       
        ->select(
             'inversionista_naturals.*',
             'nacionalidad.GENTILICIO_NAC as GENTILICIO_NAC',
             'generos.genero as sexo',
-            'estados_civiles.estado as estado_civil')->where('status', 1)->get();
-        $dc=db::table('inversionista_naturals')->where('status', 1)->count();
+           DB::raw('count(case when contenido_representantes.status <> 0 then 1 else null end) as visualizar'),
+            'estados_civiles.estado as estado_civil')->where('inversionista_naturals.status', 1)->groupBy(
+        'inversionista_naturals.id',
+        'nacionalidad.GENTILICIO_NAC',
+        'generos.genero',
+        'estados_civiles.estado')->get();
+        $dc=db::table('inversionista_naturals')->where('inversionista_naturals.status', 1)->count();
        }
 
      // dd($delegados);
@@ -916,12 +932,17 @@ $edad = $fechaNacimientoCarbon->age;
                 $empresas=DB::table('datos_empresas')
             ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
             ->join('pais as registro','datos_empresas.lregistro','=','registro.id')
+            ->leftjoin('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
+            
             ->select(
             'datos_empresas.*',
             'origen.paisnombre as pais_origen',
+            DB::raw('count(case when contenido_empresas.status <> 0 then 1 else null end) as visualizar'),
             'registro.paisnombre as lregistro')
+            ->groupBy('datos_empresas.id','origen.paisnombre','registro.paisnombre')
             ->OrderBy('id')
            ->get();
+           //dd($empresas);
 
            $generador=DB::table('datos_empresas')
             ->join('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
@@ -937,11 +958,15 @@ $edad = $fechaNacimientoCarbon->age;
                  $empresas=DB::table('datos_empresas')
             ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
             ->join('pais as registro','datos_empresas.lregistro','=','registro.id')
+            ->leftjoin('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
             ->select(
             'datos_empresas.*',
             'origen.paisnombre as pais_origen',
+            DB::raw('count(case when contenido_empresas.status <> 0 then 1 else null end) as visualizar'),
             'registro.paisnombre as lregistro')
-            ->OrderBy('id')->where('datos_empresas.status',1)
+            ->where('datos_empresas.status',1)
+            ->groupBy('datos_empresas.id','origen.paisnombre','registro.paisnombre')
+            ->OrderBy('id')
            ->get();
 
            $generador=DB::table('datos_empresas')
@@ -1732,6 +1757,7 @@ public function previews_delegates($id)
 public function elaborador($id)
     {
         if(session('usuario')){
+Carbon::setlocale('es');
 
             $previa=DB::table('datos_empresas') ->where('datos_empresas.id',$id)
             ->leftjoin('pais as origen','datos_empresas.pais_origen','=','origen.id')
@@ -1741,7 +1767,7 @@ public function elaborador($id)
             ->leftjoin('users as revisado','revisado.id','=','contenido_empresas.revisado')
             ->leftjoin('users as certificado','certificado.id','=','contenido_empresas.certificado')
             ->leftjoin('users as aprobado','aprobado.id','=','contenido_empresas.aprobado')
-
+            ->where('contenido_empresas.status', '!=', 0)
             ->select(
             'datos_empresas.*',
             'contenido_empresas.*',
@@ -1758,7 +1784,8 @@ public function elaborador($id)
             'contenido_empresas.updated_at as fecha',
             'origen.paisnombre as pais_origen',
             'registro.paisnombre as lregistro')
-           ->OrderBy('contenido_empresas.created_at','desc')->OrderBy('contenido_empresas.status','asc')->first();
+            ->OrderBy('contenido_empresas.status','asc')
+           ->OrderBy('contenido_empresas.created_at','desc')->first();
             //dd($previa);
             $twitter=db::table('datos_empresas')
             ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
@@ -1819,9 +1846,15 @@ public function elaborador($id)
                 $facebook=0;
             }
 
- $versiones=db::table('contenido_empresas')
+ if(session('usuario')->role >= 8)
+{
+             $versiones=db::table('contenido_empresas')
              ->where('contenido_empresas.enterprise_id',$id)->get();
-
+}
+else
+{
+     $versiones=db::table('contenido_empresas')->where('contenido_empresas.enterprise_id',$id)->where('contenido_empresas.status','!=','0')->get();
+}
   //dd($twitter);
 
 
@@ -1846,7 +1879,7 @@ public function elaborador_delegados($id)
            ->leftjoin('users as revisado','revisado.id','=','contenido_representantes.revisado')
            ->leftjoin('users as certificado','certificado.id','=','contenido_representantes.certificado')
            ->leftjoin('users as aprobado','aprobado.id','=','contenido_representantes.aprobado')
-             
+             ->where('contenido_representantes.status', '!=', 0)
              ->select(
             'inversionista_naturals.*',
             'nacionalidad.GENTILICIO_NAC as GENTILICIO_NAC',
@@ -1864,15 +1897,21 @@ public function elaborador_delegados($id)
             'aprobado.surname as surnameapro',
             'contenido_representantes.updated_at as fecha'
         )
-            
+            ->OrderBy('contenido_representantes.status','Asc')
            ->OrderBy('contenido_representantes.created_at','desc')
-           ->OrderBy('contenido_representantes.status','asc')
+           
              ->first();
             //dd($previa);
 
+            if(session('usuario')->role >= 8)
+{
              $versiones=db::table('contenido_representantes')
              ->where('contenido_representantes.delegate_id',$id)->get();
-
+}
+else
+{
+     $versiones=db::table('contenido_representantes')->where('contenido_representantes.delegate_id',$id)->where('contenido_representantes.status','!=',0)->get();
+}
 
             $twitter=db::table('inversionista_naturals')
             ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')
@@ -1946,6 +1985,37 @@ public function elaborador_delegados($id)
         return $this->index();
     }
 
+public function suspender_pdf($id){
+
+     $previa = contenidoempresa::find($id);
+     if($previa->status != 0)
+     {
+        $previa->update(['status' => '0']);
+        return redirect()->route('enterprises')->with('status','Documento Eliminado');
+}
+elseif($previa->status == 0)
+{
+    $previa->update(['status' => '1']);
+        return redirect()->route('enterprises')->with('status','Documento Restaurando');
+}
+     
+     
+}
+
+public function suspender_pdf_delegados($id){
+
+     $previa = contenidorepresentante::find($id);
+      if($previa->status != 0)
+     {
+        $previa->update(['status' => '0']);
+        return redirect()->route('enterprises')->with('status','Documento Eliminado');
+}
+elseif($previa->status == 0)
+{
+    $previa->update(['status' => '1']);
+        return redirect()->route('enterprises')->with('status','Documento Restaurando');
+}
+}
 
     public function modificar_elaborador_delegados($id)
     {   
@@ -1982,9 +2052,16 @@ public function elaborador_delegados($id)
              ->first();
             //dd($previa);
 
+if(session('usuario')->role >= 8)
+{
              $versiones=db::table('contenido_representantes')
              ->where('contenido_representantes.delegate_id',$id)->get();
-
+}
+else
+{
+     $versiones=db::table('contenido_representantes')
+             ->where('contenido_representantes.delegate_id',$id)->get();
+}
 
             $twitter=db::table('inversionista_naturals')
             ->join('redes_sociales_delegados','redes_sociales_delegados.delegate_id','=','inversionista_naturals.id')

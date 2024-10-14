@@ -216,7 +216,7 @@
 
                                      <br>
                             
-                                <h4 style="text-align:CENTER">Registro Fizcal</h4>
+                                <h4 style="text-align:CENTER">Registro Fiscal</h4>
 
                                 <h5 style="text-align:CENTER">{{$previa->identificador}}-{{$previa->rif}}</h5>
 

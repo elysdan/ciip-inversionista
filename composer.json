@@ -9,10 +9,15 @@
         "barryvdh/laravel-dompdf": "^3.0",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
+        "laraveles/spanish": "^1.5",
         "realrashid/sweet-alert": "^7.2"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
+        "laravel-lang/attributes": "^2.11",
+        "laravel-lang/common": "^6.4",
+        "laravel-lang/lang": "^15.8",
+        "laravel-lang/publisher": "^16.4",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.26",
         "mockery/mockery": "^1.6",

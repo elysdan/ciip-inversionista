@@ -124,7 +124,14 @@ Route::get('/modificar_elaborador_delegados_{id}', [inversionista::class, 'modif
 Route::put('/modificar_elaborar_empresas', [inversionista::class, 'modificar_elaborar_empresas'])->name('modificar_elaborar_empresas');
 
 
+
 Route::put('/modificar_elaborar_delegados', [inversionista::class, 'modificar_elaborar_delegados'])->name('modificar_elaborar_delegados');
+
+Route::put('/suspender_pdf_delegados_{id}', [inversionista::class, 'suspender_pdf_delegados'])->name('suspender_pdf_delegados');
+
+Route::put('/suspender_pdf_{id}', [inversionista::class, 'suspender_pdf'])->name('suspender_pdf');
+
+
 
 
 

@@ -223,7 +223,7 @@
                             <div style="win-width:100%;  display: flex;
   justify-content: center;">
                             <div class="d-flex m-3 p-2" style="width:15vw;height: 15vw;border:solid 1px black;justify-content: center;align-items: center;align-content: center;margin: 0 auto;">
-                                <img src="{{$previa->foto}}" style="width:100%">
+                                <img src="{{$previa->foto}}" style="width:auto;max-height: 100%;">
                             </div>
                             </div>
 

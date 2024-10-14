@@ -187,6 +187,7 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
   align-items: center;
   justify-content: center;
   align-content: center;
+  aspect-ratio: 1;
   width: 3vw;"></td>
    @if(session('usuario')->role >=8)
               <td>
@@ -362,6 +363,7 @@ class="btn btn-outline-secondary mt-3 mb-3 p-0"
   align-items: center;
   justify-content: center;
   align-content: center;
+  aspect-ratio: 1;
   width: 3vw;">
 </td>
    @if(session('usuario')->role==9)

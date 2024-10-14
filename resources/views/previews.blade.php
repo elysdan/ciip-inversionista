@@ -193,7 +193,7 @@
                             <div style="win-width:100%;  display: flex;
   justify-content: center;">
                             <div class="d-flex m-3 p-2" style="width:10vw;height: 10vw;border:solid 1px black;justify-content: center;align-items: center;align-content: center;margin: 0 auto;">
-                                <img src="{{$previa->foto}}" style="width:100%">
+                                <img src="{{$previa->foto}}" style="width:auto;max-height: 100%;">
                             </div>
                             </div>
 
@@ -216,7 +216,7 @@
 
                                      <br>
                             
-                                <h4 style="text-align:CENTER">Registro Fizcal</h4>
+                                <h4 style="text-align:CENTER">Registro Fiscal</h4>
 
                                 <h5 style="text-align:CENTER">{{$previa->identificador}}-{{$previa->rif}}</h5>
 

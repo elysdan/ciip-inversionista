@@ -98,7 +98,7 @@ position: absolute;
                      <div class="user_profle_side">
                         <div class="user_img" style="  display: flex;
   align-items: center;
-  justify-content: center;"><img class="img-responsive"  src="{{session('usuario')->file}}" alt="#" /></div>
+  justify-content: center;"><img class="img-responsive" style="aspect-ratio: 1"  src="{{session('usuario')->file}}" alt="#" /></div>
                         <div class="user_info">
                            <h6>{{session('usuario')->name}}</h6>
                            
@@ -169,7 +169,7 @@ position: absolute;
                             
                               <ul class="user_profile_dd">
                                  <li>
-                                    <a class="dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-responsive rounded-circle" src="{{session('usuario')->file}}" alt="#" /><span class="name_user">{{session('usuario')->name}}</span></a>
+                                    <a class="dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-responsive rounded-circle" src="{{session('usuario')->file}}" style="aspect-ratio: 1"  alt="#" /><span class="name_user">{{session('usuario')->name}}</span></a>
                                     <div class="dropdown-menu ">
                                        <a class="dropdown-item" href="{{route('configurations')}}">Configuracion</a>
                                        <a class="dropdown-item" href="{{route('logout')}}"><span>Cerrar Sesion</span> <i class="fa fa-sign-out"></i></a>

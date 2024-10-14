@@ -117,9 +117,12 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
                @if(session('usuario')->role >=4)
               <td><a href="{{route('previews_delegates',$delegado->id)}}"><button class="btn btn-primary">Generar</button></a></td>
               @endif
-              @if($generador > 0)
+              @if($delegado->visualizar > 0)
               <td><a href="{{route('elaborador_delegados',$delegado->id)}}"><button class="btn btn-primary">Visualizar</button></a></td>
+              @else
+              <td><a ><button class="btn btn-secondary">Visualizar</button></a></td>
                @endif
+
               @endif
               @if(session('usuario')->role >=8 )
               <td>
