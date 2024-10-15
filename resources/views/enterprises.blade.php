@@ -366,7 +366,7 @@ data-toggle="modal" data-target="#DelModal{{$empresa->id}}" data-whatever="@mdo"
 </div>
 
 
-
+@endif
 
 
 
@@ -451,7 +451,7 @@ data-toggle="modal" data-target="#DelModal{{$empresa->id}}" data-whatever="@mdo"
       </div>
 
 
-@endif
+
 
 
 

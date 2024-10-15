@@ -12,7 +12,7 @@ class inversionistanatural extends Model
     protected $table = 'inversionista_naturals';
 
     protected $fillable = [
-        'user_id',
+        
         'nombre',
         'apellido',
         'doc_identidad',

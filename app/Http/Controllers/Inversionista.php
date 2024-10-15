@@ -650,7 +650,7 @@ else
     {
                 //dd($request->hasfile("foto"));
 
-                $busqueda=db::table('users')->where('email',$request->correo)->select('id')->first();
+              //  $busqueda=db::table('users')->where('email',$request->correo)->select('id')->first();
                 //dd($busqueda);
                 $registry = new inversionistanatural;
 
@@ -663,7 +663,7 @@ else
                         $registry-> foto = $ruta.$nombreimagen;
                         
                     }
-                $registry -> user_id = $busqueda->id;
+               
                 $registry -> nombre = $request -> nombre;
                 $registry -> apellido = $request -> apellido;
                 $registry -> doc_identidad = $request -> cedula;

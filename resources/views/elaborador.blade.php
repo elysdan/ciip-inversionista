@@ -423,7 +423,7 @@
 @csrf
 @method('PUT')
  <div class="mt-5" style="text-align:center;width: 100%;">
-<input href="" type="submit" class="btn btn-primary" value="Aprobar Revision" onclick="return confirm('¿Desea Finalizar la Revision?')"></input>
+<input href="" type="submit" class="btn btn-primary" value="Revisar" onclick="return confirm('¿Desea Finalizar la Revision?')"></input>
 </div>
 </form>
 @endif
@@ -444,7 +444,7 @@
 @method('PUT')
 
  <div class="mt-5" style="text-align:center;width: 100%;">
-<input href="" type="submit" class="btn btn-primary" value="Aprobar" onclick="return confirm('¿Desea Finalizar la Aprobac?')"></input>
+<input href="" type="submit" class="btn btn-primary" value="Aprobar" onclick="return confirm('¿Desea Finalizar la Aprobacion?')"></input>
 </div>
 
 </form>

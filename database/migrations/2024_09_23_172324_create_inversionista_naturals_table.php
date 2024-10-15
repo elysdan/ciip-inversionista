@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('inversionista_naturals', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('user_id');
+           
             $table->string('nombre');
             $table->string('apellido');
             $table->string('doc_identidad')->unique();
