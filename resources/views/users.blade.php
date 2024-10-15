@@ -79,19 +79,19 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
                     <label for="campo4" class="col-form-label" >Rol:</label>
                     <select class="form-control" id="campo4" name="rol" required>
                         <option selected disabled>Seleccione una opcion</option>
-                        <option value="1">Ordinario</option>
-                        <option value="2">Invitado</option>
-                        <option value="3">Ayudante</option>
+                        <option value="1">Invitado</option>
+                        <option value="2">Ayudante</option>
+                        <option value="3">Tecnico</option>
                        
-                        <option value="4">Tecnico</option>
+                        <option value="4">Licenciado</option>
                         @if(session('usuario')->role >= 5)
-                        <option value="5">Licenciado</option>
+                        <option value="5">Coordinador</option>
                         @endif
                         @if(session('usuario')->role >= 6)
-                        <option value="6">Coordinador</option>
+                        <option value="6">Gerente</option>
                         @endif
                         @if(session('usuario')->role >= 7)
-                        <option value="7">Gerente</option>
+                        <option value="7">Gerente General</option>
                         @endif
                         @if(session('usuario')->role >= 8)
                         <option value="8">Administrador</option>
@@ -169,13 +169,13 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
               <td>{{$usuario->email}}</td>
               @if(session('usuario')->role >= 8)
               
-              <td>@if($usuario->role == 1) Ordinario
-              @elseif($usuario->role == 2) Visitante
-              @elseif($usuario->role == 3) Ayudante
-              @elseif($usuario->role == 4) Tecnico
-              @elseif($usuario->role == 5) Licenciado
-              @elseif($usuario->role == 6) Coordinador
-              @elseif($usuario->role == 7) Gerente
+              <td>@if($usuario->role == 1) Invitado
+              @elseif($usuario->role == 2) Ayudante
+              @elseif($usuario->role == 3) Tecnico
+              @elseif($usuario->role == 4) Licenciado
+              @elseif($usuario->role == 5) Coordinador
+              @elseif($usuario->role == 6) Gerente
+              @elseif($usuario->role == 7) Gerente General
               @elseif($usuario->role == 8) Administrador
               @elseif($usuario->role == 9) Super Usuario
               @endif</td>

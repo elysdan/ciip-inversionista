@@ -111,12 +111,13 @@ position: absolute;
                   <ul class="list-unstyled components">
                     
                      <li><a href="{{route('search')}}"><i class="fa fa-search "></i> <span>Busqueda</span></a></li>
-                     @if(session('usuario')->role > 2)
+                     @if(session('usuario')->role >= 7)
                       <li><a href="{{route('users')}}"><i class="fa fa-users "></i> <span>Usuarios</span></a></li>
+                      @endif
                       <li><a href="{{route('enterprises')}}"><i class="fa fa-building "></i> <span>Empresas</span></a></li>
                       <li><a href="{{route('delegates')}}"><i class="fa fa-user "></i> <span>Representantes</span></a></li>
-                     @if(session('usuario')->role > 8) <li><a href="{{route('stadistics')}}"><i class="fa fa-pie-chart "></i> <span>Estadisticas</span></a></li>
-                     @endif
+                     @if(session('usuario')->role >= 8) <li><a href="{{route('stadistics')}}"><i class="fa fa-pie-chart "></i> <span>Estadisticas</span></a></li>
+                     
                      @endif
                       <li> @if (session('status'))
 

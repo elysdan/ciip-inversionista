@@ -30,7 +30,7 @@
 </button>
 @endif
 
-
+@if($dc >0)
                            <div class="white_shd full margin_bottom_30">
 
 
@@ -237,7 +237,7 @@ align-content: center;" >
                
               </a></td>
 
-           @if(session('usuario')->role >=5)
+           @if(session('usuario')->role >=2)
               <td><a href="{{route('previews',$empresa->id)}}"><button class="btn btn-primary">Generar</button></a></td>
               @endif
                 @if($empresa->visualizar > 0)
@@ -451,7 +451,7 @@ data-toggle="modal" data-target="#DelModal{{$empresa->id}}" data-whatever="@mdo"
       </div>
 
 
-
+@endif
 
 
 

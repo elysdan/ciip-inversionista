@@ -22,10 +22,16 @@
         .previews
         {  
             font-family: arial;
-            width: 100%;
+            width: auto;
+
+            justify-content: center;
             height: auto;
-            margin: 0;
+            max-height: 100%;
+        
             font-size: auto;
+            display:flex-inline;
+            justify-content:space-between;
+            align-items: center;
           
         }
         .consideraciones{
@@ -69,16 +75,16 @@
     <body>
 
 
-<div class="previews m-3">
+<div class="previews m-auto" style="margin-left: 1%;">
 
-<div style="win-width:100%; display:flex;justify-content:space-between;align-items: center"><div style="display: flex;align-items:center"><img src="{{asset('asset_original/logo_gbv.jpg')}}" style="width: 50%;"><div style="color:black;width:40%;text-align: left;font-size:120%">Vicepresidencia de la Republica Bolivariana de Venezuela</div></div><img class="mr-5" src="{{asset('asset_original/logo-ciip.png')}}" style="width: 25%;;height: 50%"></div>
+<div style="min-width:100%; display:flex;justify-content:space-between;align-items: center"><div style="display: flex;align-items:center"><img src="{{asset('asset_original/logo_gbv.jpg')}}" style="width: 50%;"><div style="color:black;width:40%;text-align: left;font-size:120%">Vicepresidencia de la Republica Bolivariana de Venezuela</div></div><img class="mr-5" src="{{asset('asset_original/logo-ciip.png')}}" style="width: 25%;;height: 50%"></div>
             <h2 class="m-5 w-100" style="text-align:center">REPORTE DE VERIFICACIÓN DE EMPRESAS</h2>
 <br>
 
                     <div class="row " >
 
 
-                            <div style="height: auto;width: 60%;">
+                            <div style="height: auto;width: 65%;margin-left: 2%;">
                                 
                                     <table>
                                             
@@ -201,11 +207,11 @@
                         </div>
                                     
 
-                        <div class="ml-5" style="background-color:LIGHTGREY;width: 35%;height: auto;align-items: center;justify-content: center;font-size: 100%;">
+                        <div class="ml-4" style="background-color:LIGHTGREY;width: 30%;height: auto;align-items: center;justify-content: center;font-size: 100%;">
                             <div style="win-width:100%;  display: flex;
   justify-content: center;">
                             <div class="d-flex m-3 p-2" style="width:15vw;height: 15vw;border:solid 1px black;justify-content: center;align-items: center;align-content: center;margin: 0 auto;">
-                                <img src="{{$previa->foto}}" style="width:100%">
+                                <img src="{{$previa->foto}}" style="width:auto;max-height: 100%;">
                             </div>
                             </div>
 
@@ -257,7 +263,7 @@
                                 <h5 style="text-align:CENTER;width:100%">{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',  $previa->fecha)->format('d-m-Y') }}</h5>
 
                                    <br>
-                                <div class="d-flex m-5 p-1" style="justify-content: center;widht:100%;font-size: auto;">
+                                <div class="d-flex m-4 p-1" style="justify-content: center;widht:100%;font-size: auto;">
                                 <table style="win-width:100%">
                                     <tr>
                                         <td >

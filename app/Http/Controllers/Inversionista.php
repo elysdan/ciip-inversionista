@@ -925,8 +925,8 @@ $edad = $fechaNacimientoCarbon->age;
     }
     public function enterprises()
     {
-        if(session('usuario') && session('usuario')->role >= 3  ){
-
+        if(session('usuario')){
+            $dc=db::table('datos_empresas')->count();
             if(session('usuario')->role >= 8){
 
                 $empresas=DB::table('datos_empresas')
@@ -980,7 +980,7 @@ $edad = $fechaNacimientoCarbon->age;
             
             $pais=db::table('pais')->OrderBy('paisnombre')->get();
             //dd($generador);
-            return view('enterprises',['empresas'=>$empresas,'pais'=>$pais,'generador'=>$generador]);
+            return view('enterprises',['empresas'=>$empresas,'pais'=>$pais,'generador'=>$generador,'dc' => $dc]);
         }
         else
         return $this->dashboard();

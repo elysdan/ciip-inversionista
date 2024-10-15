@@ -24,6 +24,6 @@ class Sector extends Model
 	protected $table = 'sectors';
 
 	protected $fillable = [
-		'nombre'
+		'sector'
 	];
 }

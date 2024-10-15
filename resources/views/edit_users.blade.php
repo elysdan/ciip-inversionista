@@ -78,16 +78,16 @@
                 <label for="campo4" class="col-form-label" >Rol:</label>
                 <select class="form-control" id="campo4" name="rol" required>
                     <option disabled>Seleccione una opcion</option>
-                    <option value="1" @if( 1 == $usuario->role) selected @endif >Ordinario</option>
-                    <option value="2" @if( 2 == $usuario->role) selected @endif >Invitado</option>
-                    <option value="3" @if( 3 == $usuario->role) selected @endif >Ayudante</option>
-                    <option value="4" @if( 4 == $usuario->role) selected @endif >Tecnico</option>
+                    <option value="1" @if( 1 == $usuario->role) selected @endif >Invitado</option>
+                    <option value="2" @if( 2 == $usuario->role) selected @endif >Ayudante</option>
+                    <option value="3" @if( 3 == $usuario->role) selected @endif >Tecnico</option>
+                    <option value="4" @if( 4 == $usuario->role) selected @endif >Licenciado</option>
                    @if(session('usuario')->role >=5)
-                    <option value="5" @if( 5 == $usuario->role) selected @endif >Licenciado</option>
+                    <option value="5" @if( 5 == $usuario->role) selected @endif >Coordinador</option>
                 @if(session('usuario')->role >=6)
-                    <option value="6" @if( 6 == $usuario->role) selected @endif >Coordinador</option>
+                    <option value="6" @if( 6 == $usuario->role) selected @endif >Gerente</option>
                   @if(session('usuario')->role >=7)
-                    <option value="7" @if( 7 == $usuario->role) selected @endif >Gerente</option>
+                    <option value="7" @if( 7 == $usuario->role) selected @endif >Gerente General</option>
                     @if(session('usuario')->role >=8)
                     <option value="8" @if( 8 == $usuario->role) selected @endif >Administrador</option>
                     @if(session('usuario')->role >=9)
