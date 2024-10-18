@@ -56,6 +56,8 @@
 <th >Correo</th>
 <th >Telefono</th>
 <th >Redes Sociales</th>
+<th >Representantes</th>
+<th colspan="2">Embajada</th>
 <th colspan="2">Reporte</th>
 
 
@@ -71,7 +73,7 @@
          </thead>
          <tbody style="color:black">
           @php $n=1; @endphp
-           @if($empresas && session('usuario')->role==9)
+           
              
              @foreach($empresas as $empresa)
 
@@ -89,7 +91,9 @@ align-content: center;" >
 <td>{{$empresa->correo}}</td>
 <td>{{$empresa->telefono}}</td>
 
-<td><a href="{{route('add_web',$empresa->id)}}" class="btn btn-outline-primary mt-1 mb-1 p-0"  style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;text-align: center;">
+<td>
+
+  <a href="{{route('add_web',$empresa->id)}}" class="btn btn-outline-primary mt-1 mb-1 p-0"  style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;text-align: center;">
                 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;text-align: center;
     align-items: center;
@@ -97,7 +101,63 @@ align-content: center;" >
                     <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
                     </svg>
                
+              </a>
+
+            </td>
+
+<td>
+
+  <a href="{{route('asociador',$empresa->id)}}" class="btn btn-outline-success mt-1 mb-1 p-0"  style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;text-align: center;">
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;text-align: center;
+    align-items: center;
+    justify-content: center;">
+                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                    </svg>
+               
+              </a>
+
+            </td>
+            @if($empresa->visualizar > 0)
+
+              <td><a href="{{route('embajada_register',$empresa->id)}}" >
+                
+                  <button class="btn btn-primary">Generar</button>
               </a></td>
+
+              @else
+
+              <td>
+                
+                  <button class="btn btn-secondary">Generar</button>
+              </td>
+               @endif
+  @if($empresa->visualizare > 0)
+              <td>
+
+                <a href="{{route('embajada',$empresa->id)}}" >
+                
+                   <button class="btn btn-primary">Visualizar</button>
+               
+              </a>
+              </td>
+              @else
+                <td>
+
+              
+                
+                   <button class="btn btn-secondary">Visualizar</button>
+               
+              </td>
+             
+              
+
+            
+
+              
+              @endif
+
+            
 
               <td><a href="{{route('previews',$empresa->id)}}"><button class="btn btn-primary">Generar</button></a></td>
                 @if($empresa->visualizar > 0)
@@ -207,152 +267,7 @@ data-toggle="modal" data-target="#DelModal{{$empresa->id}}" data-whatever="@mdo"
               @php $n++; @endphp
               @endforeach
               
-              @else
-              @php $n=1; @endphp
-@foreach($empresas as $empresa)
-
-
-
-<tr style="vertical-align: none;text-align: center;align-items: center;
-justify-content: center;
-align-content: center;" >
-<td >@php echo $n; @endphp</td>
-
-
-<td>{{$empresa->razonsocial}}</td>
-<td>{{$empresa->identificador}}-{{$empresa->rif}}</td>
-
-
-<td>{{$empresa->direccion}}</td>
-<td>{{$empresa->correo}}</td>
-<td>{{$empresa->telefono}}</td>
-
-<td><a href="{{route('add_web',$empresa->id)}}" class="btn btn-outline-primary mt-1 mb-1 p-0"  style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;text-align: center;">
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;text-align: center;
-    align-items: center;
-    justify-content: center;">
-                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
-                    </svg>
-               
-              </a></td>
-
-           @if(session('usuario')->role >=2)
-              <td><a href="{{route('previews',$empresa->id)}}"><button class="btn btn-primary">Generar</button></a></td>
-              @endif
-                @if($empresa->visualizar > 0)
-
-              <td><a href="{{route('elaborador',$empresa->id)}}"><button class="btn btn-primary">Visualizar</button></a></td>
-              @else
-                   <td><a ><button class="btn btn-secondary">Visualizar</button></a></td>
-              @endif
-             
-@if(session('usuario')->role >=8 )
-<td>
-@if($empresa->status==1)
-<form method="POST" action="{{route('suspend_enterprises',$empresa->id)}}">
-  @csrf
-  @method('PUT')
-<button type="submit" 
-                class="btn btn-outline-success mt-1 mb-1 p-0" 
-                
-                  style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;">
-                     <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
-</svg>
-                </button>
-              </form>
-@endif
-
-@if($empresa->status==0)
- <form method="POST" action="{{route('suspend_enterprises',$empresa->id)}}">
-  @csrf
-  @method('PUT')
-
-<button type="submit" 
-                class="btn btn-outline-danger mt-1 mb-1 p-0" 
-                
-                  style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
-                 
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;">
-                      <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>
-</svg>
-                </button></form>
-                
-
-
-@endif
-
-</td>
-@endif
-@if(session('usuario')->role >=5 )
-              <td>
-                <a href="{{route('edit_enterprises',$empresa->id)}}">
-                <button type="button" 
-                class="btn btn-outline-warning mt-1 mb-1 p-0" 
-                
-                  style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;" > 
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;">
-                       <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6.5a.5.5 0 0 1-1 0V1H3v14h3v-2.5a.5.5 0 0 1 .5-.5H8v4H3a1 1 0 0 1-1-1z"/>
-  <path d="M4.5 2a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm4.386 1.46c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382zM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>
-</svg>
-                </button>
-                
-              </a>
-            </td>
-@endif
-@if(session('usuario')->role >=6 )
-              <td>
-                
-                <button type="button" 
-class="btn btn-outline-danger mt-1 mb-1 p-0" 
-
-  style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;"  
-data-toggle="modal" data-target="#DelModal{{$empresa->id}}" data-whatever="@mdo"> 
-    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-dash" align="center" viewBox="0 0 16 16" style="width: 2vw;">
-      <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6.5a.5.5 0 0 1-1 0V1H3v14h3v-2.5a.5.5 0 0 1 .5-.5H8v4H3a1 1 0 0 1-1-1z"/>
-  <path d="M4.5 2a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm-6 3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5zm5 8a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m-.646-4.854.646.647.646-.647a.5.5 0 0 1 .708.708l-.647.646.647.646a.5.5 0 0 1-.708.708l-.646-.647-.646.647a.5.5 0 0 1-.708-.708l.647-.646-.647-.646a.5.5 0 0 1 .708-.708"/>
-</svg>
-</button>
-<div class="modal fade" id="DelModal{{$empresa->id}}" tabindex="-1" role="dialog" aria-labelledby="RegModal" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Eliminar Empresa</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      
-      <div class="modal-body">
-       <h3>¿Desea Eliminar la Empresa</h3>
-      </div>
-      <div class="modal-footer">
-        
-       
-        <form method="POST" action="{{route('delete_enterprises', $empresa->id)}}" > 
-          @csrf 
-          @method('PUT')
-          <input class="btn btn-primary" type="submit" value="Si">
-        </form>
-      </div>
-    </form>
-    </div>
-
-  </div>
-</div>
-                
-
-                
               
-              </td>
-
-            
-              @endif
-              @php $n++; @endphp
-              @endforeach
-              
-              @endif
               @if(session('status'))
 
 @endif

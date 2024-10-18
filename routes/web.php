@@ -132,6 +132,46 @@ Route::put('/suspender_pdf_delegados_{id}', [inversionista::class, 'suspender_pd
 Route::put('/suspender_pdf_{id}', [inversionista::class, 'suspender_pdf'])->name('suspender_pdf');
 
 
+Route::get('/asociador_modificar_{id}', [inversionista::class, 'asociador_modificar'])->name('asociador_modificar');
+
+
+Route::get('/asociador_registrar_{id}', [inversionista::class, 'asociador_registrar'])->name('asociador_registrar');
+
+Route::post('/asociador_registrado', [inversionista::class, 'asociador_registrado'])->name('asociador_registrado');
+
+
+
+Route::put('/asociador_modificador_{id}', [inversionista::class, 'asociador_modificador'])->name('asociador_modificador');
+
+
+
+Route::put('/asociador_eliminar_{id}', [inversionista::class, 'asociador_eliminar'])->name('asociador_eliminar');
+
+
+Route::get('/asociador_{id}', [inversionista::class, 'asociador'])->name('asociador');
+
+
+Route::put('/embajada_modificador_{id}', [inversionista::class, 'embajada_modificador'])->name('embajada_modificador');
+
+Route::get('/embajada_modificar_{id}', [inversionista::class, 'embajada_modificar'])->name('embajada_modificar');
+
+Route::get('/embajada_print_{id}', [inversionista::class, 'embajada_print'])->name('embajada_print');
+
+
+Route::get('/embajada_register_{id}', [inversionista::class, 'embajada_register'])->name('embajada_register');
+
+Route::get('/embajada_{id}', [inversionista::class, 'embajada'])->name('embajada');
+
+
+
+
+
+
+
+Route::post('/embajada_registrador', [inversionista::class, 'embajada_registrador'])->name('embajada_registrador');
+
+Route::put('/embajada_eliminador_{id}', [inversionista::class, 'embajada_eliminador'])->name('embajada_eliminador');
+
 
 
 

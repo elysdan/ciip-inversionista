@@ -28,6 +28,8 @@ use App\Models\nacionalidad;
 use App\Models\pais;
 use App\Models\contenidoempresa;
 use App\Models\contenidorepresentante;
+use App\Models\asociadorxempresasxrepresentante;
+use App\Models\datosembajada;
 
 
 class Inversionista extends Controller
@@ -933,11 +935,13 @@ $edad = $fechaNacimientoCarbon->age;
             ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
             ->join('pais as registro','datos_empresas.lregistro','=','registro.id')
             ->leftjoin('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
+            ->leftjoin('datos_embajadas','datos_embajadas.enterprise_id','=','datos_empresas.id')
             
             ->select(
             'datos_empresas.*',
             'origen.paisnombre as pais_origen',
             DB::raw('count(case when contenido_empresas.status <> 0 then 1 else null end) as visualizar'),
+            DB::raw('count(datos_embajadas) as visualizare'),
             'registro.paisnombre as lregistro')
             ->groupBy('datos_empresas.id','origen.paisnombre','registro.paisnombre')
             ->OrderBy('id')
@@ -1141,6 +1145,94 @@ elseif($empresas->status==1)
     
         
     }
+
+ public function asociador_eliminar( $id)
+    {
+
+                
+               $delegados = asociadorxempresasxrepresentante::findorFail($id);
+               $peticion=$delegados->enterprise_id;
+               //dd($red);
+    // Update the id_status column
+    $delegados->delete();
+
+        
+            return redirect()->route('asociador', $peticion)->with('status','Delegado Eliminado');
+        
+    }
+
+
+    public function asociador_modificar($id)
+    {
+
+       // dd();
+        $empresa = asociadorxempresasxrepresentante::findorfail($id);
+        //dd($delegado);
+          $delegados=db::table('inversionista_naturals')->get();
+            return view('asociador_modificar',['delegados' => $delegados,'empresa' =>$empresa]);
+        
+    }
+
+       public function asociador_modificador(request $request,$id)
+    {
+        $empresas = asociadorxempresasxrepresentante::findorfail($id);
+
+         
+ $peticion=$empresas->enterprise_id;
+          
+
+        if($request->delegate_id != $empresas->delegate_id && $request->delegate_id!="" ||  $request->delegate_id != $empresas->delegate_id && $request->delegate_id!=" " ||  $request->delegate_id != $empresas->delegate_id && $request->delegate_id!=null)
+        {  
+                //dd("a");
+                $empresas->update(['delegate_id' => $request->delegate_id]);
+            }
+
+             if($request->type != $empresas->type && $request->type!="" ||  $request->type != $empresas->type && $request->type!=" " ||  $request->type != $empresas->type && $request->type!=null)
+        {  
+                //dd("B");
+                $empresas->update(['type' => $request->type]);
+            }
+        //dd($empresa);
+
+            return redirect()->route('asociador', $peticion)->with('status','Red Social Modificada');
+        
+    }
+
+public function asociador($id)
+    {
+        $empresa = datosempresa::findorfail($id);
+
+        $representantes=db::table('asociador_empresas_representantes')
+        ->join('inversionista_naturals', 'inversionista_naturals.id', '=' ,'asociador_empresas_representantes.delegate_id')
+        ->select('asociador_empresas_representantes.*',
+            'inversionista_naturals.*','asociador_empresas_representantes.id as id')
+        ->where('enterprise_id',$id)
+        ->get();
+         $delegados=db::table('inversionista_naturals')->get();
+        //dd($red);
+    //dd($delegados);
+            return view('asociador',['representantes' => $representantes,'delegados' => $delegados,'empresa' => $empresa]);
+        
+    }
+
+    public function asociador_registrado(request $request)
+    {
+
+                
+                $registry = new asociadorxempresasxrepresentante;
+                
+                $registry -> delegate_id = $request->delegate_id;
+                $registry -> enterprise_id = $request->enterprise_id;
+                $registry -> type = $request->type;
+                //dd($registry);
+                $registry -> save();
+                
+        
+        //dd($request);
+            return back()->with('status','funciona');
+        
+    }
+
 
 
 public function add_web($id)
@@ -2423,6 +2515,275 @@ else
 
             return redirect()->route('elaborador', $empresas->enterprise_id)->with('status','informe Modificado');
     }
+
+
+public function embajada_modificador(request $request, $id)
+{
+//dd($request);
+     $empresas = datosembajada::findorfail($id);
+
+         
+ $peticion=$empresas->enterprise_id;
+          
+
+        if($request->pais != $empresas->pais && $request->pais!="" ||  $request->pais != $empresas->pais && $request->pais!=" " ||  $request->pais != $empresas->pais && $request->pais!=null)
+        {  
+                //dd("a");
+                $empresas->update(['pais' => $request->pais]);
+            }
+
+             if($request->ne != $empresas->ne && $request->ne!="" ||  $request->ne != $empresas->ne && $request->ne!=" " ||  $request->ne != $empresas->ne && $request->ne!=null)
+        {  
+                //dd("B");
+                $empresas->update(['ne' => $request->ne]);
+            }
+
+             if($request->oe != $empresas->oe && $request->oe!="" ||  $request->oe != $empresas->oe && $request->oe!=" " ||  $request->oe != $empresas->oe && $request->oe!=null)
+        {  
+                //dd("B");
+                $empresas->update(['oe' => $request->oe]);
+            }
+
+             if($request->inv != $empresas->inv && $request->inv!="" ||  $request->inv != $empresas->inv && $request->inv!=" " ||  $request->inv != $empresas->inv && $request->inv!=null)
+        {  
+                //dd("B");
+                $empresas->update(['inv' => $request->inv]);
+            }
+             if($request->ex != $empresas->ex && $request->ex!="" ||  $request->ex != $empresas->ex && $request->ex!=" " ||  $request->ex != $empresas->ex && $request->ex!=null)
+        {  
+                //dd("B");
+                $empresas->update(['ex' => $request->ex]);
+            }
+             if($request->al != $empresas->al && $request->al!="" ||  $request->al != $empresas->al && $request->al!=" " ||  $request->al != $empresas->al && $request->al!=null)
+        {  
+                //dd("B");
+                $empresas->update(['al' => $request->al]);
+            }
+             if($request->ob != $empresas->ob && $request->ob!="" ||  $request->ob != $empresas->ob && $request->ob!=" " ||  $request->ob != $empresas->ob && $request->ob!=null)
+        {  
+                //dd("B");
+                $empresas->update(['ob' => $request->ob]);
+            }
+        //dd($empresa);
+
+            return redirect()->route('embajada', $peticion)->with('status','Documento Modificado Modificada');
+        
+    
+}
+public function embajada_modificar($id)
+    {
+        if(session('usuario')){
+
+            $previa=DB::table('datos_empresas') 
+            ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
+            ->join('pais as registro','datos_empresas.lregistro','=','registro.id')
+            ->join('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('datos_embajadas','datos_embajadas.enterprise_id','=','datos_empresas.id')
+            ->join('pais as embajada','datos_embajadas.pais','=','embajada.id')
+            ->where('datos_embajadas.id',$id)
+            ->OrderBy('datos_embajadas.created_at','Asc')
+            ->select(
+            
+            
+            'embajada.paisnombre as paisembajada',
+            'datos_embajadas.*',
+            'origen.paisnombre as pais_origen',
+            'registro.paisnombre as lregistro',
+            'datos_embajadas.ex',
+            'contenido_empresas.ef',
+            'contenido_empresas.oci',
+        'datos_empresas.*','datos_embajadas.id as id',)
+           ->first();
+        //dd($previa->id);
+           $paises=db::table('pais')->get();
+
+           $versiones=DB::table('datos_embajadas')->where('enterprise_id',$id)->get();
+
+           //dd($paises);
+
+
+
+
+  //dd($twitter);
+
+
+
+
+            return view('embajada_modificar' ,['previa' => $previa,'paises'=> $paises,'versiones'=>$versiones]);
+   
+        }
+        else
+        return $this->index();
+    }
+
+ public function embajada($id)
+    {
+        if(session('usuario')){
+
+            $previa=DB::table('datos_empresas')->where('datos_empresas.id',$id)
+            ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
+            ->join('pais as registro','datos_empresas.lregistro','=','registro.id')
+            ->join('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('datos_embajadas','datos_embajadas.enterprise_id','=','datos_empresas.id')
+            ->join('pais as embajada','datos_embajadas.pais','=','embajada.id')
+            ->where('contenido_empresas.status', '!=', 0)
+           
+            ->select('datos_embajadas.id as id',
+            
+            
+            'embajada.paisnombre as paisembajada',
+            'datos_embajadas.*',
+            'origen.paisnombre as pais_origen',
+            'registro.paisnombre as lregistro',
+            'datos_embajadas.ex',
+            'contenido_empresas.ef',
+            'contenido_empresas.oci',
+        'datos_empresas.*',)
+           ->first();
+        //dd($previa);
+           $paises=db::table('pais')->get();
+
+           $versiones=DB::table('datos_embajadas')->where('enterprise_id',$id)->get();
+
+           //dd($paises);
+
+
+
+
+  //dd($twitter);
+
+
+
+
+            return view('embajada' ,['previa' => $previa,'paises'=> $paises,'versiones'=>$versiones]);
+   
+        }
+        else
+        return $this->index();
+    }
+
+
+    public function embajada_print($id)
+    {//dd($id);
+        if(session('usuario')){
+
+            $previa=DB::table('datos_empresas')
+            ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
+            ->join('pais as registro','datos_empresas.lregistro','=','registro.id')
+            ->join('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('datos_embajadas','datos_embajadas.enterprise_id','=','datos_empresas.id')
+            ->join('pais as embajada','datos_embajadas.pais','=','embajada.id')
+             ->where('datos_embajadas.id',$id)
+            ->OrderBy('contenido_empresas.status','Asc')->OrderBy('contenido_empresas.created_at','Asc')
+            ->select(
+            'datos_empresas.*',
+            'datos_embajadas.id as id',
+            'embajada.paisnombre as paisembajada',
+            'datos_embajadas.*',
+            'origen.paisnombre as pais_origen',
+            'registro.paisnombre as lregistro',
+            'contenido_empresas.ex',
+            'contenido_empresas.ef',
+            'contenido_empresas.oci')
+           ->first();
+        //dd($previa);
+           $paises=db::table('pais')->get();
+
+           //dd($paises);
+
+
+
+
+  //dd($twitter);
+
+
+
+
+            return view('embajada_print' ,['previa' => $previa,'paises'=> $paises]);
+   
+        }
+        else
+        return $this->index();
+    }
+
+
+
+public function embajada_eliminador($id){
+       $red = datosembajada::findOrFail($id);
+
+    // Update the id_status column
+    $red->delete();
+      return redirect()->route('enterprises')->with('status','Documento Eliminado');
+}
+
+
+
+
+    public function embajada_register($id)
+    {
+        if(session('usuario')){
+
+            $previa=DB::table('datos_empresas') ->where('datos_empresas.id',$id)
+            ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
+            ->join('pais as registro','datos_empresas.lregistro','=','registro.id')
+            ->join('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')->OrderBy('contenido_empresas.status','Asc')->OrderBy('contenido_empresas.created_at','Asc')
+            ->select(
+            'datos_empresas.*',
+            'datos_empresas.id as id',
+            'origen.paisnombre as pais_origen',
+            'registro.paisnombre as lregistro',
+            'contenido_empresas.ex',
+            'contenido_empresas.ef',
+            'contenido_empresas.oci')
+            ->OrderBy('created_at','asc')
+           ->first();
+        //dd($previa);
+           $paises=db::table('pais')->get();
+
+           //dd($paises);
+
+
+
+
+  //dd($twitter);
+
+
+
+
+            return view('embajada_register' ,['previa' => $previa,'paises'=> $paises]);
+   
+        }
+        else
+        return $this->index();
+    }
+
+
+     public function embajada_registrador(request $request)
+    {
+       $registry = new datosembajada;
+              //dd($request);  
+                $registry -> enterprise_id = $request->enterprise_id;
+               // $registry -> delegate_id = $request->delegate_id;
+                $registry -> ne = $request->ne;
+                $registry -> oe = $request->oe;
+                $registry -> inv = $request->inv;
+                $registry -> ex = $request->ex;
+                $registry -> al = $request->al;
+                $registry -> ob = $request->ob;
+                $registry -> pais = $request->pais;
+               
+               
+                //dd($registry);
+                $registry -> save();
+                
+        
+        //dd($request);
+            return redirect()->route('enterprises')->with('status','Documento Elaborado');
+   
+        
+    }
+
+
 
 
     public function results()

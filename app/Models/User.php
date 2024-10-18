@@ -63,33 +63,5 @@ class User extends Model
 		'status'
 	];
 
-	public function inversionista_juridicas()
-	{
-		return $this->hasMany(InversionistaJuridica::class);
-	}
-
-	public function inversionista_naturals()
-	{
-		return $this->hasMany(InversionistaNatural::class);
-	}
-
-	public function datos_poders()
-	{
-		return $this->hasMany(DatosPoder::class);
-	}
-
-	public function datos_inversions()
-	{
-		return $this->hasMany(DatosInversion::class);
-	}
-
-	public function datos_registros()
-	{
-		return $this->hasMany(DatosRegistro::class);
-	}
-
-	public function datos_representantes()
-	{
-		return $this->hasMany(DatosRepresentante::class);
-	}
+	
 }
