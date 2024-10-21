@@ -250,7 +250,9 @@
                             
                                 <h4 style="text-align:CENTER">Representante Legal</h4>
 
-                                <h5 style="text-align:CENTER">no hay</h5>
+                               
+                                  <h5 style="text-align:CENTER">{{$previa->delegado_nombre}}</h5>
+                                  <h5 style="text-align:CENTER">{{$previa->delegado_apellido}}</h5>
 
                                      <br><br>
                             

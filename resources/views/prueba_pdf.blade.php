@@ -254,7 +254,9 @@
                             
                                 <h4 style="text-align:CENTER;width:100%">Representante Legal</h4>
 
-                                <h5 style="text-align:CENTER;width:100%">no hay</h5>
+                                  <h5 style="text-align:CENTER">{{$previa->delegado_nombre}}</h5>
+                                  <h5 style="text-align:CENTER">{{$previa->delegado_apellido}}</h5>
+
 
                                      <br>
                             
@@ -263,8 +265,8 @@
                                 <h5 style="text-align:CENTER;width:100%">{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',  $previa->fecha)->format('d-m-Y') }}</h5>
 
                                    <br>
-                                <div class="d-flex m-4 p-1" style="justify-content: center;widht:100%;font-size: auto;">
-                                <table style="win-width:100%">
+                                <div class=" p-3 m-auto" style="justify-content: center;widht:40%;">
+                                <table style="win-width:100%;max-width: 100%;">
                                     <tr>
                                         <td >
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-instagram" viewBox="0 0 16 16">
@@ -321,7 +323,7 @@
                                         <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-fill" viewBox="0 0 16 16">
   <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414zM0 4.697v7.104l5.803-3.558zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586zm3.436-.586L16 11.801V4.697z"/>
 </svg></td>
-                                    <td>
+                                    <td style="font-size:80%"> 
 
                                         {{$previa->correo}}
 

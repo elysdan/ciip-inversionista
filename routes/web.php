@@ -158,10 +158,11 @@ Route::get('/embajada_modificar_{id}', [inversionista::class, 'embajada_modifica
 Route::get('/embajada_print_{id}', [inversionista::class, 'embajada_print'])->name('embajada_print');
 
 
+
+
 Route::get('/embajada_register_{id}', [inversionista::class, 'embajada_register'])->name('embajada_register');
 
 Route::get('/embajada_{id}', [inversionista::class, 'embajada'])->name('embajada');
-
 
 
 

@@ -67,7 +67,7 @@
 @endif
 @if(session('usuario')->role >=5 )
 
-<th  colspan="2"> Administracion</th>
+<th  colspan="3"> Administracion</th>
 @endif
             </tr>
          </thead>
@@ -166,8 +166,10 @@ align-content: center;" >
               <td><a ><button class="btn btn-secondary">Visualizar</button></a></td>
               @endif
              
-@if(session('usuario')->role >=8 )
+@if(session('usuario')->role >=5 )
+
 <td>
+  @if(session('usuario')->role >=8 )
 @if($empresa->status==1)
 <form method="POST" action="{{route('suspend_enterprises',$empresa->id)}}">
   @csrf
@@ -201,7 +203,7 @@ align-content: center;" >
 
 
 @endif
-
+@endif
 </td>
               <td>
                 <a href="{{route('edit_enterprises',$empresa->id)}}">

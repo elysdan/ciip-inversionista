@@ -959,18 +959,24 @@ $edad = $fechaNacimientoCarbon->age;
             }
             else
             {
-                 $empresas=DB::table('datos_empresas')
+                     $empresas=DB::table('datos_empresas')
             ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
             ->join('pais as registro','datos_empresas.lregistro','=','registro.id')
             ->leftjoin('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
+            ->leftjoin('datos_embajadas','datos_embajadas.enterprise_id','=','datos_empresas.id')
+            
             ->select(
             'datos_empresas.*',
             'origen.paisnombre as pais_origen',
             DB::raw('count(case when contenido_empresas.status <> 0 then 1 else null end) as visualizar'),
+            DB::raw('count(datos_embajadas) as visualizare'),
             'registro.paisnombre as lregistro')
-            ->where('datos_empresas.status',1)
+             ->where('datos_empresas.status',1)
             ->groupBy('datos_empresas.id','origen.paisnombre','registro.paisnombre')
             ->OrderBy('id')
+           
+           
+            
            ->get();
 
            $generador=DB::table('datos_empresas')
@@ -1201,13 +1207,14 @@ elseif($empresas->status==1)
 public function asociador($id)
     {
         $empresa = datosempresa::findorfail($id);
+       // dD($empresa);
 
         $representantes=db::table('asociador_empresas_representantes')
-        ->join('inversionista_naturals', 'inversionista_naturals.id', '=' ,'asociador_empresas_representantes.delegate_id')
-        ->select('asociador_empresas_representantes.*',
-            'inversionista_naturals.*','asociador_empresas_representantes.id as id')
-        ->where('enterprise_id',$id)
-        ->get();
+    ->join('inversionista_naturals', 'inversionista_naturals.id', '=' ,'asociador_empresas_representantes.delegate_id')
+    ->select('asociador_empresas_representantes.*',
+        'inversionista_naturals.*','asociador_empresas_representantes.id as id')
+    ->where('enterprise_id',$id)->OrderBy('type','asc')->OrderBy('nombre','asc')
+    ->get();
          $delegados=db::table('inversionista_naturals')->get();
         //dd($red);
     //dd($delegados);
@@ -1218,9 +1225,16 @@ public function asociador($id)
     public function asociador_registrado(request $request)
     {
 
-                
+                //dd($request);
                 $registry = new asociadorxempresasxrepresentante;
-                
+                $condicion=db::table('asociador_empresas_representantes')->where('enterprise_id',$request->enterprise_id)->where('delegate_id',$request->delegate_id)->first();
+                //dd($condicion);
+                if($condicion)
+                {
+                    return back()->with('status','El Delegado Ya Esta Registrado');
+                }
+                else
+                {
                 $registry -> delegate_id = $request->delegate_id;
                 $registry -> enterprise_id = $request->enterprise_id;
                 $registry -> type = $request->type;
@@ -1229,8 +1243,8 @@ public function asociador($id)
                 
         
         //dd($request);
-            return back()->with('status','funciona');
-        
+            return back()->with('status','Delegado Asociado');
+        }
     }
 
 
@@ -1345,7 +1359,7 @@ public function add_web($id)
             ->join('rrss','rrss.id','=','redes_sociales_empresas.site')->where('datos_empresas.id',$id)->where('red','twitter')
             ->select('redes_sociales_empresas.username as twitter')->first();
 
-           
+           $delegados=db::table('inversionista_naturals')->join('asociador_empresas_representantes as asociador','asociador.delegate_id','=','inversionista_naturals.id')->where('inversionista_naturals.status','!=',0)->where('asociador.enterprise_id','=',$id)->OrderBy('asociador.type','asc')->OrderBy('inversionista_naturals.nombre','ASC')->get();
 
              $facebook=db::table('datos_empresas')
             ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
@@ -1406,7 +1420,7 @@ public function add_web($id)
 
 
 
-            return view('previews' ,['instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
+            return view('previews' ,['instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo,'delegados' => $delegados]);
    
         }
         else
@@ -1423,6 +1437,9 @@ public function add_web($id)
             ->leftjoin('users as revisado','revisado.id','=','contenido_empresas.revisado')
             ->leftjoin('users as certificado','certificado.id','=','contenido_empresas.certificado')
             ->leftjoin('users as aprobado','aprobado.id','=','contenido_empresas.aprobado')
+->leftjoin('inversionista_naturals as delegado','delegado.id','=','contenido_empresas.delegate_id')
+
+            
             ->where('contenido_empresas.id',$id)
             ->select(
             'datos_empresas.*',
@@ -1431,6 +1448,10 @@ public function add_web($id)
               'contenido_empresas.status as estatuscontent',
             'elaborado.name as name',
             'elaborado.surname as surname',
+'delegado.nombre as delegado_nombre',
+            'delegado.apellido as delegado_apellido',
+
+
             'revisado.name as namerev',
             'revisado.surname as surnamerev',
             'certificado.name as namecert',
@@ -1713,10 +1734,11 @@ public function previews_delegates($id)
     public function elaborar(request $request)
     {
 
-                
+           
                 $registry = new contenidoempresa;
                 
                 $registry -> enterprise_id = $request->enterprise_id;
+                $registry -> delegate_id = $request->delegate_id;
                 $registry -> elaborado = $request->elaborado;
                 $registry -> oci = $request->oci;
                 $registry -> fbi = $request->fbi;
@@ -1859,6 +1881,7 @@ Carbon::setlocale('es');
             ->leftjoin('users as revisado','revisado.id','=','contenido_empresas.revisado')
             ->leftjoin('users as certificado','certificado.id','=','contenido_empresas.certificado')
             ->leftjoin('users as aprobado','aprobado.id','=','contenido_empresas.aprobado')
+            ->leftjoin('inversionista_naturals as delegado','delegado.id','=','contenido_empresas.delegate_id')
             ->where('contenido_empresas.status', '!=', 0)
             ->select(
             'datos_empresas.*',
@@ -1871,6 +1894,8 @@ Carbon::setlocale('es');
             'revisado.surname as surnamerev',
             'certificado.name as namecert',
             'certificado.surname as surnamecert',
+            'delegado.nombre as delegado_nombre',
+            'delegado.apellido as delegado_apellido',
             'aprobado.name as nameapro',
             'aprobado.surname as surnameapro',
             'contenido_empresas.updated_at as fecha',
@@ -1878,7 +1903,7 @@ Carbon::setlocale('es');
             'registro.paisnombre as lregistro')
             ->OrderBy('contenido_empresas.status','asc')
            ->OrderBy('contenido_empresas.created_at','desc')->first();
-            //dd($previa);
+           // dd($previa);
             $twitter=db::table('datos_empresas')
             ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
             ->join('rrss','rrss.id','=','redes_sociales_empresas.site')->where('datos_empresas.id',$id)->where('red','twitter')
@@ -2239,6 +2264,9 @@ else
             ->leftjoin('users as revisado','revisado.id','=','contenido_empresas.revisado')
             ->leftjoin('users as certificado','certificado.id','=','contenido_empresas.certificado')
             ->leftjoin('users as aprobado','aprobado.id','=','contenido_empresas.aprobado')
+            ->leftjoin('inversionista_naturals as delegado','delegado.id','=','contenido_empresas.delegate_id')
+
+       
             ->where('contenido_empresas.id',$id)
             ->select(
             'datos_empresas.*',
@@ -2251,6 +2279,8 @@ else
             'revisado.surname as surnamerev',
             'certificado.name as namecert',
             'certificado.surname as surnamecert',
+                 'delegado.nombre as delegado_nombre',
+            'delegado.apellido as delegado_apellido',
             'aprobado.name as nameapro',
             'aprobado.surname as surnameapro',
             'contenido_empresas.updated_at as fecha',
@@ -2580,6 +2610,9 @@ public function embajada_modificar($id)
             ->join('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
             ->join('datos_embajadas','datos_embajadas.enterprise_id','=','datos_empresas.id')
             ->join('pais as embajada','datos_embajadas.pais','=','embajada.id')
+            ->join('inversionista_naturals as delegado','delegado.id','=','contenido_empresas.delegate_id')
+  
+
             ->where('datos_embajadas.id',$id)
             ->OrderBy('datos_embajadas.created_at','Asc')
             ->select(
@@ -2592,6 +2625,8 @@ public function embajada_modificar($id)
             'datos_embajadas.ex',
             'contenido_empresas.ef',
             'contenido_empresas.oci',
+            'delegado.nombre as delegado_nombre',
+            'delegado.apellido as delegado_apellido',
         'datos_empresas.*','datos_embajadas.id as id',)
            ->first();
         //dd($previa->id);
@@ -2620,30 +2655,34 @@ public function embajada_modificar($id)
     {
         if(session('usuario')){
 
-            $previa=DB::table('datos_empresas')->where('datos_empresas.id',$id)
+            $previa=DB::table('datos_empresas')
             ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
             ->join('pais as registro','datos_empresas.lregistro','=','registro.id')
             ->join('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
             ->join('datos_embajadas','datos_embajadas.enterprise_id','=','datos_empresas.id')
             ->join('pais as embajada','datos_embajadas.pais','=','embajada.id')
-            ->where('contenido_empresas.status', '!=', 0)
+            ->join('inversionista_naturals as delegado','delegado.id','=','contenido_empresas.delegate_id')
+            ->where('datos_empresas.id',$id)
            
-            ->select('datos_embajadas.id as id',
+            ->select('datos_embajadas.id as dato_embajada',
             
             
             'embajada.paisnombre as paisembajada',
             'datos_embajadas.*',
-            'origen.paisnombre as pais_origen',
+           
             'registro.paisnombre as lregistro',
             'datos_embajadas.ex',
             'contenido_empresas.ef',
             'contenido_empresas.oci',
-        'datos_empresas.*',)
+            'delegado.nombre as delegado_nombre',
+            'delegado.apellido as delegado_apellido',
+        'datos_empresas.*', 'origen.paisnombre as pais_origen',)
+            ->OrderBy('datos_embajadas.created_at','desc')
            ->first();
         //dd($previa);
            $paises=db::table('pais')->get();
 
-           $versiones=DB::table('datos_embajadas')->where('enterprise_id',$id)->get();
+           $versiones=DB::table('datos_embajadas')->OrderBy('id','desc')->where('enterprise_id',$id)->get();
 
            //dd($paises);
 
@@ -2673,6 +2712,8 @@ public function embajada_modificar($id)
             ->join('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
             ->join('datos_embajadas','datos_embajadas.enterprise_id','=','datos_empresas.id')
             ->join('pais as embajada','datos_embajadas.pais','=','embajada.id')
+               ->join('inversionista_naturals as delegado','delegado.id','=','contenido_empresas.delegate_id')
+
              ->where('datos_embajadas.id',$id)
             ->OrderBy('contenido_empresas.status','Asc')->OrderBy('contenido_empresas.created_at','Asc')
             ->select(
@@ -2684,7 +2725,8 @@ public function embajada_modificar($id)
             'registro.paisnombre as lregistro',
             'contenido_empresas.ex',
             'contenido_empresas.ef',
-            'contenido_empresas.oci')
+            'contenido_empresas.oci', 'delegado.nombre as delegado_nombre',
+            'delegado.apellido as delegado_apellido',)
            ->first();
         //dd($previa);
            $paises=db::table('pais')->get();
@@ -2723,22 +2765,43 @@ public function embajada_eliminador($id){
     {
         if(session('usuario')){
 
-            $previa=DB::table('datos_empresas') ->where('datos_empresas.id',$id)
-            ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
-            ->join('pais as registro','datos_empresas.lregistro','=','registro.id')
-            ->join('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')->OrderBy('contenido_empresas.status','Asc')->OrderBy('contenido_empresas.created_at','Asc')
+            $previa=DB::table('contenido_empresas')
+            ->join('datos_empresas as empresas','empresas.id','=','contenido_empresas.enterprise_id')
+            ->join('inversionista_naturals as delegado','delegado.id','=','contenido_empresas.delegate_id')
+            ->leftjoin('pais','pais.id','=','empresas.pais_origen')
             ->select(
-            'datos_empresas.*',
-            'datos_empresas.id as id',
-            'origen.paisnombre as pais_origen',
-            'registro.paisnombre as lregistro',
-            'contenido_empresas.ex',
-            'contenido_empresas.ef',
-            'contenido_empresas.oci')
-            ->OrderBy('created_at','asc')
+                'contenido_empresas.id',
+                'pais.paisnombre as pais_origen',
+                'empresas.razonsocial as razonsocial',
+                'empresas.foto',
+                'empresas.direccion',
+                'empresas.identificador',
+                'empresas.rif',
+                 'contenido_empresas.oci',
+                  'contenido_empresas.ex',
+                   'contenido_empresas.ef',
+                  'empresas.correo',
+                     'empresas.telefono',
+
+                   'delegado.nombre as delegado_nombre',
+
+                   'delegado.apellido as delegado_apellido',
+               )
+            ->where('contenido_empresas.enterprise_id','=',$id)
+            ->where('contenido_empresas.status','!=',0)
+            ->OrderBy('contenido_empresas.created_at','desc')
+
+           
            ->first();
+
+
+
+
         //dd($previa);
-           $paises=db::table('pais')->get();
+
+
+
+           $paises=db::table('pais')->orderby('paisnombre','asc')->get();
 
            //dd($paises);
 

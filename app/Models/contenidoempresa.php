@@ -13,6 +13,7 @@ class contenidoempresa extends Model
      protected $fillable = [
         'status',
          'elaborado',
+         'delegate_id',
           'revisado',
            'certificado',
             'aprobado',

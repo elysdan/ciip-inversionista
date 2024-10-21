@@ -49,8 +49,8 @@
                         <img width="210" src="asset_original/logo-blanco-01.png" alt="#" />
                      </div>
                   </div>
-                  <div class="login_form">
-                     <form method="POST" action="{{route('login')}}" id="miFormulario"> 
+                  <div class="login_form ">
+                     <form method="POST" action="{{route('login')}}" id="miFormulario" > 
                       @csrf
                         <fieldset>
                            <div class="field">
@@ -67,7 +67,7 @@
                            </div>
                            <div class="field margin_0">
                               <label class="label_field hidden">hidden label</label>
-                              <button class="main_bt" type="submit" id="submitBtn" disabled>Ingresar</button>
+                              <button class="main_bt btn-primary" type="submit" id="submitBtn" disabled>Ingresar</button>
                            </div>
                         </fieldset>
                      </form>

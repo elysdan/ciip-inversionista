@@ -182,8 +182,14 @@ data-toggle="modal" data-target="#DelModal{{$representante->id}}" data-whatever=
                     <label for="campo4" class="col-form-label" >Delegado:</label>
                     <select class="form-control" id="campo4" name="delegate_id" required>
                         <option selected disabled>Seleccione una opcion</option>
+                      
                          @foreach ($delegados as $delegado)
+                         
+                       
+
                         <option value="{{$delegado->id}}" >{{$delegado->nombre}} {{$delegado->apellido}}, {{$delegado->doc_identidad}}</option>
+
+                    
                         @endforeach
                       </select>
  

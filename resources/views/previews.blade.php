@@ -236,7 +236,10 @@
                             
                                 <h4 style="text-align:CENTER">Representante Legal</h4>
 
-                                <h5 style="text-align:CENTER">no hay</h5>
+                                <select class="form-control m-auto "style="width: 90%;text-align:CENTER;align-content:center" name="delegate_id" id="Dii">
+                                  @foreach($delegados as $delegado)  <option value="{{$delegado->id}}">{{$delegado->nombre}} {{$delegado->apellido}} {{$delegado->doc_identidad}} (@if($delegado->type == 1) Representante @else  Apoderado @endif)</option>
+                                  @endforeach
+                                </select>
 
                                      <br>
                             
@@ -353,6 +356,7 @@
     var campo10= document.getElementById("Ef");
     var campo11= document.getElementById("Ex");
     var campo12= document.getElementById("Ipol");
+    var campo13= document.getElementById("Dii");
     var submitBtn = document.getElementById('submitBtn');
 
     function validarCampos() {
