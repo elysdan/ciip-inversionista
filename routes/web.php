@@ -174,7 +174,13 @@ Route::post('/embajada_registrador', [inversionista::class, 'embajada_registrado
 Route::put('/embajada_eliminador_{id}', [inversionista::class, 'embajada_eliminador'])->name('embajada_eliminador');
 
 
+Route::get('/sectores', [inversionista::class, 'sectores'])->name('sectores');
 
+Route::get('/sectores_empresa_registro_{id}', [inversionista::class, 'sectores_empresa_registro'])->name('sectores_empresa_registro');
+
+Route::post('/sectores_empresa_registrar', [inversionista::class, 'sectores_empresa_registrar'])->name('sectores_empresa_registrar');
+
+Route::get('/search/sectors', 'inversionista@search')->name('search.sectors');
 
 
 Route::get('/userpanel', [inversionista::class, 'userpanel'])->name('userpanel');

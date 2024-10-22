@@ -21,6 +21,7 @@ class datosembajada extends Model
         'al',
         'ob',
         'pais',
+        'status',
         
     ];
 }

@@ -30,6 +30,9 @@ use App\Models\contenidoempresa;
 use App\Models\contenidorepresentante;
 use App\Models\asociadorxempresasxrepresentante;
 use App\Models\datosembajada;
+use App\Models\sectors;
+use App\Models\sector_empresa;
+use App\Models\sector_fase;
 
 
 class Inversionista extends Controller
@@ -77,7 +80,7 @@ class Inversionista extends Controller
         return view('search');
     }
 
-    public function search()
+    /*public function search()
     {
         if(session('usuario')){
             return view('search');
@@ -85,7 +88,7 @@ class Inversionista extends Controller
         else
         return view('index');
     }
-
+*/
 
       public function result(request $request)
     {// dd(db::table('inversionista_naturals')->where('email',$request->busqueda)->first() == null);
@@ -939,6 +942,7 @@ $edad = $fechaNacimientoCarbon->age;
             
             ->select(
             'datos_empresas.*',
+             'datos_empresas.id as id',
             'origen.paisnombre as pais_origen',
             DB::raw('count(case when contenido_empresas.status <> 0 then 1 else null end) as visualizar'),
             DB::raw('count(datos_embajadas) as visualizare'),
@@ -946,7 +950,9 @@ $edad = $fechaNacimientoCarbon->age;
             ->groupBy('datos_empresas.id','origen.paisnombre','registro.paisnombre')
             ->OrderBy('id')
            ->get();
-           //dd($empresas);
+
+           //$dato=datosembajada::all();
+           //dd($dato);
 
            $generador=DB::table('datos_empresas')
             ->join('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
@@ -972,6 +978,7 @@ $edad = $fechaNacimientoCarbon->age;
             DB::raw('count(datos_embajadas) as visualizare'),
             'registro.paisnombre as lregistro')
              ->where('datos_empresas.status',1)
+             ->where('datos_embajadas.status',1)
             ->groupBy('datos_empresas.id','origen.paisnombre','registro.paisnombre')
             ->OrderBy('id')
            
@@ -2770,7 +2777,6 @@ public function embajada_eliminador($id){
             ->join('inversionista_naturals as delegado','delegado.id','=','contenido_empresas.delegate_id')
             ->leftjoin('pais','pais.id','=','empresas.pais_origen')
             ->select(
-                'contenido_empresas.id',
                 'pais.paisnombre as pais_origen',
                 'empresas.razonsocial as razonsocial',
                 'empresas.foto',
@@ -2786,6 +2792,7 @@ public function embajada_eliminador($id){
                    'delegado.nombre as delegado_nombre',
 
                    'delegado.apellido as delegado_apellido',
+                'empresas.id as id',
                )
             ->where('contenido_empresas.enterprise_id','=',$id)
             ->where('contenido_empresas.status','!=',0)
@@ -2846,6 +2853,102 @@ public function embajada_eliminador($id){
         
     }
 
+
+
+
+public function sectores()
+    {
+        if(session('usuario')){
+            $sectores=sectors::all();
+            //dd($sec);
+            $dc=db::table('sector_empresas')->count();
+           
+
+                $empresas=DB::table('datos_empresas')
+            ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
+            ->join('sector_empresas','sector_empresas.enterprise_id','=','datos_empresas.id')
+            ->select(
+                'sector_empresas.sector_id as sector_id',
+            'datos_empresas.*',
+            'origen.paisnombre as pais_origen',
+            DB::raw('count(sector_empresas) as vizualizare'))
+            ->groupBy('datos_empresas.id','origen.paisnombre','sector_empresas.sector_id')
+            
+           ->get();
+           //dd($empresas);
+
+           $generador=DB::table('datos_empresas')
+            ->join('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
+            
+            
+            ->count()
+           ;
+          // dd($empresas);
+
+           
+            
+            $pais=db::table('pais')->OrderBy('paisnombre')->get();
+            //dd($generador);
+            return view('sectores',['empresas'=>$empresas,'pais'=>$pais,'generador'=>$generador,'dc' => $dc,'sectores' => $sectores]);
+        }
+        else
+        return $this->dashboard();
+    }
+
+
+    public function sectores_empresa_registro($id)
+    {
+        if(session('usuario')){
+            $sectores=sectors::all()->where('sector',$id)->first();
+            //dd($sec);
+            
+
+                $empresas=DB::table('datos_empresas')
+            ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
+            ->join('pais as registro','datos_empresas.lregistro','=','registro.id')
+            ->leftjoin('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
+            ->leftjoin('inversionista_naturals','inversionista_naturals.id','=','contenido_empresas.delegate_id')
+            ->leftjoin('datos_embajadas','datos_embajadas.enterprise_id','=','datos_empresas.id')
+            
+            ->select(
+            'datos_empresas.*',
+            'origen.paisnombre as pais_origen',
+            'origen.id as pais',
+            'inversionista_naturals.id as delegado_id',
+            'inversionista_naturals.nombre as delegate_id',
+            'inversionista_naturals.apellido as delegatee_id',
+        )
+            ->groupBy('datos_empresas.id','origen.id','origen.paisnombre','inversionista_naturals.nombre','inversionista_naturals.apellido','inversionista_naturals.id')
+            ->OrderBy('id')
+           ->get();
+           //dd($empresas);
+
+           
+           //dd($empresas);
+
+            
+           
+            return view('sectores_empresa_registro',['empresas'=>$empresas,'sectores' => $sectores]);
+        }
+        else
+        return $this->dashboard();
+    }
+
+
+
+     public function sectores_empresa_registrar(request $request)
+    {
+      $registry=new sector_empresa;
+      $registry -> delegate_id=$request->delegate_id;
+      $registry -> enterprise_id=$request->empresa_id;
+      $registry -> cii=$request->cii;
+      $registry -> sector_id=$request->sector_id;
+      $registry -> act=$request->act;
+      $registry -> ip=$request->ip;
+      //dd($registry);
+      $registry ->save();
+      return redirect()->route('sectores')->with('status','Relacion de sectores creado');
+    }
 
 
 

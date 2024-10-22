@@ -116,6 +116,7 @@ position: absolute;
                       @endif
                       <li><a href="{{route('enterprises')}}"><i class="fa fa-building "></i> <span>Empresas</span></a></li>
                       <li><a href="{{route('delegates')}}"><i class="fa fa-user "></i> <span>Representantes</span></a></li>
+                      <li><a href="{{route('sectores')}}"><i class="fa fa-cubes "></i> <span>Sectores</span></a></li>
                      @if(session('usuario')->role >= 8) <li><a href="{{route('stadistics')}}"><i class="fa fa-pie-chart "></i> <span>Estadisticas</span></a></li>
                      
                      @endif
