@@ -45,109 +45,68 @@
 <br>
 
 
+@foreach ($empresas->groupBy('sector_id') as $sectorId => $sectorEmpresas)
+    <div class="white_shd full margin_bottom_30 sector-item" data-search="{{ $sectorEmpresas->first()->sector }}">
+        <div class="full graph_head">
+            <div class="heading1 margin_0">
+                <h2>{{ $sectorEmpresas->first()->sector }}</h2>
+            </div>
+        </div>
 
-
-@if($dc >0)
-@foreach($sectores as $sector)
-
-
-                           <div class="white_shd full margin_bottom_30 sector-item" data-search="{{ $sector->sector }}">
-
-
-
-                              <div class="full graph_head">
-                                 <div class="heading1 margin_0">
-                                    <h2>{{$sector->sector}}</h2>
-                                 </div>
-                              </div>
-
-<div class="table_section padding_infor_info">
-  
-
-   <div class="table-responsive-sm">
-      <table class="table">
-         <thead class="thead" >
-            <tr style="background-color: #13579e;color: white;">
-              <th  >#</th>
-
-<th >Razon Social</th>
-<th >Rif</th>
-
-
-            </tr>
-         </thead>
-         <tbody style="color:black">
-          @php $n=1; @endphp
-           
-             
-             @foreach($empresas as $empresa)
-
-
-@if($empresa->sector_id == $sector->id)
-
-<tr style="vertical-align: none;text-align: center;align-items: center;
-justify-content: center;
-align-content: center;" >
-<td >@php echo $n; @endphp</td>
-
-
-<td>{{$empresa->razonsocial}}</td>
-<td>{{$empresa->identificador}}-{{$empresa->rif}}</td>
-@else  <tr style="background-color: #13579e;color: white;">
-                          <a href="{{route('sectores_empresa_registro',$sector->sector)}}">
-                           <button class="btn btn-primary w-50 m-auto" style="display: flex;justify-content: center">añadir</button>
-                          </a>
-                      </tr>
-
-          
-            
-        
-
-
-              @endif
-      
-
-
-             
-
-              @endforeach
-              
-               @php $n++; @endphp
-              
-
-         </tbody>
-      </table>
-   </div>
-</div>
-</div>
-
-
-@endforeach
-@else
-    <div class="white_shd full margin_bottom_30 sector-item" data-search="{{ $sector->sector }}" style="display:none" >
-
-          <div class="full graph_head">
-                                 <div class="heading1 margin_0">
-                                    <h2>{{$sector->sector}}</h2>
-                                 </div>
-          </div>
+@if($sectorEmpresas->first()->revision != null)
         <div class="table_section padding_infor_info">
-              <div class="table-responsive-sm">
-                <table class="table">
-                   <thead class="thead" >
-                      <tr style="background-color: #13579e;color: white;">
-                          <a href="{{route('sectores_empresa_registro',$sector->sector)}}">
-                           <button class="btn btn-primary w-50 m-auto" style="display: flex;justify-content: center">añadir</button>
-                          </a>
-                      </tr>
-                  </thead>
-                </table>
-              </div>
 
+        <a href="{{ route('sectores_empresa_registro', $sectorId) }}">   <button class="btn btn-success mb-2">Añadir</button>   </a>
+
+
+            <table class="table">
+                <thead>
+                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                        <th>#</th>
+                        <th>Razon Social</th>
+                        <th>Rif</th>
+
+                        <th>Fecha</th>
+                        <th>Fases</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($sectorEmpresas as $n => $empresa)
+                        <tr style="text-align:center">
+                            <td>{{ $n + 1 }}</td>
+                            <td>{{ $empresa->razonsocial }}</td>
+                            <td><a href="{{ route('sector_vizualizador', ['id'=>$empresa->rif,'revision'=>$empresa->revision]) }}" style="color: blue">{{ $empresa->identificador }}-{{ $empresa->rif }}<a></td>
+                            <td>{{ \Carbon\Carbon::parse($empresa->created_at)->locale('es_ES')
+                                                        ->isoFormat('DD [/] MM [de] YYYY [a las] h:mm a ') }}</td>
+                                                        <td>PROXIMAMENTE...</td>
+                        </tr>
+                    @endforeach
+
+                    @else
+                    <div class="table_section padding_infor_info">
+           
+ <tbody>
+                        <tr style="background-color: #13579e;color: white;">
+                            <td colspan="3">
+                                <a href="{{ route('sectores_empresa_registro', $sectorId) }}">
+                                    <button class="btn btn-primary w-50 m-auto" style="display: flex;justify-content: center">Añadir</button>
+                                </a>
+                            </td>
+                        </tr>
+                    @endif
+                </tbody>
+            </table>
         </div>
     </div>
+@endforeach
 
-@endif
+
+
+
+
+
+
+
 
 </div>
 
@@ -186,115 +145,7 @@ align-content: center;" >
 });
 </script>
 
-<script>
 
-     var campo10 = document.getElementById('campo10'); //direccion
-campo10.innerHTML=''
-
-  function validarCampos() {
-      var campo1 = document.getElementById('campo1');
-      var campo2 = document.getElementById('campo2');
-      var campo3 = document.getElementById('campo3');
-      var campo4 = document.getElementById('campo4');
-      var campo4 = document.getElementById('campo11');
-      var campo4 = document.getElementById('campo12');
-      
-    
-      var fileInput = document.getElementById('fileInput');
-      var submitBtn = document.getElementById('submitBtn');
-      var valido = campo1.checkValidity() && campo10.checkValidity() && campo11.checkValidity() && campo12.checkValidity() && campo3.selectedIndex != 0  && campo4.selectedIndex != 0 && campo2.selectedIndex != 0 ;
-
-      submitBtn.disabled = !valido;
-  }
-
-  document.getElementById('miFormulario').addEventListener('input', function(event) {
-      var campo = event.target;
-      if (campo.id === 'campo1') {
-          campo.value = campo.value.replace(/[^A-Za-z0-9áÁéÉíÍóÓúÚñÑ®©.' ']/g, '');
-      }
-      
-      if (campo.id === 'campo3') {
-          campo.value = campo.value.replace(/[^0-9]/g, '');
-      }
-      if (campo.id === 'campo10') {
-          campo.value = campo.value.replace(/[^A-Za-z0-9' ',.#áÁéÉíÍóÓúÚñÑ]/g, '');
-      }
-       if (campo.id === 'campo11') {
-          campo.value = campo.value.replace(/[^A-Za-z0-9@' ',.#áÁéÉíÍóÓúÚñÑ]/g, '');
-      }
-       if (campo.id === 'campo12') {
-          campo.value = campo.value.replace(/[^0-9]/g, '');
-      }
-     
-      validarCampos();
-  });
-
-  document.getElementById('fileInput').addEventListener('change', function(event) {
-      var files = event.target.files;
-      var preview = document.getElementById('preview');
-      var fileError = document.getElementById('fileError');
-      preview.innerHTML = '';
-      fileError.style.display = 'none';
-      var validFiles = true;
-
-      Array.from(files).forEach(file => {
-          if (file.type.startsWith('image/')) {
-              var reader = new FileReader();
-              reader.onload = function(e) {
-                  var container = document.createElement('div');
-                  container.classList.add('preview-container');
-                  var img = document.createElement('img');
-                  img.src = e.target.result;
-                  img.addEventListener('click', function() {
-                      img.classList.toggle('maximized');
-                  });
-                  var span = document.createElement('span');
-                  span.textContent = file.name.length > 20 ? file.name.substring(0, 20) + '...' : file.name;
-                  container.appendChild(img);
-                  container.appendChild(span);
-                  preview.appendChild(container);
-              };
-              reader.readAsDataURL(file);
-          } else {
-              validFiles = false;
-          }
-      });
-
-      if (!validFiles) {
-          fileError.style.display = 'block';
-          event.target.value = '';
-      }
-
-      validarCampos();
-  });
-
-  document.getElementById('miFormulario').addEventListener('submit', function(event) {
-      var campo1 = document.getElementById('campo1');
-      var campo2 = document.getElementById('campo2');
-      var valido = true;
-
-      if (!campo1.checkValidity()) {
-          campo1.classList.add('error');
-          valido = false;
-      } else {
-          campo1.classList.remove('error');
-      }
-
-      if (!campo2.checkValidity()) {
-          campo2.classList.add('error');
-          valido = false;
-      } else {
-          campo2.classList.remove('error');
-      }
-
-      if (!valido) {
-          event.preventDefault();
-      }
-  });
-
-
-
-</script>
 
    
     @endsection

@@ -90,6 +90,8 @@ class Inversionista extends Controller
     }
 */
 
+
+
       public function result(request $request)
     {// dd(db::table('inversionista_naturals')->where('email',$request->busqueda)->first() == null);
         if(db::table('inversionista_naturals')->where('email',$request->busqueda)->first()!=null)
@@ -942,7 +944,7 @@ $edad = $fechaNacimientoCarbon->age;
             
             ->select(
             'datos_empresas.*',
-             'datos_empresas.id as id',
+             'datos_empresas.id as id_empresa',
             'origen.paisnombre as pais_origen',
             DB::raw('count(case when contenido_empresas.status <> 0 then 1 else null end) as visualizar'),
             DB::raw('count(datos_embajadas) as visualizare'),
@@ -950,7 +952,7 @@ $edad = $fechaNacimientoCarbon->age;
             ->groupBy('datos_empresas.id','origen.paisnombre','registro.paisnombre')
             ->OrderBy('id')
            ->get();
-
+          // dd($empresas);
            //$dato=datosembajada::all();
            //dd($dato);
 
@@ -1366,7 +1368,13 @@ public function add_web($id)
             ->join('rrss','rrss.id','=','redes_sociales_empresas.site')->where('datos_empresas.id',$id)->where('red','twitter')
             ->select('redes_sociales_empresas.username as twitter')->first();
 
-           $delegados=db::table('inversionista_naturals')->join('asociador_empresas_representantes as asociador','asociador.delegate_id','=','inversionista_naturals.id')->where('inversionista_naturals.status','!=',0)->where('asociador.enterprise_id','=',$id)->OrderBy('asociador.type','asc')->OrderBy('inversionista_naturals.nombre','ASC')->get();
+           $delegados=db::table('inversionista_naturals')
+           ->join('asociador_empresas_representantes as asociador','asociador.delegate_id','=','inversionista_naturals.id')
+           ->select('inversionista_naturals.*','inversionista_naturals.id as id','asociador.type')
+           ->where('inversionista_naturals.status','!=',0)
+           ->where('asociador.enterprise_id','=',$id)
+           ->OrderBy('asociador.type','asc')
+           ->OrderBy('inversionista_naturals.nombre','ASC')->get();
 
              $facebook=db::table('datos_empresas')
             ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
@@ -1422,7 +1430,7 @@ public function add_web($id)
 
 
 
-  //dd($twitter);
+  //dd($delegados);
 
 
 
@@ -2773,8 +2781,8 @@ public function embajada_eliminador($id){
         if(session('usuario')){
 
             $previa=DB::table('contenido_empresas')
-            ->join('datos_empresas as empresas','empresas.id','=','contenido_empresas.enterprise_id')
-            ->join('inversionista_naturals as delegado','delegado.id','=','contenido_empresas.delegate_id')
+            ->leftjoin('datos_empresas as empresas','empresas.id','=','contenido_empresas.enterprise_id')
+            ->leftjoin('inversionista_naturals as delegado','delegado.id','=','contenido_empresas.delegate_id')
             ->leftjoin('pais','pais.id','=','empresas.pais_origen')
             ->select(
                 'pais.paisnombre as pais_origen',
@@ -2800,6 +2808,8 @@ public function embajada_eliminador($id){
 
            
            ->first();
+
+           //dd($previa);
 
 
 
@@ -2853,28 +2863,58 @@ public function embajada_eliminador($id){
         
     }
 
+public function sector_vizualizador($id, $revision){
+   $valor=db::table('sector_empresas')
+   ->rightjoin('datos_empresas', 'datos_empresas.id','=','sector_empresas.enterprise_id')
+    ->rightjoin('sectors', 'sectors.id', '=', 'sector_empresas.sector_id')
 
+            ->rightjoin('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
+
+            ->rightjoin('inversionista_naturals','inversionista_naturals.id','=','contenido_empresas.delegate_id')
+
+            ->rightjoin('pais as origen','datos_empresas.pais_origen','=','origen.id')
+                ->select('sector_empresas.id','sectors.sector','datos_empresas.razonsocial','inversionista_naturals.nombre','inversionista_naturals.apellido','origen.paisnombre as pais','sector_empresas.cii','sector_empresas.act','sector_empresas.ip')
+                ->where('rif',$id)
+                ->where('sector_id',$revision)
+                ->OrderBy('sector_empresas.created_at','desc')
+                ->first();
+//dd($valor);
+    $versiones=db::table('sector_empresas')
+   ->rightjoin('datos_empresas', 'datos_empresas.id','=','sector_empresas.delegate_id')
+    ->rightjoin('sectors', 'sectors.id', '=', 'sector_empresas.sector_id')
+
+       
+                ->select('sector_empresas.id','sector_empresas.updated_at')->where('rif',$id)->where('sector_id',$revision)->OrderBy('sector_empresas.created_at','desc')->get();
+  // dd($valor);
+   return view('sector_vizualizador',['valor' => $valor,'versiones'=>$versiones]);
+}
 
 
 public function sectores()
     {
         if(session('usuario')){
             $sectores=sectors::all();
-            //dd($sec);
+            //dd($sectores);
             $dc=db::table('sector_empresas')->count();
            
 
-                $empresas=DB::table('datos_empresas')
-            ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
-            ->join('sector_empresas','sector_empresas.enterprise_id','=','datos_empresas.id')
-            ->select(
-                'sector_empresas.sector_id as sector_id',
-            'datos_empresas.*',
-            'origen.paisnombre as pais_origen',
-            DB::raw('count(sector_empresas) as vizualizare'))
-            ->groupBy('datos_empresas.id','origen.paisnombre','sector_empresas.sector_id')
-            
-           ->get();
+         $empresas = DB::table('datos_empresas')
+    ->join('pais as origen', 'datos_empresas.pais_origen', '=', 'origen.id')
+    ->rightjoin('sector_empresas', 'sector_empresas.enterprise_id', '=', 'datos_empresas.id')
+    ->rightjoin('sectors', 'sectors.id', '=', 'sector_empresas.sector_id')
+    ->select(
+        'sectors.sector as sector_id',  // Group by sector name
+          'sector_empresas.sector_id as revision', 
+         
+       
+        'datos_empresas.*',
+        'origen.paisnombre as pais_origen', 'sectors.*'
+    )
+    ->groupBy('sectors.sector','sectors.id','sector_empresas.sector_id','datos_empresas.id','origen.paisnombre')  // Grouping by sector name
+    ->orderBy('sectors.sector', 'ASC')
+    ->get();
+
+           //dd($sectores);
            //dd($empresas);
 
            $generador=DB::table('datos_empresas')
@@ -2904,11 +2944,11 @@ public function sectores()
             
 
                 $empresas=DB::table('datos_empresas')
-            ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
-            ->join('pais as registro','datos_empresas.lregistro','=','registro.id')
-            ->leftjoin('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
-            ->leftjoin('inversionista_naturals','inversionista_naturals.id','=','contenido_empresas.delegate_id')
-            ->leftjoin('datos_embajadas','datos_embajadas.enterprise_id','=','datos_empresas.id')
+            ->leftjoin('pais as origen','datos_empresas.pais_origen','=','origen.id')
+            ->leftjoin('pais as registro','datos_empresas.lregistro','=','registro.id')
+            ->join('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('inversionista_naturals','inversionista_naturals.id','=','contenido_empresas.delegate_id')
+            ->join('datos_embajadas','datos_embajadas.enterprise_id','=','datos_empresas.id')
             
             ->select(
             'datos_empresas.*',
