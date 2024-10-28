@@ -159,6 +159,12 @@ Route::get('/embajada_print_{id}', [inversionista::class, 'embajada_print'])->na
 
 Route::get('/sector_vizualizador_{id}_{revision}', [inversionista::class, 'sector_vizualizador'])->name('sector_vizualizador');
 
+Route::put('/sector_modificador_{id}', [inversionista::class, 'sector_modificador'])->name('sector_modificador');
+
+Route::get('/sector_modificar_{id}', [inversionista::class, 'sector_modificar'])->name('sector_modificar');
+
+Route::get('/sector_imprenta_{id}', [inversionista::class, 'sector_imprenta'])->name('sector_imprenta');
+
 
 Route::get('/embajada_register_{id}', [inversionista::class, 'embajada_register'])->name('embajada_register');
 
