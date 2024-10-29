@@ -2863,6 +2863,74 @@ public function embajada_eliminador($id){
         
     }
 
+
+
+public function fases($id, $revision){
+   $valor=db::table('sector_empresas')
+
+
+   ->rightjoin('datos_empresas', 'datos_empresas.id','=','sector_empresas.enterprise_id')
+    ->rightjoin('sectors', 'sectors.id', '=', 'sector_empresas.sector_id')
+
+            ->join('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
+
+            ->join('inversionista_naturals','inversionista_naturals.id','=','contenido_empresas.delegate_id')
+
+            ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
+                ->select('sector_empresas.id',
+                    'sectors.sector',
+                    'datos_empresas.razonsocial',
+                    'inversionista_naturals.nombre',
+                    'inversionista_naturals.apellido',
+                    'origen.paisnombre as pais',
+                    'sector_empresas.cii',
+                    'sector_empresas.act',
+                    'sector_empresas.ip',
+
+                    'sector_empresas.id as evaluador',
+                    'datos_empresas.rif',
+
+
+                    'sector_empresas.sector_id',
+                    )
+                ->where('rif',$id)
+                ->where('sector_id',$revision)
+                ->OrderBy('sector_empresas.created_at','desc')
+                ->first();
+
+                $fase=db::table('sector_fases')->where('sector_id',$valor->evaluador)->first();
+//dd($fase);
+    
+ // dd($versiones);
+   return view('fases',['valor' => $valor,'fase'=>$fase]);
+}
+
+public function fases_registro(request $request , $id)
+{
+    $fases=sector_fase::all()->where('sector_id',$id)->first();
+    if($fases==null){
+        $registry=new sector_fase;
+        $registry -> sector_id = $id;
+        $registry -> ob = $request->ob;
+        $registry ->save();
+        return back()->with('status','Observacion Añadida');
+    }
+    else{
+         if($request->ob != $fases->ob && $request->ob!="" ||  $request->ob != $fases->ob && $request->ob!=" " ||  $request->ob != $fases->ob && $request->ob!=null)
+        { 
+            $fases ->update(['ob' => $request->ob]);
+            return back()->with('status','Observacion Modificada');
+     }
+        
+    }
+
+}
+
+
+
+
+
+
     public function sector_modificador(request $request,$id){
    
 

@@ -170,7 +170,9 @@ Route::get('/embajada_register_{id}', [inversionista::class, 'embajada_register'
 
 Route::get('/embajada_{id}', [inversionista::class, 'embajada'])->name('embajada');
 
+Route::get('/fases_{id}_{revision}', [inversionista::class, 'fases'])->name('fases');
 
+Route::PUT('/fases_registro_{id}', [inversionista::class, 'fases_registro'])->name('fases_registro');
 
 
 

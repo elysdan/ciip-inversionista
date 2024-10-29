@@ -89,7 +89,7 @@
                             <td><a href="{{ route('sector_vizualizador', ['id'=>$empresa->first()->rif,'revision'=>$empresa->first()->revision]) }}" style="color: blue">{{ $empresa->first()->identificador }}-{{ $empresa->first()->rif }}<a></td>
                             <td>{{ \Carbon\Carbon::parse($empresa->first()->created_at)->locale('es_ES')
                                                         ->isoFormat('DD [/] MM [de] YYYY [a las] h:mm a ') }}</td>
-                                                        <td><a href="" class="btn btn-outline-secondary mt-1 mb-1 p-0" style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;text-align: center;">
+                                                        <td><a href="{{route('fases',['id'=>$empresa->first()->rif,'revision'=>$empresa->first()->revision])}}" class="btn btn-outline-secondary mt-1 mb-1 p-0" style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;text-align: center;">
                 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;text-align: center;
     align-items: center;
