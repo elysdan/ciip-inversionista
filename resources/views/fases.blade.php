@@ -45,7 +45,9 @@
 
 
                             <div style="height: auto;width: 100%;">
-                                
+                                <form method="POST" action="{{route('fases_registro',$valor->id)}}">
+                                    @csrf
+                                    @method('PUT')
                                     <table>
                                             
                                             <tr>
@@ -73,15 +75,33 @@ Reunion Exploratoria
                                                     </td>
 
                                                      <td  class="col-md-2" style="text-align: center;" id="paiis_id">
+@if($fase)
+@if($fase->fase1i)
+                                                    {{$fase->fase1i}}
+                                                     @else
+                                                      <button type="submit" name="fase1i" value="{{today()->format('d-m-y')}}" class="btn btn-outline-success">Iniciar en fecha del: {{today()->format('d-m-y')}}  </button>
+                                                     @endif @endif
 
-                                                     <button class="btn btn-outline-success">Iniciar    </button>
+
                                                     </td>
                                                       <td class="col-md-2"  style="text-align: center;" id="paiis_id">
-
-                                                     
+                                                       @if($fase) @if($fase->fase1f)
+                                                            {{$fase->fase1f}}
+                                                        @elseif($fase->fase1i )
+                                                          <button class="btn btn-outline-success" type="submit" name="fase1f" value="{{today()->format('d-m-y')}}">Culminar en fecha del: {{today()->format('d-m-y')}}  </button>
+                                                          @else
+                                                            Fecha estimada:   {{today()->addDays(5)->format('d-m-y')}}
+                                                        @endif @endif
                                                     </td>
-                                                      <td class="col-md-2" style="text-align: center;" id="paiis_id">
-En Proceso
+@if($fase)                                                      <td class="col-md-2" style="text-align: center;" id="paiis_id">
+@if($fase->fase1status) 
+@if($fase->fase1status == 2)
+Procesado 
+@elseif($fase->fase1status == 3)
+Finalizado 
+@endif 
+@else En Proceso 
+@endif @endif
                                                      
                                                     </td>
                                                     
@@ -96,15 +116,33 @@ Consignacion de Documentos
                                                     </td>
 
                                                      <td  class="col-md-2" style="text-align: center;" id="paiis_id">
-
-                                                     <button class="btn btn-outline-success">Iniciar    </button>
+ @if($fase)
+                                                   @if($fase->fase2i)
+                                                        {{$fase->fase2i}}
+                                                     @else
+                                                      <button class="btn btn-outline-success" type="submit" name="fase2i" value="{{today()->format('d-m-y')}}"  >Iniciar en fecha del: {{today()->format('d-m-y')}}  </button>
+                                                     @endif @endif
                                                     </td>
                                                       <td class="col-md-2"  style="text-align: center;" id="paiis_id">
-
-                                                     
+                                                        @if($fase)
+  @if($fase->fase2f)
+                                                          {{$fase->fase2f}}  
+                                                        @elseif($fase->fase2i )
+                                                          <button class="btn btn-outline-success" type="submit" name="fase2f" value="{{today()->format('d-m-y')}}">Culminar en fecha del: {{today()->format('d-m-y')}}  </button>
+                                                          @else
+                                                            Fecha estimada:   {{today()->addDays(5)->format('d-m-y')}}
+                                                        @endif
+                                                     @endif
                                                     </td>
-                                                      <td class="col-md-2" style="text-align: center;" id="paiis_id">
-En Proceso
+ @if($fase)                                                      <td class="col-md-2" style="text-align: center;" id="paiis_id">
+@if($fase->fase2status) 
+@if($fase->fase2status == 2)
+Procesado 
+@elseif($fase->fase2status == 3)
+Finalizado 
+@endif 
+@else En Proceso 
+@endif @endif
                                                      
                                                     </td>
                                                     
@@ -119,15 +157,32 @@ Firma del Acuerdo de Confidencialidad
                                                     </td>
 
                                                      <td  class="col-md-2" style="text-align: center;" id="paiis_id">
-
-                                                     <button class="btn btn-outline-success">Iniciar    </button>
+                                                         @if($fase)
+@if($fase->fase3i)
+                                                        {{$fase->fase3i}}
+                                                     @else
+                                                      <button class="btn btn-outline-success" type="submit" name="fase3i" value="{{today()->format('d-m-y')}}" >Iniciar en fecha del: {{today()->format('d-m-y')}}  </button>
+                                                     @endif @endif
                                                     </td>
                                                       <td class="col-md-2"  style="text-align: center;" id="paiis_id">
-
-                                                     
+@if($fase)
+                                                      @if($fase->fase3f)
+                                                            {{$fase->fase3f}}
+                                                        @elseif($fase->fase3i )
+                                                          <button class="btn btn-outline-success" type="submit" name="fase3f" value="{{today()->format('d-m-y')}}">Culminar en fecha del: {{today()->format('d-m-y')}}  </button>
+                                                          @else
+                                                            Fecha estimada:   {{today()->addDays(10)->format('d-m-y')}}
+                                                        @endif @endif
                                                     </td>
-                                                      <td class="col-md-2" style="text-align: center;" id="paiis_id">
-En Proceso
+            @if($fase)                                           <td class="col-md-2" style="text-align: center;" id="paiis_id">
+@if($fase->fase3status) 
+@if($fase->fase3status == 2)
+Procesado 
+@elseif($fase->fase3status == 3)
+Finalizado 
+@endif 
+@else En Proceso 
+@endif @endif
                                                      
                                                     </td>
                                                     
@@ -142,15 +197,33 @@ Visita al Activo
                                                     </td>
 
                                                      <td  class="col-md-2" style="text-align: center;" id="paiis_id">
-
-                                                     <button class="btn btn-outline-success">Iniciar    </button>
+ @if($fase)
+                                                    @if($fase->fase4i)
+                                                        {{$fase->fase4i}}
+                                                     @else
+                                                      <button class="btn btn-outline-success" type="submit" name="fase4i" value="{{today()->format('d-m-y')}}" >Iniciar en fecha del: {{today()->format('d-m-y')}}  </button>
+                                                     @endif @endif
                                                     </td>
                                                       <td class="col-md-2"  style="text-align: center;" id="paiis_id">
-
+                                                         @if($fase)
+ @if($fase->fase4f)
+                       {{$fase->fase4f}}                                     
+                                                        @elseif($fase->fase4i )
+                                                          <button class="btn btn-outline-success" type="submit" name="fase4f" value="{{today()->format('d-m-y')}}">Culminar en fecha del: {{today()->format('d-m-y')}}  </button>
+                                                          @else
+                                                            Fecha estimada:   {{today()->addDays(30)->format('d-m-y')}}
+                                                        @endif @endif
                                                      
                                                     </td>
-                                                      <td class="col-md-2" style="text-align: center;" id="paiis_id">
-En Proceso
+    @if($fase)                                                   <td class="col-md-2" style="text-align: center;" id="paiis_id">
+@if($fase->fase4status) 
+@if($fase->fase4status == 2)
+Procesado 
+@elseif($fase->fase4status == 3)
+Finalizado 
+@endif 
+@else En Proceso 
+@endif @endif
                                                      
                                                     </td>
                                                     
@@ -165,15 +238,32 @@ Desarrollo y Presentación del Proyecto
                                                     </td>
 
                                                      <td  class="col-md-2" style="text-align: center;" id="paiis_id">
-
-                                                     <button class="btn btn-outline-success">Iniciar    </button>
+ @if($fase)
+                                                  @if($fase->fase5i)
+                                                        {{$fase->fase5i}}
+                                                     @else
+                                                      <button class="btn btn-outline-success" type="submit" name="fase5i" value="{{today()->format('d-m-y')}}" >Iniciar en fecha del: {{today()->format('d-m-y')}}  </button>
+                                                     @endif @endif
                                                     </td>
                                                       <td class="col-md-2"  style="text-align: center;" id="paiis_id">
-
-                                                     
+ @if($fase)
+                                                       @if($fase->fase5f)
+                                                            {{$fase->fase5f}}
+                                                        @elseif($fase->fase5i )
+                                                          <button class="btn btn-outline-success" type="submit" name="fase5f" value="{{today()->format('d-m-y')}}">Culminar en fecha del: {{today()->format('d-m-y')}}  </button>
+                                                          @else
+                                                            Fecha estimada:   {{today()->addDays(5)->format('d-m-y')}}
+                                                        @endif @endif
                                                     </td>
-                                                      <td class="col-md-2" style="text-align: center;" id="paiis_id">
-En Proceso
+     @if($fase)                                                  <td class="col-md-2" style="text-align: center;" id="paiis_id">
+@if($fase->fase5status) 
+@if($fase->fase5status == 2)
+Procesado 
+@elseif($fase->fase5status == 3)
+Finalizado 
+@endif 
+@else En Proceso 
+@endif @endif
                                                      
                                                     </td>
                                                     
@@ -188,15 +278,33 @@ Factibilidad
                                                     </td>
 
                                                      <td  class="col-md-2" style="text-align: center;" id="paiis_id">
-
-                                                     <button class="btn btn-outline-success">Iniciar    </button>
+ @if($fase)
+                                                   @if($fase->fase6i)
+                                                        {{$fase->fase6i}}
+                                                     @else
+                                                      <button class="btn btn-outline-success" type="submit" name="fase6i" value="{{today()->format('d-m-y')}}" >Iniciar en fecha del: {{today()->format('d-m-y')}}  </button>
+                                                     @endif @endif
                                                     </td>
                                                       <td class="col-md-2"  style="text-align: center;" id="paiis_id">
-
-                                                     
+                                                        @if($fase)
+ @if($fase->fase6f)
+                       {{$fase->fase6f}}                                     
+                                                        @elseif($fase->fase6i )
+                                                          <button class="btn btn-outline-success" type="submit" name="fase6f" value="{{today()->format('d-m-y')}}">Culminar en fecha del: {{today()->format('d-m-y')}}  </button>
+                                                          @else
+                                                            Fecha estimada:   {{today()->addDays(26)->format('d-m-y')}}
+                                                        @endif
+                                                     @endif
                                                     </td>
-                                                      <td class="col-md-2" style="text-align: center;" id="paiis_id">
-En Proceso
+     @if($fase)                                                  <td class="col-md-2" style="text-align: center;" id="paiis_id">
+@if($fase->fase6status) 
+@if($fase->fase6status == 2)
+Procesado 
+@elseif($fase->fase6status == 3)
+Finalizado 
+@endif 
+@else En Proceso 
+@endif @endif
                                                      
                                                     </td>
                                                     
@@ -211,11 +319,22 @@ Negociacion y Firma del Contrato
                                                     </td>
 
                                                      <td  class="col-md-2" style="text-align: center;" id="paiis_id">
-
-                                                     <button class="btn btn-outline-success">Iniciar    </button>
+ @if($fase)
+                                                   @if($fase->fase7i)
+                                                        {{$fase->fase7i}}
+                                                     @else
+                                                      <button class="btn btn-outline-success" type="submit" name="fase7i" value="{{today()->format('d-m-y')}}" >Iniciar en fecha del: {{today()->format('d-m-y')}}  </button>
+                                                     @endif @endif
                                                     </td>
                                                       <td class="col-md-2"  style="text-align: center;" id="paiis_id">
-
+                                                         @if($fase)
+ @if($fase->fase7f)
+                                                       {{$fase->fase7f}}     
+                                                        @elseif($fase->fase7i )
+                                                          <button class="btn btn-outline-success" type="submit" name="fase7f" value="{{today()->format('d-m-y')}}">Culminar en fecha del: {{today()->format('d-m-y')}}  </button>
+                                                          @else
+                                                            Fecha estimada:   {{today()->addDays(5)->format('d-m-y')}}
+                                                        @endif @endif
                                                      
                                                     </td>
                                                       <td class="col-md-2" style="text-align: center;  font-weight: bold;
@@ -229,10 +348,9 @@ Proyeccion de Firma:
                                               
                                             
                                     </table>
+                               
     <br>
-<form method="POST" action="{{route('fases_registro',$valor->id)}}">
-    @csrf
-    @method('PUT')
+
     <table>
                                             
                                             <tr>

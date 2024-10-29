@@ -139,9 +139,13 @@
  <tbody>
                         <tr style="background-color: #13579e;color: white;">
                             <td colspan="3">
+                                @if($valor > 0)
                                 <a href="{{ route('sectores_empresa_registro', $sectorId) }}">
                                     <button class="btn btn-primary w-50 m-auto" style="display: flex;justify-content: center">Añadir</button>
                                 </a>
+                                @else
+                                <button class="btn btn-secondary w-50 m-auto" style="display: flex;justify-content: center">Añadir</button>
+                                @endif
                             </td>
                         </tr>
                     @endif

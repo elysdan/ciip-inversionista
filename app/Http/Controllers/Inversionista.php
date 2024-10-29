@@ -94,19 +94,24 @@ class Inversionista extends Controller
 
       public function result(request $request)
     {// dd(db::table('inversionista_naturals')->where('email',$request->busqueda)->first() == null);
-        if(db::table('inversionista_naturals')->where('email',$request->busqueda)->first()!=null)
+        if(db::table('inversionista_naturals')->where('inversionista_naturals.email',$request->busqueda)  
+            ->join('nacionalidad','nacionalidad.id','=','inversionista_naturals.nacionalidad')
+            ->join('contenido_representantes','contenido_representantes.delegate_id','=','inversionista_naturals.id')
+           ->join('users as elaborado','elaborado.id','=','contenido_representantes.elaborado')
+           ->where('contenido_representantes.status', '!=', 0)
+           ->first()!=null)
 
 {
     
              $resultado=db::table('inversionista_naturals')
              ->where('inversionista_naturals.email',$request->busqueda)
-            ->join('nacionalidad','nacionalidad.id','=','inversionista_naturals.nacionalidad')
+           ->join('nacionalidad','nacionalidad.id','=','inversionista_naturals.nacionalidad')
             ->join('contenido_representantes','contenido_representantes.delegate_id','=','inversionista_naturals.id')
            ->join('users as elaborado','elaborado.id','=','contenido_representantes.elaborado')
            ->leftjoin('users as revisado','revisado.id','=','contenido_representantes.revisado')
            ->leftjoin('users as certificado','certificado.id','=','contenido_representantes.certificado')
            ->leftjoin('users as aprobado','aprobado.id','=','contenido_representantes.aprobado')
-             
+             ->where('contenido_representantes.status', '!=', 0)
              ->select(
             'inversionista_naturals.*',
             'nacionalidad.GENTILICIO_NAC as GENTILICIO_NAC',
@@ -127,7 +132,7 @@ class Inversionista extends Controller
              
            ->OrderBy('contenido_representantes.created_at','desc')
              ->first();
-            //dd($previa);
+            //dd($resultado);
 
              $versiones=db::table('inversionista_naturals')
               ->join('contenido_representantes','contenido_representantes.delegate_id','=','inversionista_naturals.id')
@@ -198,7 +203,12 @@ $twitter=db::table('inversionista_naturals')
         //dd($resultado);
         return view('elaborador_delegados',['versiones'=> $versiones,'previa'=> $resultado,'instagram' =>$instagram,'twitter' =>$twitter,'facebook' =>$facebook ,'linkedin' =>$linkedin,'correo' =>$correo,'telefono' =>$telefono]);
 }       
-elseif (db::table('inversionista_naturals')->where('doc_identidad',$request->busqueda)->first()!=null) {
+elseif (db::table('inversionista_naturals')->where('doc_identidad',$request->busqueda)   ->join('nacionalidad','nacionalidad.id','=','inversionista_naturals.nacionalidad')
+            ->join('contenido_representantes','contenido_representantes.delegate_id','=','inversionista_naturals.id')
+           ->join('users as elaborado','elaborado.id','=','contenido_representantes.elaborado')->where('contenido_representantes.status', '!=', 0)
+           
+             
+           ->first()!=null) {
   $resultado=db::table('inversionista_naturals')
              ->where('inversionista_naturals.doc_identidad',$request->busqueda)
             ->join('nacionalidad','nacionalidad.id','=','inversionista_naturals.nacionalidad')
@@ -207,7 +217,7 @@ elseif (db::table('inversionista_naturals')->where('doc_identidad',$request->bus
            ->leftjoin('users as revisado','revisado.id','=','contenido_representantes.revisado')
            ->leftjoin('users as certificado','certificado.id','=','contenido_representantes.certificado')
            ->leftjoin('users as aprobado','aprobado.id','=','contenido_representantes.aprobado')
-             
+             ->where('contenido_representantes.status', '!=', 0)
              ->select(
             'inversionista_naturals.*',
             'nacionalidad.GENTILICIO_NAC as GENTILICIO_NAC',
@@ -297,18 +307,26 @@ $twitter=db::table('inversionista_naturals')
         //dd($resultado);
         return view('elaborador_delegados',['versiones'=> $versiones,'previa'=> $resultado,'instagram' =>$instagram,'twitter' =>$twitter,'facebook' =>$facebook ,'linkedin' =>$linkedin,'correo' =>$correo,'telefono' =>$telefono]);
 }
-elseif(db::table('datos_empresas')->where('rif',$request->busqueda)->first()!=null)
+elseif(db::table('datos_empresas')->where('datos_empresas.rif',$request->busqueda)
+        ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
+            ->join('pais as registro','datos_empresas.lregistro','=','registro.id')
+            ->join('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
+            ->join('users as elaborado','elaborado.id','=','contenido_empresas.elaborado')
+            ->where('contenido_empresas.status', '!=', 0)
+        
+->first()!=null)
 {
    
             $previa=DB::table('datos_empresas') ->where('datos_empresas.rif',$request->busqueda)
             ->leftjoin('pais as origen','datos_empresas.pais_origen','=','origen.id')
             ->leftjoin('pais as registro','datos_empresas.lregistro','=','registro.id')
             ->leftjoin('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
-            ->LEFTjoin('users as elaborado','elaborado.id','=','contenido_empresas.elaborado')
+            ->join('users as elaborado','elaborado.id','=','contenido_empresas.elaborado')
             ->leftjoin('users as revisado','revisado.id','=','contenido_empresas.revisado')
             ->leftjoin('users as certificado','certificado.id','=','contenido_empresas.certificado')
             ->leftjoin('users as aprobado','aprobado.id','=','contenido_empresas.aprobado')
-
+            ->leftjoin('inversionista_naturals as delegado','delegado.id','=','contenido_empresas.delegate_id')
+            ->where('contenido_empresas.status', '!=', 0)
             ->select(
             'datos_empresas.*',
             'contenido_empresas.*',
@@ -320,6 +338,8 @@ elseif(db::table('datos_empresas')->where('rif',$request->busqueda)->first()!=nu
             'revisado.surname as surnamerev',
             'certificado.name as namecert',
             'certificado.surname as surnamecert',
+            'delegado.nombre as delegado_nombre',
+            'delegado.apellido as delegado_apellido',
             'aprobado.name as nameapro',
             'aprobado.surname as surnameapro',
             'contenido_empresas.updated_at as fecha',
@@ -1376,6 +1396,13 @@ public function add_web($id)
            ->OrderBy('asociador.type','asc')
            ->OrderBy('inversionista_naturals.nombre','ASC')->get();
 
+           $conteo=db::table('inversionista_naturals')
+           ->join('asociador_empresas_representantes as asociador','asociador.delegate_id','=','inversionista_naturals.id')
+           
+           ->where('inversionista_naturals.status','!=',0)
+           ->where('asociador.enterprise_id','=',$id)
+           ->count();
+
              $facebook=db::table('datos_empresas')
             ->join('redes_sociales_empresas','redes_sociales_empresas.enterprise_id','=','datos_empresas.id')
             ->join('rrss','rrss.id','=','redes_sociales_empresas.site')
@@ -1435,7 +1462,7 @@ public function add_web($id)
 
 
 
-            return view('previews' ,['instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo,'delegados' => $delegados]);
+            return view('previews' ,['instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo,'delegados' => $delegados,'conteo'=>$conteo]);
    
         }
         else
@@ -2899,7 +2926,7 @@ public function fases($id, $revision){
                 ->first();
 
                 $fase=db::table('sector_fases')->where('sector_id',$valor->evaluador)->first();
-//dd($fase);
+//dd($valor);
     
  // dd($versiones);
    return view('fases',['valor' => $valor,'fase'=>$fase]);
@@ -2908,10 +2935,38 @@ public function fases($id, $revision){
 public function fases_registro(request $request , $id)
 {
     $fases=sector_fase::all()->where('sector_id',$id)->first();
+    //dd($request);
     if($fases==null){
         $registry=new sector_fase;
+
         $registry -> sector_id = $id;
+        if($request->ob)
+        {
         $registry -> ob = $request->ob;
+        }
+        if($request->fase1i)
+        {
+        $registry -> fase1i = $request->fase1i;
+        }
+        if($request->fase2i)
+        {
+        $registry -> fase2i = $request->fase2i;
+        }if($request->fase3i)
+        {
+        $registry -> fase3i = $request->fase3i;
+        }if($request->fase4i)
+        {
+        $registry -> fase4i = $request->fase4i;
+        }if($request->fase5i)
+        {
+        $registry -> fase5i = $request->fase5i;
+        }if($request->fase6i)
+        {
+        $registry -> fase6i = $request->fase6i;
+        }if($request->fase7i)
+        {
+        $registry -> fase7i = $request->fase7i;
+        }
         $registry ->save();
         return back()->with('status','Observacion Añadida');
     }
@@ -2920,6 +2975,92 @@ public function fases_registro(request $request , $id)
         { 
             $fases ->update(['ob' => $request->ob]);
             return back()->with('status','Observacion Modificada');
+     }
+
+     if($request->fase1i)
+        { //dd();
+            $fases ->update(['fase1i' => $request->fase1i]);
+            $fases ->update(['fase1status' => 2]);
+            return back()->with('status','Fase Iniciada');
+     }
+     if($request->fase2i)
+        { //dd();
+            $fases ->update(['fase2i' => $request->fase2i]);
+                $fases ->update(['fase2status' => 2]);
+            return back()->with('status','Fase Iniciada');
+     }
+     if($request->fase3i)
+        { //dd();
+            $fases ->update(['fase3i' => $request->fase3i]);
+                $fases ->update(['fase3status' => 2]);
+            return back()->with('status','Fase Iniciada');
+     }
+     if($request->fase4i)
+        { //dd();
+            $fases ->update(['fase4i' => $request->fase4i]);
+                $fases ->update(['fase4status' => 2]);
+            return back()->with('status','Fase Iniciada');
+     }
+     if($request->fase5i)
+        { //dd();
+            $fases ->update(['fase5i' => $request->fase5i]);
+                $fases ->update(['fase5status' => 2]);
+            return back()->with('status','Fase Iniciada');
+     }
+     if($request->fase6i)
+        { //dd();
+            $fases ->update(['fase6i' => $request->fase6i]);
+                $fases ->update(['fase6status' => 2]);
+            return back()->with('status','Fase Iniciada');
+     }
+     if($request->fase7i)
+        { //dd();
+            $fases ->update(['fase7i' => $request->fase7i]);
+                $fases ->update(['fase7status' => 2]);
+            return back()->with('status','Fase Iniciada');
+     }
+
+     if($request->fase1f)
+        { //dd();
+            $fases ->update(['fase1f' => $request->fase1f]);
+            $fases ->update(['fase1status' => 3]);
+            return back()->with('status','Fase Iniciada');
+     }
+     if($request->fase2f)
+        { //dd();
+            $fases ->update(['fase2f' => $request->fase2f]);
+                $fases ->update(['fase2status' => 3]);
+            return back()->with('status','Fase Iniciada');
+     }
+     if($request->fase3f)
+        { //dd();
+            $fases ->update(['fase3f' => $request->fase3f]);
+                $fases ->update(['fase3status' => 3]);
+            return back()->with('status','Fase Iniciada');
+     }
+     if($request->fase4f)
+        { //dd();
+            $fases ->update(['fase4f' => $request->fase4f]);
+                $fases ->update(['fase4status' => 3]);
+            return back()->with('status','Fase Iniciada');
+     }
+     if($request->fase5f)
+        { //dd();
+            $fases ->update(['fase5f' => $request->fase5f]);
+                $fases ->update(['fase5status' => 3]);
+            return back()->with('status','Fase Iniciada');
+     }
+     if($request->fase6f)
+        { //dd();
+            $fases ->update(['fase6f' => $request->fase6f]);
+                $fases ->update(['fase6status' => 3]);
+            return back()->with('status','Fase Iniciada');
+     }
+     if($request->fase7f)
+        { //dd();
+            $fases ->update(['fase7f' => $request->fase7f]);
+                $fases ->update(['fase7status' => 3]);
+            return back()->with('status','Fase Iniciada');
      }
         
     }
@@ -3109,12 +3250,14 @@ public function sectores()
             ->count()
            ;
           // dd($empresas);
+ $valor=DB::table('datos_empresas')->count();
+           
 
            
             
             $pais=db::table('pais')->OrderBy('paisnombre')->get();
             //dd($generador);
-            return view('sectores',['empresas'=>$empresas,'pais'=>$pais,'generador'=>$generador,'dc' => $dc,'sectores' => $sectores]);
+            return view('sectores',['empresas'=>$empresas,'pais'=>$pais,'generador'=>$generador,'dc' => $dc,'sectores' => $sectores,'valor' => $valor]);
         }
         else
         return $this->dashboard();
@@ -3132,7 +3275,6 @@ public function sectores()
             ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
             ->join('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
             ->join('inversionista_naturals','inversionista_naturals.id','=','contenido_empresas.delegate_id')
-            ->join('datos_embajadas','datos_embajadas.enterprise_id','=','datos_empresas.id')
             
             ->select(
             'datos_empresas.*',
@@ -3155,7 +3297,6 @@ public function sectores()
            ->get();
            //dd($empresas);
 
-           
            //dd($empresas);
 
             

@@ -235,11 +235,25 @@
                                      <br>
                             
                                 <h4 style="text-align:CENTER">Representante Legal</h4>
-
+@if($conteo > 0)
                                 <select class="form-control m-auto "style="width: 90%;text-align:CENTER;align-content:center" name="delegate_id" id="Dii">
                                   @foreach($delegados as $delegado)  <option value="{{$delegado->id}}">{{$delegado->nombre}} {{$delegado->apellido}} {{$delegado->doc_identidad}} (@if($delegado->type == 1) Representante @else  Apoderado @endif)</option>
                                   @endforeach
                                 </select>
+                                @else
+                               
+<div class="w-100 m-auto" style="justify-content:center;text-align:center">
+  <a href="{{route('asociador',$previa->id)}}" class="btn btn-success mt-1 mb-1 p-0"  style="border-radius: 1rem; display: inline-flex; align-items: center; justify-content: center;width: 3vw;height: 3vw;text-align: center;">
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-fill-gear" align="center" viewBox="0 0 16 16" style="width: 2vw;text-align: center;
+    align-items: center;
+    justify-content: center;">
+                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                    </svg>
+               
+              </a></div>
+
+                                @endif
 
                                      <br>
                             
