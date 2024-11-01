@@ -2899,9 +2899,9 @@ public function fases($id, $revision){
    ->rightjoin('datos_empresas', 'datos_empresas.id','=','sector_empresas.enterprise_id')
     ->rightjoin('sectors', 'sectors.id', '=', 'sector_empresas.sector_id')
 
-            ->join('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
+            ->rightjoin('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
 
-            ->join('inversionista_naturals','inversionista_naturals.id','=','contenido_empresas.delegate_id')
+            ->leftjoin('inversionista_naturals','inversionista_naturals.id','=','contenido_empresas.delegate_id')
 
             ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
                 ->select('sector_empresas.id',
@@ -2926,10 +2926,21 @@ public function fases($id, $revision){
                 ->first();
 
                 $fase=db::table('sector_fases')->where('sector_id',$valor->evaluador)->first();
+
+                  $versiones=db::table('sector_empresas')
+   ->rightjoin('datos_empresas', 'datos_empresas.id','=','sector_empresas.enterprise_id')
+    ->rightjoin('sectors', 'sectors.id', '=', 'sector_empresas.sector_id')
+
+       
+                ->select('sector_empresas.id','sector_empresas.updated_at','datos_empresas.rif as rif','sector_empresas.id as evaluador')
+                ->where('datos_empresas.rif',$id)
+                ->where('sector_id',$revision)
+                ->OrderBy('sector_empresas.created_at','desc')
+                ->get();
 //dd($valor);
     
  // dd($versiones);
-   return view('fases',['valor' => $valor,'fase'=>$fase]);
+   return view('fases',['valor' => $valor,'fase'=>$fase,'versiones'=>$versiones]);
 }
 
 public function fases_registro(request $request , $id)
@@ -3191,6 +3202,7 @@ public function sector_imprenta($id){
             ->join('inversionista_naturals','inversionista_naturals.id','=','contenido_empresas.delegate_id')
 
             ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
+            ->leftjoin('sector_fases', 'sector_fases.sector_id', '=', 'sector_empresas.id')
                 ->select('sector_empresas.id',
                     'sectors.sector',
                     'datos_empresas.razonsocial',
@@ -3206,12 +3218,13 @@ public function sector_imprenta($id){
 
 
                     'sector_empresas.sector_id',
+                    'sector_fases.*'
                     )
                 ->where('sector_empresas.id',$id)
                
                 ->OrderBy('sector_empresas.created_at','desc')
                 ->first();
-dd($valor);
+//dd($valor);
   
  // dd($versiones);
    return view('sector_imprenta',['valor' => $valor]);
@@ -3229,6 +3242,7 @@ public function sectores()
     ->rightjoin('sector_empresas', 'sector_empresas.enterprise_id', '=', 'datos_empresas.id')
     ->rightjoin('sectors', 'sectors.id', '=', 'sector_empresas.sector_id')
     ->select(
+          'sectors.id as sector_valor',  
         'sectors.sector as sector_id',  // Group by sector name
           'sector_empresas.sector_id as revision', 
          
@@ -3260,7 +3274,7 @@ public function sectores()
             return view('sectores',['empresas'=>$empresas,'pais'=>$pais,'generador'=>$generador,'dc' => $dc,'sectores' => $sectores,'valor' => $valor]);
         }
         else
-        return $this->dashboard();
+        return $this->index();
     }
 
 
@@ -3304,7 +3318,7 @@ public function sectores()
             return view('sectores_empresa_registro',['empresas'=>$empresas,'sectores' => $sectores]);
         }
         else
-        return $this->dashboard();
+        return $this->index();
     }
 
 

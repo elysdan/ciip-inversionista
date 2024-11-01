@@ -96,7 +96,9 @@
                                             
                                             <tr style="height:auto">
                                                 
-                                                    <td class="consideraciones " >{{$previa->oci}}</td>
+                                                    <td class="consideraciones " > @php  
+                                                        echo nl2br($previa->oci) ; 
+                                                    @endphp</td>
                                             </tr>
                                     </table>
     <br>

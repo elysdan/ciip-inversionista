@@ -58,7 +58,7 @@
 @if($sectorEmpresas->first()->revision != null)
         <div class="table_section padding_infor_info">
 
-            <input type="text" class="form-control  w-50 m-auto" style="text-align:center;"  id="busqueda_{{ $sectorEmpresas->first()->sector }}" placeholder="Buscar Empresa, Rif o Identificador">
+            <input type="text" class="form-control  w-50 m-auto" style="text-align:center;"  id="busqueda_{{ $sectorEmpresas->first()->sector_valor }}" placeholder="Buscar Empresa, Rif o Identificador">
 
         <a href="{{ route('sectores_empresa_registro', $sectorId) }}">
            <button class="btn btn-outline-primary mb-2">Añadir</button>   
@@ -83,7 +83,7 @@
 
                           
 
-                        <tr style="text-align:center" class="busqueda_item_{{ $sectorEmpresas->first()->sector }}" data-search="{{ $empresa->first()->razonsocial }}" data-valor="{{ $empresa->first()->rif }}" data-identificador="{{ $empresa->first()->identificador }}">
+                        <tr style="text-align:center" class="busqueda_item_{{ $sectorEmpresas->first()->sector_valor }}" data-search="{{ $empresa->first()->razonsocial }}" data-valor="{{ $empresa->first()->rif }}" data-identificador="{{ $empresa->first()->identificador }}">
                             <td >{{ $i }}</td>
                             <td>{{ $empresa->first()->razonsocial }}</td>
                             <td><a href="{{ route('sector_vizualizador', ['id'=>$empresa->first()->rif,'revision'=>$empresa->first()->revision]) }}" style="color: blue">{{ $empresa->first()->identificador }}-{{ $empresa->first()->rif }}<a></td>
@@ -108,10 +108,10 @@
 <script>
  $(document).ready(function()   
  {
-    $('#busqueda_{{ $sectorEmpresas->first()->sector }}').on('keyup', function() {
+    $('#busqueda_{{ $sectorEmpresas->first()->sector_valor }}').on('keyup', function() {
         var query = $(this).val().toLowerCase();
 
-        $('.busqueda_item_{{ $sectorEmpresas->first()->sector }}').each(function() {
+        $('.busqueda_item_{{ $sectorEmpresas->first()->sector_valor }}').each(function() {
             var searchString = $(this).data('search').toLowerCase();
             var sectorValor = $(this).data('valor').toString().toLowerCase(); 
             var sectorident = $(this).data('identificador').toLowerCase(); // Convert to string
