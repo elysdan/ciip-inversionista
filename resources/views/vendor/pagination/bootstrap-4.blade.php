@@ -4,11 +4,11 @@
             {{-- Previous Page Link --}}
             @if ($paginator->onFirstPage())
                 <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.previous')">
-                    <span class="page-link" aria-hidden="true">&lsaquo; Anterior</span>
+                    <span class="page-link" aria-hidden="true" style="text-align:center;border-top-left-radius: 2rem;border-bottom-left-radius: 2rem;"  >&lsaquo; Anterior</span>
                 </li>
             @else
                 <li class="page-item">
-                    <a class="page-link" href="{{ $paginator->previousPageUrl() }}" rel="prev" aria-label="@lang('pagination.previous')">&lsaquo; Anterior</a>
+                    <a class="page-link" href="{{ $paginator->previousPageUrl() }}" rel="prev"  style="text-align:center;border-top-left-radius: 2rem;border-bottom-left-radius: 2rem;"  aria-label="@lang('pagination.previous')">&lsaquo; Anterior</a>
                 </li>
             @endif
 
@@ -34,11 +34,11 @@
             {{-- Next Page Link --}}
             @if ($paginator->hasMorePages())
                 <li class="page-item">
-                    <a class="page-link" href="{{ $paginator->nextPageUrl() }}" rel="next" aria-label="@lang('pagination.next')">Siguiente &rsaquo;</a>
+                    <a class="page-link" href="{{ $paginator->nextPageUrl() }}" style="text-align:center;border-top-right-radius: 2rem;border-bottom-right-radius: 2rem;"  rel="next" aria-label="@lang('pagination.next')">Siguiente &rsaquo;</a>
                 </li>
             @else
                 <li class="page-item disabled" aria-disabled="true" aria-label="@lang('pagination.next')">
-                    <span class="page-link" aria-hidden="true">Siguiente &rsaquo;</span>
+                    <span class="page-link" aria-hidden="true" style="text-align:center;border-top-right-radius: 2rem;border-bottom-right-radius: 2rem;"  >Siguiente &rsaquo;</span>
                 </li>
             @endif
         </ul>

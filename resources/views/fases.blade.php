@@ -373,7 +373,10 @@ Proyeccion de Firma:
                                             
                                     </table>
 <br>         
-                  <button type="submit" class="btn btn-primary w-50 m-auto d-flex" style="text-align:center;justify-content:center">Actualizar</button>
+                  <button type="submit" class="btn btn-primary w-50 m-auto d-flex" style="text-align:center;justify-content:center">
+                  @if($fase)Actualizar
+              @else Generar
+          @endif</button>
 
 </form>
 <br>

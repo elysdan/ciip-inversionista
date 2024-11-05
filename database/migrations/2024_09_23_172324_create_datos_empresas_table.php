@@ -14,14 +14,15 @@ return new class extends Migration
         Schema::create('datos_empresas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('razonsocial');
-            $table->string('rif');
-             $table->string('identificador');
+            $table->string('rif')->nullable();
+             $table->string('identificador')->nullable();
             $table->bigInteger('pais_origen');
             $table->bigInteger('lregistro');
             $table->string('status')->default('1');
             $table->text('direccion');
             $table->text('correo');
             $table->text('telefono');
+            $table->text('correlativo')->nullable();
             $table->text('foto')->nullable();
             $table->timestamps();
         });

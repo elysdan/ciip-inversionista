@@ -40,7 +40,7 @@
 
 
 
-<input type="text" class="form-control form-control-lg  w-50 m-5 m-auto " style="text-align:center"  id="search" placeholder="Buscar Sector">
+<input type="text" class="form-control form-control-lg  w-50 m-5 m-auto " style="text-align:center;border-top-right-radius: 2rem;border-bottom-right-radius: 2rem;border-top-left-radius: 2rem;border-bottom-left-radius: 2rem;"  id="search" placeholder="Buscar Sector">
 
 <br>
 
@@ -58,7 +58,7 @@
 @if($sectorEmpresas->first()->revision != null)
         <div class="table_section padding_infor_info">
 
-            <input type="text" class="form-control  w-50 m-auto" style="text-align:center;"  id="busqueda_{{ $sectorEmpresas->first()->sector_valor }}" placeholder="Buscar Empresa, Rif o Identificador">
+            <input type="text" class="form-control  w-50 m-auto"  style="text-align:center;border-top-right-radius: 2rem;border-bottom-right-radius: 2rem;border-top-left-radius: 2rem;border-bottom-left-radius: 2rem;"   id="busqueda_{{ $sectorEmpresas->first()->sector_valor }}" placeholder="Buscar Empresa, Rif o Identificador">
 
         <a href="{{ route('sectores_empresa_registro', $sectorId) }}">
            <button class="btn btn-outline-primary mb-2">Añadir</button>   

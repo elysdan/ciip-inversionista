@@ -129,7 +129,7 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
       @if($uc>0)
                            <div class="white_shd full margin_bottom_30">
 
-
+{{$usuarios->links('vendor.pagination.bootstrap-4')}}
                               <div class="full graph_head">
                                  <div class="heading1 margin_0">
                                     <h2>Usuarios del Sistema</h2>

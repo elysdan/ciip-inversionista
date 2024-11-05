@@ -78,8 +78,8 @@ td:first-child {
 <div class="previews">
 <div style="min-width:100%; display:flex;justify-content:space-between;align-items: center">
     <div style="display: flex;align-items:center">
-        <img src="{{asset('asset_original/logo_gbv.jpg')}}" style="width: 30%;">
-        <div style="color:black;width:30%;text-align: left;font-size:80%">
+        <img src="{{asset('asset_original/logo_gbv.jpg')}}" style="width: 40%;">
+        <div style="color:black;width:45%;text-align: left;font-size:80%">
             Vicepresidencia de la Republica Bolivariana de Venezuela
         </div></div>
         <img class="mr-5" src="{{asset('asset_original/logo-ciip.png')}}" style="width: 40%;height: 30%">

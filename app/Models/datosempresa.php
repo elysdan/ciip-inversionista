@@ -21,6 +21,7 @@ class datosempresa extends Model
         'foto',
         'status',
         'correo',
+        'correlativo',
         'telefono',
         
     ];

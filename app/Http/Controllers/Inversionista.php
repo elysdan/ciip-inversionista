@@ -430,7 +430,8 @@ else
             if(session('usuario')->role >= 8)
         {
 
-            $usuarios=db::table('users')->OrderBy('role','desc')->OrderBy('id','asc')->get();}
+            $usuarios=db::table('users')->OrderBy('role','desc')->OrderBy('id','asc')->paginate(5);
+        }
     else
       {
 
@@ -2945,6 +2946,7 @@ public function fases($id, $revision){
 
 public function fases_registro(request $request , $id)
 {
+   // dd($id);
     $fases=sector_fase::all()->where('sector_id',$id)->first();
     //dd($request);
     if($fases==null){
@@ -2979,7 +2981,7 @@ public function fases_registro(request $request , $id)
         $registry -> fase7i = $request->fase7i;
         }
         $registry ->save();
-        return back()->with('status','Observacion Añadida');
+        return back()->with('status','Observacion/Fase Añadida');
     }
     else{
          if($request->ob != $fases->ob && $request->ob!="" ||  $request->ob != $fases->ob && $request->ob!=" " ||  $request->ob != $fases->ob && $request->ob!=null)
@@ -3073,7 +3075,7 @@ public function fases_registro(request $request , $id)
                 $fases ->update(['fase7status' => 3]);
             return back()->with('status','Fase Iniciada');
      }
-        
+        return back()->with('status','Documento Modificado');
     }
 
 }

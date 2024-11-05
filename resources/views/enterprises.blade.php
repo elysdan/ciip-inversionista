@@ -2,7 +2,11 @@
 @section('content')
 
   <style>
-          .table td{vertical-align: inherit;"}
+          .table td, th, thread{vertical-align: middle;
+
+          }
+
+       
         </style>
         <div class="midde_cont">
                   <div class="container-fluid">
@@ -46,11 +50,11 @@
 
    <div class="table-responsive-sm">
       <table class="table">
-         <thead class="thead" >
+         <thead style="none">
             <tr style="background-color: #13579e;color: white;">
-              <th  >#</th>
+              <th  class="col-md-1">#</th>
 
-<th >Razon Social</th>
+<th class="col-lg-2" >Razon Social</th>
 <th >Rif</th>
 <th >Direccion</th>
 <th >Correo</th>
@@ -87,7 +91,7 @@ align-content: center;" >
 <td>{{$empresa->razonsocial}}</td>
 <td>{{$empresa->identificador}}-{{$empresa->rif}}</td>
 
-<td>{{$empresa->direccion}}</td>
+<td >{{ Str::limit($empresa->direccion, 50,'...') }}</td>
 <td>{{$empresa->correo}}</td>
 <td>{{$empresa->telefono}}</td>
 
