@@ -1,3 +1,31 @@
-<div>
-    <!-- If you do not have a consistent goal in life, you can not live it in a consistent way. - Marcus Aurelius -->
-</div>
+@extends('layouts.panel')
+@section('content')
+
+      <div class="midde_cont">
+                  <div class="container-fluid">
+                     <div class="row column_title">
+                        <div class="col-md-12">
+                           <div class="page_title">
+                              <h2>Estadisticas</h2>
+                           </div>
+                        </div>
+                     </div>
+              
+<div class="col-md-12">
+
+
+
+
+
+
+
+
+      </div>
+
+
+
+
+
+
+
+    @endsection

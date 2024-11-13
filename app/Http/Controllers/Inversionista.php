@@ -435,7 +435,7 @@ else
     else
       {
 
-        $usuarios=db::table('users')->where('role', '!=', 8)->where('role', '!=', 9)->where('status', '!=', 0)->OrderBy('role','desc')->OrderBy('id','asc')->get();
+        $usuarios=db::table('users')->where('role', '!=', 8)->where('role', '!=', 9)->where('status', '!=', 0)->OrderBy('role','desc')->OrderBy('id','asc')->paginate(5);
            //dd(session('usuario')->role );
 }
         $uc=db::table('users')->count();
@@ -992,10 +992,11 @@ $edad = $fechaNacimientoCarbon->age;
             ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
             ->join('pais as registro','datos_empresas.lregistro','=','registro.id')
             ->leftjoin('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
-            ->leftjoin('datos_embajadas','datos_embajadas.enterprise_id','=','datos_empresas.id')
+            ->leftjoin('datos_embajadas','datos_embajadas.enterprise_id','=','contenido_empresas.enterprise_id')
             
             ->select(
             'datos_empresas.*',
+             'datos_empresas.id as id_empresa',
             'origen.paisnombre as pais_origen',
             DB::raw('count(case when contenido_empresas.status <> 0 then 1 else null end) as visualizar'),
             DB::raw('count(datos_embajadas) as visualizare'),
