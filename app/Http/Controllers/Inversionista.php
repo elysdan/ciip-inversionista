@@ -1002,7 +1002,6 @@ $edad = $fechaNacimientoCarbon->age;
             DB::raw('count(datos_embajadas) as visualizare'),
             'registro.paisnombre as lregistro')
              ->where('datos_empresas.status',1)
-             ->where('datos_embajadas.status',1)
             ->groupBy('datos_empresas.id','origen.paisnombre','registro.paisnombre')
             ->OrderBy('id')
            

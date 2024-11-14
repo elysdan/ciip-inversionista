@@ -40,7 +40,7 @@
                                                       @csrf
                                                       <div class="input-append w-100">
 
-                                                         <input type="text" class="sr-input  " name="busqueda" placeholder="Busque por Cedula, Rif o Correo" style="width:96%;border-top-left-radius: 2rem;border-bottom-left-radius: 2rem;">
+                                                         <input type="text" class="sr-input  " name="busqueda" placeholder="Busque por Cedula, Rif o Correo" style="width:90%;border-top-left-radius: 2rem;border-bottom-left-radius: 2rem;">
 
                                                          <button class="btn sr-btn" type="submit" style="border-top-right-radius: 2rem;border-bottom-right-radius: 2rem;"><i class="fa fa-search"></i></button>
 
