@@ -3290,7 +3290,7 @@ public function sectores()
                 $empresas=DB::table('datos_empresas')
             ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
             ->join('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
-            ->join('inversionista_naturals','inversionista_naturals.id','=','contenido_empresas.delegate_id')
+            ->leftjoin('inversionista_naturals','inversionista_naturals.id','=','contenido_empresas.delegate_id')
             
             ->select(
             'datos_empresas.*',
@@ -3352,6 +3352,8 @@ public function sectores()
     public function stadistics()
     {
         if(session('usuario') && session('usuario')->role==9 || session('usuario') && session('usuario')->role > 3){
+
+            
             return view('stadistics');
         }
         else
