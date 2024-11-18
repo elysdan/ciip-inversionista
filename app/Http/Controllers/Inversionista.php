@@ -76,23 +76,23 @@ class Inversionista extends Controller
 
     public function dashboard()
     {
-        $this->logs(session('usuario')->id,'Carga de pagina','dashboard'); 
+        //$this->logs(session('usuario')->id,'Carga de pagina','dashboard'); 
        if(session('usuario') && session('usuario')->role==9 || session('usuario') && session('usuario')->role > 3 ){
             return view('dashboard');
         }
         else
-            $this->logs(session('usuario')->id,'Redireccionamiento','dashboard'); 
+           // $this->logs(session('usuario')->id,'Redireccionamiento','dashboard'); 
         return view('search');
     }
 
     public function search()
     {
         if(session('usuario')){
-             $this->logs(session('usuario')->id,'Carga de pagina','search'); 
+             //$this->logs(session('usuario')->id,'Carga de pagina','search'); 
             return view('search');
         }
         else
-            $this->logs(session('usuario')->id,'Redireccionamiento','search'); 
+           // $this->logs(session('usuario')->id,'Redireccionamiento','search'); 
         return view('index');
     }
 
@@ -436,7 +436,7 @@ else
 
     public function users()
     {   
-        $this->logs(session('usuario')->id,'Carga de pagina','users'); 
+        //$this->logs(session('usuario')->id,'Carga de pagina','users'); 
         if(session('usuario') ){
             if(session('usuario')->role >= 8)
         {
@@ -456,7 +456,7 @@ else
             return view('users',['usuarios' => $usuarios,'nacionalidad' => $nacionalidad,'uc' => $uc]);
        }
         else
-             $this->logs(session('usuario')->id,'Redireccionamiento','users'); 
+            // $this->logs(session('usuario')->id,'Redireccionamiento','users'); 
         return view('index');
     }
 
@@ -473,7 +473,7 @@ else
     }
 
     public function edit_users($id)
-    {   $this->logs(session('usuario')->id,'Carga de pagina','edit_users'); 
+    {   //$this->logs(session('usuario')->id,'Carga de pagina','edit_users'); 
         $usuario = user::findorfail($id);
         //dd($usuario);
             return view('edit_users',['usuario' => $usuario]);
@@ -614,7 +614,7 @@ else
 
     public function delegates()
     {
-        $this->logs(session('usuario')->id,'Carga de pagina','delegates'); 
+        //$this->logs(session('usuario')->id,'Carga de pagina','delegates'); 
         if(session('usuario')){
            
          // dd(session('usuario')->role);
@@ -678,7 +678,7 @@ else
             return view('delegates',['delegados' => $delegados,'nacionalidad' => $nacionalidad,'generador' => $generador,'estados_civiles' => $estados_civiles,'generos' => $generos,'dc' => $dc]);
         }
         else
-            $this->logs(session('usuario')->id,'Redireccionamiento','delegates'); 
+           // $this->logs(session('usuario')->id,'Redireccionamiento','delegates'); 
         return view('index');
 
     }
@@ -727,7 +727,7 @@ $registry->edad = $edad;
 
     public function edit_delegates($id)
     {
-        $this->logs(session('usuario')->id,'Carga de pagina','edit_delegates'); 
+        //$this->logs(session('usuario')->id,'Carga de pagina','edit_delegates'); 
         $delegado = inversionistanatural::findorfail($id);
         $nacionalidad=db::table('nacionalidad')->get();
 
@@ -872,7 +872,7 @@ $edad = $fechaNacimientoCarbon->age;
 
     public function add_socialweb($id)
     {
-          $this->logs(session('usuario')->id,'Carga de pagina','add_socialweb'); 
+          //$this->logs(session('usuario')->id,'Carga de pagina','add_socialweb'); 
         $delegado = inversionistanatural::findorfail($id);
 
         $redes=db::table('redes_sociales_delegados')->join('rrss', 'rrss.id', '=' ,'redes_sociales_delegados.site')->select(
@@ -909,7 +909,7 @@ $edad = $fechaNacimientoCarbon->age;
 
     public function edit_web($id)
     {
-        $this->logs(session('usuario')->id,'Carga de pagina','edit_web'); 
+        //$this->logs(session('usuario')->id,'Carga de pagina','edit_web'); 
         $delegado = redessocialesdelegado::findorfail($id);
         //dd($delegado);
          $sitios=db::table('rrss')->get();
@@ -960,17 +960,17 @@ $edad = $fechaNacimientoCarbon->age;
     public function configurations()
     {
         if(session('usuario')){
-            $this->logs(session('usuario')->id,'Carga de pagina','configurations'); 
+            //$this->logs(session('usuario')->id,'Carga de pagina','configurations'); 
             return view('configurations');
         }
         else
-             $this->logs(session('usuario')->id,'Redireccionamiento','configurations'); 
+            // $this->logs(session('usuario')->id,'Redireccionamiento','configurations'); 
         return $this->index();
 
     }
     public function enterprises()
     {
-        $this->logs(session('usuario')->id,'Carga de pagina','enterprises'); 
+        //$this->logs(session('usuario')->id,'Carga de pagina','enterprises'); 
         if(session('usuario')){
             $dc=db::table('datos_empresas')->count();
             if(session('usuario')->role >= 8){
@@ -1041,7 +1041,7 @@ $edad = $fechaNacimientoCarbon->age;
             return view('enterprises',['empresas'=>$empresas,'pais'=>$pais,'generador'=>$generador,'dc' => $dc]);
         }
         else
-            $this->logs(session('usuario')->id,'Redireccionamiento','enterprises'); 
+           // $this->logs(session('usuario')->id,'Redireccionamiento','enterprises'); 
         return $this->dashboard();
     }
 
@@ -1087,7 +1087,7 @@ $edad = $fechaNacimientoCarbon->age;
 
     public function edit_enterprises($id)
     {   
-        $this->logs(session('usuario')->id,'Carga de pagina','edit_enterprises'); 
+        //$this->logs(session('usuario')->id,'Carga de pagina','edit_enterprises'); 
         $empresa = datosempresa::findorfail($id);
         $pais=db::table('pais')->OrderBy('paisnombre')->get();
         
@@ -1221,7 +1221,7 @@ elseif($empresas->status==1)
 
     public function asociador_modificar($id)
     {
-        $this->logs(session('usuario')->id,'Carga de pagina','asociador_modificar'); 
+        //$this->logs(session('usuario')->id,'Carga de pagina','asociador_modificar'); 
        // dd();
         $empresa = asociadorxempresasxrepresentante::findorfail($id);
         //dd($delegado);
@@ -1257,7 +1257,7 @@ elseif($empresas->status==1)
 
 public function asociador($id)
     {
-        $this->logs(session('usuario')->id,'Carga de pagina','asociador'); 
+        //$this->logs(session('usuario')->id,'Carga de pagina','asociador'); 
         $empresa = datosempresa::findorfail($id);
        // dD($empresa);
 
@@ -1304,7 +1304,7 @@ public function asociador($id)
 
 public function add_web($id)
     {   
-        $this->logs(session('usuario')->id,'Carga de pagina','add_web'); 
+        //$this->logs(session('usuario')->id,'Carga de pagina','add_web'); 
         $empresa = datosempresa::findorfail($id);
 
         $redes=db::table('redes_sociales_empresas')->join('rrss', 'rrss.id', '=' ,'redes_sociales_empresas.site')->select(
@@ -1342,7 +1342,7 @@ public function add_web($id)
 
     public function edit_web_enterprise($id)
     {
-         $this->logs(session('usuario')->id,'Carga de pagina','edit_web_enterprise');
+         //$this->logs(session('usuario')->id,'Carga de pagina','edit_web_enterprise');
         $delegado = redessocialesempresa::findorfail($id);
         //dd($delegado);
           $sitios=db::table('rrss')->get();
@@ -1400,7 +1400,7 @@ public function add_web($id)
 
     public function previews($id)
     {
-        $this->logs(session('usuario')->id,'Carga de pagina','previews');
+        //$this->logs(session('usuario')->id,'Carga de pagina','previews');
         if(session('usuario')){
 
             $previa=DB::table('datos_empresas') ->where('datos_empresas.id',$id)
@@ -1495,7 +1495,7 @@ public function add_web($id)
    
         }
         else
-            $this->logs(session('usuario')->id,'Redireccionamiento','previews');
+           // $this->logs(session('usuario')->id,'Redireccionamiento','previews');
         return $this->index();
     }
 
@@ -1607,7 +1607,7 @@ public function add_web($id)
 
 public function previews_delegates($id)
     {
-        $this->logs(session('usuario')->id,'Carga de pagina','previews_delegates');
+        //$this->logs(session('usuario')->id,'Carga de pagina','previews_delegates');
         if(session('usuario')){
 
             $previa=db::table('inversionista_naturals')->join('nacionalidad','nacionalidad.id','=','inversionista_naturals.nacionalidad')->where('inversionista_naturals.id',$id)->select(
@@ -1685,7 +1685,7 @@ public function previews_delegates($id)
    
         }
         else
-             $this->logs(session('usuario')->id,'Redireccionamiento','previews_delegates');
+            // $this->logs(session('usuario')->id,'Redireccionamiento','previews_delegates');
         return $this->index();
     }
 
@@ -1794,7 +1794,7 @@ public function previews_delegates($id)
    
         }
         else
-             $this->logs(session('usuario')->id,'Redireccionamiento','prueba_delegates_pdf');
+            // $this->logs(session('usuario')->id,'Redireccionamiento','prueba_delegates_pdf');
         return $this->index();
     }
 
@@ -1945,7 +1945,7 @@ public function previews_delegates($id)
 
 public function elaborador($id)
     {
-        $this->logs(session('usuario')->id,'Carga de pagina','elaborador');
+        //$this->logs(session('usuario')->id,'Carga de pagina','elaborador');
         if(session('usuario')){
 Carbon::setlocale('es');
 
@@ -2057,13 +2057,13 @@ else
    
         }
         else
-            $this->logs(session('usuario')->id,'Redireccionamiento','elaborador');
+           // $this->logs(session('usuario')->id,'Redireccionamiento','elaborador');
         return $this->index();
     }
 
 public function elaborador_delegados($id)
     {   
-        $this->logs(session('usuario')->id,'Carga de pagina','elaborador_delegados');
+        //$this->logs(session('usuario')->id,'Carga de pagina','elaborador_delegados');
         if(session('usuario')){
 
              $previa=db::table('inversionista_naturals')
@@ -2177,7 +2177,7 @@ else
    
         }
         else
-            $this->logs(session('usuario')->id,'Redireccionamiento','elaborador_delegados');
+           // $this->logs(session('usuario')->id,'Redireccionamiento','elaborador_delegados');
         return $this->index();
     }
 
@@ -2219,7 +2219,7 @@ elseif($previa->status == 0)
 
     public function modificar_elaborador_delegados($id)
     {   
-        $this->logs(session('usuario')->id,'Carga de pagina','modificar_elaborador_delegados');
+        //$this->logs(session('usuario')->id,'Carga de pagina','modificar_elaborador_delegados');
         if(session('usuario')){
 
              $previa=db::table('inversionista_naturals')
@@ -2333,13 +2333,13 @@ else
    
         }
         else
-              $this->logs(session('usuario')->id,'Redireccionamiento','modificar_elaborador_delegados');
+             // $this->logs(session('usuario')->id,'Redireccionamiento','modificar_elaborador_delegados');
         return $this->index();
     }
 
     public function modificar_elaborador_empresas($id)
     {
-          $this->logs(session('usuario')->id,'Carga de pagina','modificar_elaborador_empresas');
+          //$this->logs(session('usuario')->id,'Carga de pagina','modificar_elaborador_empresas');
         if(session('usuario')){
 
             $previa=DB::table('datos_empresas') 
@@ -2447,7 +2447,7 @@ else
    
         }
         else
-             $this->logs(session('usuario')->id,'Redireccionamiento','modificar_elaborador_empresas');
+            // $this->logs(session('usuario')->id,'Redireccionamiento','modificar_elaborador_empresas');
         return $this->index();
     }
 
@@ -2689,7 +2689,7 @@ public function embajada_modificador(request $request, $id)
 }
 public function embajada_modificar($id)
     {
-        $this->logs(session('usuario')->id,'Carga de pagina','embajada_modificar');
+        //$this->logs(session('usuario')->id,'Carga de pagina','embajada_modificar');
         if(session('usuario')){
 
             $previa=DB::table('datos_empresas') 
@@ -2736,13 +2736,13 @@ public function embajada_modificar($id)
    
         }
         else
-            $this->logs(session('usuario')->id,'Redireccionamiento','embajada_modificar');
+           // $this->logs(session('usuario')->id,'Redireccionamiento','embajada_modificar');
         return $this->index();
     }
 
  public function embajada($id)
     {
-         $this->logs(session('usuario')->id,'Carga de pagina','embajada');
+         //$this->logs(session('usuario')->id,'Carga de pagina','embajada');
         if(session('usuario')){
 
             $previa=DB::table('datos_empresas')
@@ -2788,7 +2788,7 @@ public function embajada_modificar($id)
    
         }
         else
-             $this->logs(session('usuario')->id,'Redireccionamiento','embajada');
+            // $this->logs(session('usuario')->id,'Redireccionamiento','embajada');
         return $this->index();
     }
 
@@ -2837,7 +2837,7 @@ public function embajada_modificar($id)
    
         }
         else
-             $this->logs(session('usuario')->id,'Redireccionamiento','embajada_print');
+            // $this->logs(session('usuario')->id,'Redireccionamiento','embajada_print');
         return $this->index();
     }
 
@@ -2857,7 +2857,7 @@ public function embajada_eliminador($id){
 
     public function embajada_register($id)
     {
-        $this->logs(session('usuario')->id,'Carga de pagina','embajada_register');
+        //$this->logs(session('usuario')->id,'Carga de pagina','embajada_register');
         if(session('usuario')){
 
             $previa=DB::table('contenido_empresas')
@@ -2914,7 +2914,7 @@ public function embajada_eliminador($id){
    
         }
         else
-            $this->logs(session('usuario')->id,'Redireccionamiento','embajada_register');
+           // $this->logs(session('usuario')->id,'Redireccionamiento','embajada_register');
         return $this->index();
     }
 
@@ -2947,7 +2947,7 @@ public function embajada_eliminador($id){
 
 
 public function fases($id, $revision){
-    $this->logs(session('usuario')->id,'Carga de pagina','fases');
+    //$this->logs(session('usuario')->id,'Carga de pagina','fases');
    $valor=db::table('sector_empresas')
 
 
@@ -3188,7 +3188,7 @@ $empresas=sector_empresa::findorfail($id);
 } 
 
     public function sector_modificar($id){
-         $this->logs(session('usuario')->id,'Carga de pagina','sector_modificar');
+         //$this->logs(session('usuario')->id,'Carga de pagina','sector_modificar');
    $valor=db::table('sector_empresas')
    ->rightjoin('datos_empresas', 'datos_empresas.id','=','sector_empresas.enterprise_id')
     ->rightjoin('sectors', 'sectors.id', '=', 'sector_empresas.sector_id')
@@ -3228,7 +3228,7 @@ $empresas=sector_empresa::findorfail($id);
 }
 
 public function sector_vizualizador($id, $revision){
-     $this->logs(session('usuario')->id,'Carga de pagina','sector_vizualizador');
+     //$this->logs(session('usuario')->id,'Carga de pagina','sector_vizualizador');
    $valor=db::table('sector_empresas')
    ->rightjoin('datos_empresas', 'datos_empresas.id','=','sector_empresas.enterprise_id')
     ->rightjoin('sectors', 'sectors.id', '=', 'sector_empresas.sector_id')
@@ -3309,7 +3309,7 @@ public function sector_imprenta($id){
 }
 public function sectores()
     {
-         $this->logs(session('usuario')->id,'Carga de pagina','sectores');
+         //$this->logs(session('usuario')->id,'Carga de pagina','sectores');
         if(session('usuario')){
             $sectores=sectors::all();
             //dd($sectores);
@@ -3353,14 +3353,14 @@ public function sectores()
             return view('sectores',['empresas'=>$empresas,'pais'=>$pais,'generador'=>$generador,'dc' => $dc,'sectores' => $sectores,'valor' => $valor]);
         }
         else
-             $this->logs(session('usuario')->id,'Redireccionamiento','sectores');
+            // $this->logs(session('usuario')->id,'Redireccionamiento','sectores');
         return $this->index();
     }
 
 
     public function sectores_empresa_registro($id)
     {   
-           $this->logs(session('usuario')->id,'Carga de pagina','sectores_empresa_registro');
+           //$this->logs(session('usuario')->id,'Carga de pagina','sectores_empresa_registro');
         if(session('usuario')){
             $sectores=sectors::all()->where('sector',$id)->first();
             //dd($sec);
@@ -3399,7 +3399,7 @@ public function sectores()
             return view('sectores_empresa_registro',['empresas'=>$empresas,'sectores' => $sectores]);
         }
         else
-             $this->logs(session('usuario')->id,'Redireccionamiento','sectores_empresa_registro');
+            // $this->logs(session('usuario')->id,'Redireccionamiento','sectores_empresa_registro');
         return $this->index();
     }
 
@@ -3423,17 +3423,17 @@ public function sectores()
 
 
     public function results()
-    {   $this->logs(session('usuario')->id,'Carga de pagina','results');
+    {   //$this->logs(session('usuario')->id,'Carga de pagina','results');
         if(session('usuario')){
             return view('results');
         }
         else
-            $this->logs(session('usuario')->id,'Redireccionamiento','results');
+           // $this->logs(session('usuario')->id,'Redireccionamiento','results');
         return $this->index();
     }
     public function stadistics()
     {   
-        $this->logs(session('usuario')->id,'Carga de pagina','stadistics');
+        //$this->logs(session('usuario')->id,'Carga de pagina','stadistics');
         if(session('usuario') && session('usuario')->role>8){
            
             //dd(db::table('users')->where('id',1)->first());
@@ -3447,7 +3447,7 @@ public function sectores()
             return view('stadistics',['actividades'=>$actividades]);
         }
         else
-            $this->logs(session('usuario')->id,'Redireccionamiento','stadistics');
+           // $this->logs(session('usuario')->id,'Redireccionamiento','stadistics');
         return $this->index();
 
     }
@@ -3465,12 +3465,12 @@ public function sectores()
     }
     public function userpanel()
     {
-        $this->logs(session('usuario')->id,'Carga de pagina','userpanel');
+        //$this->logs(session('usuario')->id,'Carga de pagina','userpanel');
         if(session('usuario')){
             return view('Userpanel');
         }
         else
-            $this->logs(session('usuario')->id,'Redireccionamiento','userpanel');
+           // $this->logs(session('usuario')->id,'Redireccionamiento','userpanel');
         return $this->index();
     }
     public function logout()

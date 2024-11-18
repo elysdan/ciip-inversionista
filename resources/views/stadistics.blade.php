@@ -1,6 +1,6 @@
 @extends('layouts.panel')
 @section('content')
-
+<meta http-equiv="refresh" content="5">
       <div class="midde_cont">
                   <div class="container-fluid">
                      <div class="row column_title">
