@@ -12,7 +12,7 @@
                      </div>
               
 <div class="col-md-12">
-
+{{$actividades->links('vendor.pagination.bootstrap-4')}}
 @if($actividades)
         <div class="table_section padding_infor_info">
 
