@@ -59,7 +59,7 @@ class Inversionista extends Controller
     }
     else
     {
-        $this->logs(session('usuario')->id,'Fallo inicio de sesion','login'); 
+       // $this->logs(session('usuario')->id,'Fallo inicio de sesion','login'); 
         return back()->with('status','Inicio de sesion Errado, Vuelva a intentar Nuevamente');
     }
 

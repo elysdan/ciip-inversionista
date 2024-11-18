@@ -44,7 +44,7 @@
                         <td>{{$actividad->usuario}}</td>
 
                         <td>{{$actividad->accion}}</td>
-                        <td>{{$actividad->controlador}}</td>
+                        <td>{{$actividad->controlador}}()</td>
                         <td>{{ \Carbon\Carbon::parse($actividad->created_at)->locale('es_ES')
                                                         ->isoFormat('dddd DD [de] MMMM [de] YYYY [a las] hh:mm') }}</td>
                        
