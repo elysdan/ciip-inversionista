@@ -13,6 +13,74 @@
               
 <div class="col-md-12">
 
+@if($actividades)
+        <div class="table_section padding_infor_info">
+
+         
+
+
+
+            <table class="table">
+                <thead>
+                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                        <th>#</th>
+                        <th>ip</th>
+                        <th>usuario</th>
+
+                        <th>accion</th>
+                        <th>controlador</th>
+                        <th>fecha</th>
+                       
+                    </tr>
+                </thead>
+                <tbody >
+                    @php $i=1; @endphp
+                    @foreach ($actividades as $actividad)
+
+                 
+                    <tr style="text-align: center;">
+                        <td> {{$actividad->id}}</td>
+                        <td>{{$actividad->ip}}</td>
+                        <td>{{$actividad->usuario}}</td>
+
+                        <td>{{$actividad->accion}}</td>
+                        <td>{{$actividad->controlador}}</td>
+                        <td>{{ \Carbon\Carbon::parse($actividad->created_at)->locale('es_ES')
+                                                        ->isoFormat('dddd DD [de] MMMM [de] YYYY [a las] hh:mm') }}</td>
+                       
+                    </tr>      
+
+                   @php $i++; @endphp
+ @endforeach
+ @endif
+         
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+</div>
+
+
+
+
+
+
+      </div>
+
 
 
 

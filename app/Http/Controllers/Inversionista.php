@@ -33,6 +33,7 @@ use App\Models\datosembajada;
 use App\Models\sectors;
 use App\Models\sector_empresa;
 use App\Models\sector_fase;
+use App\Models\logs;
 
 
 class Inversionista extends Controller
@@ -48,6 +49,7 @@ class Inversionista extends Controller
   
     if($user && password_verify($request->contrasena, $user->password)) {
         session()->put('usuario', $user);
+        $this->logs(session('usuario')->id,'inicio de sesion','Login'); 
         if(session('usuario')->role==9 || session('usuario')->role > 3)
         {
             return view('dashboard');
@@ -57,6 +59,7 @@ class Inversionista extends Controller
     }
     else
     {
+        $this->logs(session('usuario')->id,'Fallo inicio de sesion','login'); 
         return back()->with('status','Inicio de sesion Errado, Vuelva a intentar Nuevamente');
     }
 
@@ -65,7 +68,7 @@ class Inversionista extends Controller
 
     public function index()
     {
-       
+           // $this->logs(session('usuario')->id,'Ingreso al Sistema','index'); 
             return view('index');
         
     }
@@ -73,19 +76,23 @@ class Inversionista extends Controller
 
     public function dashboard()
     {
+        $this->logs(session('usuario')->id,'Carga de pagina','dashboard'); 
        if(session('usuario') && session('usuario')->role==9 || session('usuario') && session('usuario')->role > 3 ){
             return view('dashboard');
         }
         else
+            $this->logs(session('usuario')->id,'Redireccionamiento','dashboard'); 
         return view('search');
     }
 
     public function search()
     {
         if(session('usuario')){
+             $this->logs(session('usuario')->id,'Carga de pagina','search'); 
             return view('search');
         }
         else
+            $this->logs(session('usuario')->id,'Redireccionamiento','search'); 
         return view('index');
     }
 
@@ -201,7 +208,8 @@ $twitter=db::table('inversionista_naturals')
 
 
         //dd($resultado);
-        return view('elaborador_delegados',['versiones'=> $versiones,'previa'=> $resultado,'instagram' =>$instagram,'twitter' =>$twitter,'facebook' =>$facebook ,'linkedin' =>$linkedin,'correo' =>$correo,'telefono' =>$telefono]);
+            $this->logs(session('usuario')->id,'Busqueda Empresa Rif','results'); 
+        return view('elaborador',['versiones'=> $versiones,'previa'=> $resultado,'instagram' =>$instagram,'twitter' =>$twitter,'facebook' =>$facebook ,'linkedin' =>$linkedin,'correo' =>$correo,'telefono' =>$telefono]);
 }       
 elseif (db::table('inversionista_naturals')->where('doc_identidad',$request->busqueda)   ->join('nacionalidad','nacionalidad.id','=','inversionista_naturals.nacionalidad')
             ->join('contenido_representantes','contenido_representantes.delegate_id','=','inversionista_naturals.id')
@@ -305,6 +313,7 @@ $twitter=db::table('inversionista_naturals')
 
 
         //dd($resultado);
+            $this->logs(session('usuario')->id,'Busqueda Delegado Cedula','results'); 
         return view('elaborador_delegados',['versiones'=> $versiones,'previa'=> $resultado,'instagram' =>$instagram,'twitter' =>$twitter,'facebook' =>$facebook ,'linkedin' =>$linkedin,'correo' =>$correo,'telefono' =>$telefono]);
 }
 elseif(db::table('datos_empresas')->where('datos_empresas.rif',$request->busqueda)
@@ -417,15 +426,17 @@ elseif(db::table('datos_empresas')->where('datos_empresas.rif',$request->busqued
 
 
 
-
+            $this->logs(session('usuario')->id,'Busqueda Delegado Rif','results'); 
             return view('elaborador' ,['versiones' => $versiones,'instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
 }
 else
+    $this->logs(session('usuario')->id,'Fallo Busqueda','results'); 
     return back()->with('status','Dato no encontrado');
     }
 
     public function users()
-    {
+    {   
+        $this->logs(session('usuario')->id,'Carga de pagina','users'); 
         if(session('usuario') ){
             if(session('usuario')->role >= 8)
         {
@@ -441,10 +452,11 @@ else
         $uc=db::table('users')->count();
         $nacionalidad=db::table('nacionalidad')->get();
 
-        
+            
             return view('users',['usuarios' => $usuarios,'nacionalidad' => $nacionalidad,'uc' => $uc]);
        }
         else
+             $this->logs(session('usuario')->id,'Redireccionamiento','users'); 
         return view('index');
     }
 
@@ -455,13 +467,13 @@ else
     // Update the id_status column
     $user->update(['status' => '0']);
 
-        
+            $this->logs(session('usuario')->id,'Eliminacion usuario','delete_users'); 
             return back()->with('status','Usuario Suspendido');
         
     }
 
     public function edit_users($id)
-    {
+    {   $this->logs(session('usuario')->id,'Carga de pagina','edit_users'); 
         $usuario = user::findorfail($id);
         //dd($usuario);
             return view('edit_users',['usuario' => $usuario]);
@@ -511,9 +523,11 @@ else
                         
                 $user->update(['file' => $ruta.$nombreimagen]);
         }
+        $this->logs(session('usuario')->id,'Modificacion usuario','update_users'); 
     }
     else
     {
+         $this->logs(session('usuario')->id,'Restauracion usuario','update_users'); 
         $user->update(['status' => '1']);
     }
         
@@ -543,7 +557,7 @@ else
         
 
   
-        
+            $this->logs(session('usuario')->id,'Suspension usuario','users_register'); 
             return back()->with('status','Usuario Modificado');
         
     }
@@ -558,6 +572,7 @@ else
       
         if($comparar)
         {
+             $this->logs(session('usuario')->id,'Reingreso Creacion Usuario','users_register'); 
             return back()->with('status','Este Usuario Ya Se Encuentra Registrado, Por Favor Verificar');
         }
         
@@ -582,31 +597,24 @@ else
                     $registry -> role  = $request -> rol;
                     
                     $registry  -> save();
-
+                    $this->logs(session('usuario')->id,'Creacion Usuario','users_register'); 
             return back()->with('status','Usuario Registrado de Manera Exitosa');
                     }
                     else
                     {
+                        $this->logs(session('usuario')->id,'Fallo al Crear Usuario','users_register'); 
                         return back()->with('status','Registro Incompleto,Faltan Datos Necesarios');
                     }
         }
-       /* $request->user()->fill([
-            'token' => Crypt::encryptString($request->token),
-        ])->save();
-        dd($request);
-        return view(login);
-*/
+     
     }
 
     
-    /*try {
-        $decrypted = Crypt::decryptString($encryptedValue);
-    } catch (DecryptException $e) {
-        // ...
-    }*/
+   
 
     public function delegates()
     {
+        $this->logs(session('usuario')->id,'Carga de pagina','delegates'); 
         if(session('usuario')){
            
          // dd(session('usuario')->role);
@@ -670,6 +678,7 @@ else
             return view('delegates',['delegados' => $delegados,'nacionalidad' => $nacionalidad,'generador' => $generador,'estados_civiles' => $estados_civiles,'generos' => $generos,'dc' => $dc]);
         }
         else
+            $this->logs(session('usuario')->id,'Redireccionamiento','delegates'); 
         return view('index');
 
     }
@@ -710,12 +719,15 @@ $registry->edad = $edad;
                 $registry -> email = $request -> correo;
                 //dd($registry);
                 $registry  -> save();
-            return back();
+
+                $this->logs(session('usuario')->id,'Registro Delegado','delegates_register'); 
+            return back()->with('status','Delegado Registrado');
         
     }
 
     public function edit_delegates($id)
     {
+        $this->logs(session('usuario')->id,'Carga de pagina','edit_delegates'); 
         $delegado = inversionistanatural::findorfail($id);
         $nacionalidad=db::table('nacionalidad')->get();
 
@@ -745,7 +757,7 @@ if($delegados->status==1)
     }
     
         //dd($empresa);
-
+             $this->logs(session('usuario')->id,'Suspension Delegado','suspend_delegates'); 
              return back()->with('status','Representante Modificado');
     
         
@@ -840,7 +852,7 @@ $edad = $fechaNacimientoCarbon->age;
         
 
   
-        
+        $this->logs(session('usuario')->id,'modificacion Delegado','update_delegates'); 
             return redirect()->route('delegates')->with('status','Datos Modificado');
         
     }
@@ -853,13 +865,14 @@ $edad = $fechaNacimientoCarbon->age;
     // Update the id_status column
     $user->update(['status' => '0']);
 
-        
+         $this->logs(session('usuario')->id,'Eliminacion Delegado','delete_delegates'); 
             return back()->with('status','Usuario Suspendido');
         
     }
 
     public function add_socialweb($id)
     {
+          $this->logs(session('usuario')->id,'Carga de pagina','add_socialweb'); 
         $delegado = inversionistanatural::findorfail($id);
 
         $redes=db::table('redes_sociales_delegados')->join('rrss', 'rrss.id', '=' ,'redes_sociales_delegados.site')->select(
@@ -889,12 +902,14 @@ $edad = $fechaNacimientoCarbon->age;
                 
         
         //dd($request);
+                $this->logs(session('usuario')->id,'Creacion Red Social Delegado','web_register'); 
             return back()->with('status','Sitio Web Registrado');
         
     }
 
     public function edit_web($id)
     {
+        $this->logs(session('usuario')->id,'Carga de pagina','edit_web'); 
         $delegado = redessocialesdelegado::findorfail($id);
         //dd($delegado);
          $sitios=db::table('rrss')->get();
@@ -922,7 +937,7 @@ $edad = $fechaNacimientoCarbon->age;
                 $delegados->update(['site' => $request->red]);
             }
         //dd($delegado);
-
+            $this->logs(session('usuario')->id,'modificacion Red Social Delegado','update_web_inner'); 
             return redirect()->route('add_socialweb', $peticion)->with('status','Red Social Modificada');
         
     }
@@ -937,7 +952,7 @@ $edad = $fechaNacimientoCarbon->age;
     // Update the id_status column
     $red->delete();
 
-        
+        $this->logs(session('usuario')->id,'Eliminacion Red Social Delegado','delete_web_register'); 
             return back()->with('status','Red Social Eliminada');
         
     }
@@ -945,14 +960,17 @@ $edad = $fechaNacimientoCarbon->age;
     public function configurations()
     {
         if(session('usuario')){
+            $this->logs(session('usuario')->id,'Carga de pagina','configurations'); 
             return view('configurations');
         }
         else
+             $this->logs(session('usuario')->id,'Redireccionamiento','configurations'); 
         return $this->index();
 
     }
     public function enterprises()
     {
+        $this->logs(session('usuario')->id,'Carga de pagina','enterprises'); 
         if(session('usuario')){
             $dc=db::table('datos_empresas')->count();
             if(session('usuario')->role >= 8){
@@ -1023,6 +1041,7 @@ $edad = $fechaNacimientoCarbon->age;
             return view('enterprises',['empresas'=>$empresas,'pais'=>$pais,'generador'=>$generador,'dc' => $dc]);
         }
         else
+            $this->logs(session('usuario')->id,'Redireccionamiento','enterprises'); 
         return $this->dashboard();
     }
 
@@ -1049,6 +1068,7 @@ $edad = $fechaNacimientoCarbon->age;
           $registry -> telefono = $request->telefono;
         $registry ->save();
         //dd($registry);
+        $this->logs(session('usuario')->id,'Creacion Empresa','enterprises_register'); 
         return back()->with('status','Empresa Registrada');
     }
 
@@ -1061,12 +1081,13 @@ $edad = $fechaNacimientoCarbon->age;
     // Update the id_status column
     $empresa->update(['status' => 0]);
 
-        
+            $this->logs(session('usuario')->id,'Eliminacion Empresa','delete_enterprises'); 
             return back()->with('status','Empresa Eliminada');
     }
 
     public function edit_enterprises($id)
-    {
+    {   
+        $this->logs(session('usuario')->id,'Carga de pagina','edit_enterprises'); 
         $empresa = datosempresa::findorfail($id);
         $pais=db::table('pais')->OrderBy('paisnombre')->get();
         
@@ -1153,7 +1174,7 @@ if($empresas->status==1)
 
     }
         //dd($empresa);
-
+            $this->logs(session('usuario')->id,'Modificacion Empresa','update_enterprises'); 
             return redirect()->route('enterprises')->with('status','Empresa Modificada');
     
         
@@ -1176,7 +1197,7 @@ elseif($empresas->status==1)
     
     
         //dd($empresa);
-
+            $this->logs(session('usuario')->id,'Suspension Empresa','suspend_enterprises'); 
             return back()->with('status','Empresa Modificada');
     
         
@@ -1192,7 +1213,7 @@ elseif($empresas->status==1)
     // Update the id_status column
     $delegados->delete();
 
-        
+        $this->logs(session('usuario')->id,'Eliminacion Delegado a Empresa','asociador_eliminar'); 
             return redirect()->route('asociador', $peticion)->with('status','Delegado Eliminado');
         
     }
@@ -1200,7 +1221,7 @@ elseif($empresas->status==1)
 
     public function asociador_modificar($id)
     {
-
+        $this->logs(session('usuario')->id,'Carga de pagina','asociador_modificar'); 
        // dd();
         $empresa = asociadorxempresasxrepresentante::findorfail($id);
         //dd($delegado);
@@ -1229,13 +1250,14 @@ elseif($empresas->status==1)
                 $empresas->update(['type' => $request->type]);
             }
         //dd($empresa);
-
+            $this->logs(session('usuario')->id,'modificacion','asociador_modificador'); 
             return redirect()->route('asociador', $peticion)->with('status','Red Social Modificada');
         
     }
 
 public function asociador($id)
     {
+        $this->logs(session('usuario')->id,'Carga de pagina','asociador'); 
         $empresa = datosempresa::findorfail($id);
        // dD($empresa);
 
@@ -1273,6 +1295,7 @@ public function asociador($id)
                 
         
         //dd($request);
+                $this->logs(session('usuario')->id,'Asociacion Delegado a Empresa','asociador_registrado'); 
             return back()->with('status','Delegado Asociado');
         }
     }
@@ -1280,7 +1303,8 @@ public function asociador($id)
 
 
 public function add_web($id)
-    {
+    {   
+        $this->logs(session('usuario')->id,'Carga de pagina','add_web'); 
         $empresa = datosempresa::findorfail($id);
 
         $redes=db::table('redes_sociales_empresas')->join('rrss', 'rrss.id', '=' ,'redes_sociales_empresas.site')->select(
@@ -1310,6 +1334,7 @@ public function add_web($id)
                 
         
         //dd($request);
+                $this->logs(session('usuario')->id,'Registro Red Social Empresa','web_register_enterprise'); 
             return back()->with('status','Pagina Web Registrada');
         
     }
@@ -1317,9 +1342,11 @@ public function add_web($id)
 
     public function edit_web_enterprise($id)
     {
+         $this->logs(session('usuario')->id,'Carga de pagina','edit_web_enterprise');
         $delegado = redessocialesempresa::findorfail($id);
         //dd($delegado);
           $sitios=db::table('rrss')->get();
+
             return view('edit_web_enterprise',['delegado' => $delegado,'sitios' =>$sitios]);
         
     }
@@ -1347,7 +1374,7 @@ public function add_web($id)
                 $empresas->update(['site' => $request->red]);
             }
         //dd($empresa);
-
+             $this->logs(session('usuario')->id,'modificacion Red Social Empresa','update_web_enterprise_inner');
             return redirect()->route('add_web', $peticion)->with('status','Red Social Modificada');
         
     }
@@ -1363,7 +1390,7 @@ public function add_web($id)
     // Update the id_status column
     $red->delete();
 
-        
+            $this->logs(session('usuario')->id,'Eliminacion Red Social Empresa','delete_web_enterprise_register');
             return redirect()->route('add_web', $peticion)->with('status','Red Social Eliminada');
         
     }
@@ -1373,6 +1400,7 @@ public function add_web($id)
 
     public function previews($id)
     {
+        $this->logs(session('usuario')->id,'Carga de pagina','previews');
         if(session('usuario')){
 
             $previa=DB::table('datos_empresas') ->where('datos_empresas.id',$id)
@@ -1467,11 +1495,13 @@ public function add_web($id)
    
         }
         else
+            $this->logs(session('usuario')->id,'Redireccionamiento','previews');
         return $this->index();
     }
 
     public function prueba_pdf($id)
     {//dd($ide);
+        $this->logs(session('usuario')->id,'Impresion','prueba_pdf');
          $previa=DB::table('datos_empresas') 
             ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
             ->join('pais as registro','datos_empresas.lregistro','=','registro.id')
@@ -1570,23 +1600,14 @@ public function add_web($id)
                 $facebook=0;
             }
 
-  /*  $data = ['title' => 'domPDF in Laravel 10',
-             'twitter' => $twitter,
-             'facebook' => $facebook,
-             'instagram' => $instagram,
-             'linkedin' => $linkedin,
-             'telefono' => $telefono,
-             'correo' => $correo,
-             'previa' => $previa
-];*/
-       // $pdf = PDF::loadView('prueba_pdf', $data)->setOptions(['defaultFont' => 'arial','defaultPaperSize' => 'letter']);
-       // return $pdf->download('prueba_pdf.pdf');
+  
      return view('prueba_pdf' ,['instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
     }
 
 
 public function previews_delegates($id)
     {
+        $this->logs(session('usuario')->id,'Carga de pagina','previews_delegates');
         if(session('usuario')){
 
             $previa=db::table('inversionista_naturals')->join('nacionalidad','nacionalidad.id','=','inversionista_naturals.nacionalidad')->where('inversionista_naturals.id',$id)->select(
@@ -1664,11 +1685,13 @@ public function previews_delegates($id)
    
         }
         else
+             $this->logs(session('usuario')->id,'Redireccionamiento','previews_delegates');
         return $this->index();
     }
 
     public function prueba_delegates_pdf($id)
     {
+          $this->logs(session('usuario')->id,'Impresion','prueba_delegates_pdf');
         if(session('usuario')){
 
              $previa=db::table('inversionista_naturals')
@@ -1771,6 +1794,7 @@ public function previews_delegates($id)
    
         }
         else
+             $this->logs(session('usuario')->id,'Redireccionamiento','prueba_delegates_pdf');
         return $this->index();
     }
 
@@ -1799,6 +1823,7 @@ public function previews_delegates($id)
                 
         
         //dd($request);
+                 $this->logs(session('usuario')->id,'Creacion hoja de Empresas','elaborar');
             return redirect()->route('enterprises')->with('status','Documento Elaborado');
         
     }
@@ -1828,6 +1853,7 @@ public function previews_delegates($id)
                 
         
         //dd($request);
+                 $this->logs(session('usuario')->id,'Creacion hoja de delegados','elaborar_delegates');
             return redirect()->route('delegates')->with('status','Documento Elaborado');
         
     }
@@ -1843,6 +1869,7 @@ public function previews_delegates($id)
                     //dd($empresas->status);
                     $empresas->update(['status' => '3']);
                 $empresas->update(['certificado' => session('usuario')->id]);
+                 $this->logs(session('usuario')->id,'Certificacion','revisar');
                  return redirect()->route('enterprises')->with('status','Documento Certificado');
                 }
                 
@@ -1850,17 +1877,19 @@ public function previews_delegates($id)
                 {    //dd(session('usuario')->id);
                     $empresas->update(['status' => '2']);
                     $empresas->update(['revisado' => session('usuario')->id]);
+                     $this->logs(session('usuario')->id,'Revision','revisar');
                      return redirect()->route('enterprises')->with('status','Documento Revisado');
         } 
                 elseif($empresas->status==3)
                 {    //dd(session('usuario')->id);
                     $empresas->update(['status' => '4']);
                     $empresas->update(['aprobado' => session('usuario')->id]);
+                     $this->logs(session('usuario')->id,'Aprobacion','revisar');
                      return redirect()->route('prueba_pdf', $empresas->id)->with('status','Documento Aprobado');
         }
         elseif($empresas->status==4)
                 {    //dd(session('usuario')->id);
-                 
+                 $this->logs(session('usuario')->id,'Impresion','revisar');
                      return redirect()->route('prueba_pdf', $empresas->id)->with('status','Impreso');
         }
 
@@ -1882,6 +1911,7 @@ public function previews_delegates($id)
                     //dd($empresas->status);
                     $empresas->update(['status' => '3']);
                 $empresas->update(['certificado' => session('usuario')->id]);
+                $this->logs(session('usuario')->id,'Certificacion','revisar_delegados');
                  return redirect()->route('delegates')->with('status','Documento Certificado');
                 }
                 
@@ -1889,17 +1919,19 @@ public function previews_delegates($id)
                 {    //dd(session('usuario')->id);
                     $empresas->update(['status' => '2']);
                     $empresas->update(['revisado' => session('usuario')->id]);
+                    $this->logs(session('usuario')->id,'Revision','revisar_delegados');
                      return redirect()->route('delegates')->with('status','Documento Revisado');
         } 
                 elseif($empresas->status==3)
                 {    //dd(session('usuario')->id);
                     $empresas->update(['status' => '4']);
                     $empresas->update(['aprobado' => session('usuario')->id]);
+                    $this->logs(session('usuario')->id,'Aprobacion','revisar_delegados');
                      return redirect()->route('prueba_delegates_pdf', $empresas->id)->with('status','Documento Aprobado');
         }
         elseif($empresas->status==4)
                 {    //dd(session('usuario')->id);
-                 
+                    $this->logs(session('usuario')->id,'Impresion','revisar_delegados');
                      return redirect()->route('prueba_delegates_pdf', $empresas->id)->with('status','Impreso');
         }
 
@@ -1913,6 +1945,7 @@ public function previews_delegates($id)
 
 public function elaborador($id)
     {
+        $this->logs(session('usuario')->id,'Carga de pagina','elaborador');
         if(session('usuario')){
 Carbon::setlocale('es');
 
@@ -2024,11 +2057,13 @@ else
    
         }
         else
+            $this->logs(session('usuario')->id,'Redireccionamiento','elaborador');
         return $this->index();
     }
 
 public function elaborador_delegados($id)
     {   
+        $this->logs(session('usuario')->id,'Carga de pagina','elaborador_delegados');
         if(session('usuario')){
 
              $previa=db::table('inversionista_naturals')
@@ -2142,6 +2177,7 @@ else
    
         }
         else
+            $this->logs(session('usuario')->id,'Redireccionamiento','elaborador_delegados');
         return $this->index();
     }
 
@@ -2151,11 +2187,13 @@ public function suspender_pdf($id){
      if($previa->status != 0)
      {
         $previa->update(['status' => '0']);
+        $this->logs(session('usuario')->id,'Eliminacion','suspender_pdf');
         return redirect()->route('enterprises')->with('status','Documento Eliminado');
 }
 elseif($previa->status == 0)
 {
     $previa->update(['status' => '1']);
+    $this->logs(session('usuario')->id,'Restauracion','suspender_pdf');
         return redirect()->route('enterprises')->with('status','Documento Restaurando');
 }
      
@@ -2168,17 +2206,20 @@ public function suspender_pdf_delegados($id){
       if($previa->status != 0)
      {
         $previa->update(['status' => '0']);
+        $this->logs(session('usuario')->id,'Eliminacion','suspender_pdf_delegados');
         return redirect()->route('enterprises')->with('status','Documento Eliminado');
 }
 elseif($previa->status == 0)
 {
     $previa->update(['status' => '1']);
+     $this->logs(session('usuario')->id,'Restauracion','suspender_pdf_delegados');
         return redirect()->route('enterprises')->with('status','Documento Restaurando');
 }
 }
 
     public function modificar_elaborador_delegados($id)
     {   
+        $this->logs(session('usuario')->id,'Carga de pagina','modificar_elaborador_delegados');
         if(session('usuario')){
 
              $previa=db::table('inversionista_naturals')
@@ -2292,11 +2333,13 @@ else
    
         }
         else
+              $this->logs(session('usuario')->id,'Redireccionamiento','modificar_elaborador_delegados');
         return $this->index();
     }
 
     public function modificar_elaborador_empresas($id)
     {
+          $this->logs(session('usuario')->id,'Carga de pagina','modificar_elaborador_empresas');
         if(session('usuario')){
 
             $previa=DB::table('datos_empresas') 
@@ -2404,6 +2447,7 @@ else
    
         }
         else
+             $this->logs(session('usuario')->id,'Redireccionamiento','modificar_elaborador_empresas');
         return $this->index();
     }
 
@@ -2496,7 +2540,7 @@ else
             }
 
             $empresas->update(['status' => 1]);
-
+            $this->logs(session('usuario')->id,'modificacion Hoja de Delegados','modificar_elaborar_delegados');
             return redirect()->route('elaborador_delegados', $empresas->delegate_id)->with('status','informe Modificado');
     }
 
@@ -2585,7 +2629,7 @@ else
             }
 
             $empresas->update(['status' => 1]);
-
+            $this->logs(session('usuario')->id,'modificacion Hoja de Empresas','modificar_elaborar_empresas');
             return redirect()->route('elaborador', $empresas->enterprise_id)->with('status','informe Modificado');
     }
 
@@ -2638,13 +2682,14 @@ public function embajada_modificador(request $request, $id)
                 $empresas->update(['ob' => $request->ob]);
             }
         //dd($empresa);
-
+             $this->logs(session('usuario')->id,'modificacion','embajada_modificador');
             return redirect()->route('embajada', $peticion)->with('status','Documento Modificado Modificada');
         
     
 }
 public function embajada_modificar($id)
     {
+        $this->logs(session('usuario')->id,'Carga de pagina','embajada_modificar');
         if(session('usuario')){
 
             $previa=DB::table('datos_empresas') 
@@ -2691,11 +2736,13 @@ public function embajada_modificar($id)
    
         }
         else
+            $this->logs(session('usuario')->id,'Redireccionamiento','embajada_modificar');
         return $this->index();
     }
 
  public function embajada($id)
     {
+         $this->logs(session('usuario')->id,'Carga de pagina','embajada');
         if(session('usuario')){
 
             $previa=DB::table('datos_empresas')
@@ -2741,12 +2788,14 @@ public function embajada_modificar($id)
    
         }
         else
+             $this->logs(session('usuario')->id,'Redireccionamiento','embajada');
         return $this->index();
     }
 
 
     public function embajada_print($id)
     {//dd($id);
+         $this->logs(session('usuario')->id,'Impresion','embajada_print');
         if(session('usuario')){
 
             $previa=DB::table('datos_empresas')
@@ -2788,6 +2837,7 @@ public function embajada_modificar($id)
    
         }
         else
+             $this->logs(session('usuario')->id,'Redireccionamiento','embajada_print');
         return $this->index();
     }
 
@@ -2798,6 +2848,7 @@ public function embajada_eliminador($id){
 
     // Update the id_status column
     $red->delete();
+    $this->logs(session('usuario')->id,'Eliminacion Hoja Embajada','embajada_eliminador');
       return redirect()->route('enterprises')->with('status','Documento Eliminado');
 }
 
@@ -2806,6 +2857,7 @@ public function embajada_eliminador($id){
 
     public function embajada_register($id)
     {
+        $this->logs(session('usuario')->id,'Carga de pagina','embajada_register');
         if(session('usuario')){
 
             $previa=DB::table('contenido_empresas')
@@ -2862,6 +2914,7 @@ public function embajada_eliminador($id){
    
         }
         else
+            $this->logs(session('usuario')->id,'Redireccionamiento','embajada_register');
         return $this->index();
     }
 
@@ -2884,7 +2937,7 @@ public function embajada_eliminador($id){
                 //dd($registry);
                 $registry -> save();
                 
-        
+        $this->logs(session('usuario')->id,'Registro','embajada_registrador');
         //dd($request);
             return redirect()->route('enterprises')->with('status','Documento Elaborado');
    
@@ -2894,6 +2947,7 @@ public function embajada_eliminador($id){
 
 
 public function fases($id, $revision){
+    $this->logs(session('usuario')->id,'Carga de pagina','fases');
    $valor=db::table('sector_empresas')
 
 
@@ -2981,12 +3035,14 @@ public function fases_registro(request $request , $id)
         $registry -> fase7i = $request->fase7i;
         }
         $registry ->save();
+        $this->logs(session('usuario')->id,'Creacion','fases_registro');
         return back()->with('status','Observacion/Fase Añadida');
     }
     else{
          if($request->ob != $fases->ob && $request->ob!="" ||  $request->ob != $fases->ob && $request->ob!=" " ||  $request->ob != $fases->ob && $request->ob!=null)
         { 
             $fases ->update(['ob' => $request->ob]);
+            $this->logs(session('usuario')->id,'Observacion Modificacion','fases_registro');
             return back()->with('status','Observacion Modificada');
      }
 
@@ -2994,42 +3050,49 @@ public function fases_registro(request $request , $id)
         { //dd();
             $fases ->update(['fase1i' => $request->fase1i]);
             $fases ->update(['fase1status' => 2]);
+            $this->logs(session('usuario')->id,'Creacion fase 1','fases_registro');
             return back()->with('status','Fase Iniciada');
      }
      if($request->fase2i)
         { //dd();
             $fases ->update(['fase2i' => $request->fase2i]);
                 $fases ->update(['fase2status' => 2]);
+                $this->logs(session('usuario')->id,'Creacion fase 2','fases_registro');
             return back()->with('status','Fase Iniciada');
      }
      if($request->fase3i)
         { //dd();
             $fases ->update(['fase3i' => $request->fase3i]);
                 $fases ->update(['fase3status' => 2]);
+                $this->logs(session('usuario')->id,'Creacion fase 3','fases_registro');
             return back()->with('status','Fase Iniciada');
      }
      if($request->fase4i)
         { //dd();
             $fases ->update(['fase4i' => $request->fase4i]);
                 $fases ->update(['fase4status' => 2]);
+                $this->logs(session('usuario')->id,'Creacion fase 4','fases_registro');
             return back()->with('status','Fase Iniciada');
      }
      if($request->fase5i)
         { //dd();
             $fases ->update(['fase5i' => $request->fase5i]);
                 $fases ->update(['fase5status' => 2]);
+                $this->logs(session('usuario')->id,'Creacion fase 5','fases_registro');
             return back()->with('status','Fase Iniciada');
      }
      if($request->fase6i)
         { //dd();
             $fases ->update(['fase6i' => $request->fase6i]);
                 $fases ->update(['fase6status' => 2]);
+                $this->logs(session('usuario')->id,'Creacion fase 6','fases_registro');
             return back()->with('status','Fase Iniciada');
      }
      if($request->fase7i)
         { //dd();
             $fases ->update(['fase7i' => $request->fase7i]);
                 $fases ->update(['fase7status' => 2]);
+                $this->logs(session('usuario')->id,'Creacion fase 7','fases_registro');
             return back()->with('status','Fase Iniciada');
      }
 
@@ -3037,44 +3100,52 @@ public function fases_registro(request $request , $id)
         { //dd();
             $fases ->update(['fase1f' => $request->fase1f]);
             $fases ->update(['fase1status' => 3]);
-            return back()->with('status','Fase Iniciada');
+            $this->logs(session('usuario')->id,'Finalizacion fase 1','fases_registro');
+            return back()->with('status','Fase Finalizada');
      }
      if($request->fase2f)
         { //dd();
             $fases ->update(['fase2f' => $request->fase2f]);
                 $fases ->update(['fase2status' => 3]);
-            return back()->with('status','Fase Iniciada');
+                $this->logs(session('usuario')->id,'Finalizacion fase 2','fases_registro');
+            return back()->with('status','Fase Finalizada');
      }
      if($request->fase3f)
         { //dd();
             $fases ->update(['fase3f' => $request->fase3f]);
                 $fases ->update(['fase3status' => 3]);
-            return back()->with('status','Fase Iniciada');
+                $this->logs(session('usuario')->id,'Finalizacion fase 3','fases_registro');
+            return back()->with('status','Fase Finalizada');
      }
      if($request->fase4f)
         { //dd();
             $fases ->update(['fase4f' => $request->fase4f]);
                 $fases ->update(['fase4status' => 3]);
-            return back()->with('status','Fase Iniciada');
+                $this->logs(session('usuario')->id,'Finalizacion fase 4','fases_registro');
+            return back()->with('status','Fase Finalizada');
      }
      if($request->fase5f)
         { //dd();
             $fases ->update(['fase5f' => $request->fase5f]);
                 $fases ->update(['fase5status' => 3]);
-            return back()->with('status','Fase Iniciada');
+                $this->logs(session('usuario')->id,'Finalizacion fase 5','fases_registro');
+            return back()->with('status','Fase Finalizada');
      }
      if($request->fase6f)
         { //dd();
             $fases ->update(['fase6f' => $request->fase6f]);
                 $fases ->update(['fase6status' => 3]);
-            return back()->with('status','Fase Iniciada');
+                $this->logs(session('usuario')->id,'Finalizacion fase 6','fases_registro');
+            return back()->with('status','Fase Finalizada');
      }
      if($request->fase7f)
         { //dd();
             $fases ->update(['fase7f' => $request->fase7f]);
                 $fases ->update(['fase7status' => 3]);
-            return back()->with('status','Fase Iniciada');
+                $this->logs(session('usuario')->id,'Finalizacion fase 7','fases_registro');
+            return back()->with('status','Fase Finalizada');
      }
+     $this->logs(session('usuario')->id,'modificacion','fases_registro');
         return back()->with('status','Documento Modificado');
     }
 
@@ -3111,10 +3182,13 @@ $empresas=sector_empresa::findorfail($id);
               //  dd("D");
                 $empresas->update(['ip' => $request->ip]);
             }
+
+             $this->logs(session('usuario')->id,'Modificacion','sector_modificador');
    return redirect()->route('sector_vizualizador', ['id'=>$request->rif,'revision'=>$request->sector_id])->with('status','Datos Modificados');
 } 
 
     public function sector_modificar($id){
+         $this->logs(session('usuario')->id,'Carga de pagina','sector_modificar');
    $valor=db::table('sector_empresas')
    ->rightjoin('datos_empresas', 'datos_empresas.id','=','sector_empresas.enterprise_id')
     ->rightjoin('sectors', 'sectors.id', '=', 'sector_empresas.sector_id')
@@ -3154,6 +3228,7 @@ $empresas=sector_empresa::findorfail($id);
 }
 
 public function sector_vizualizador($id, $revision){
+     $this->logs(session('usuario')->id,'Carga de pagina','sector_vizualizador');
    $valor=db::table('sector_empresas')
    ->rightjoin('datos_empresas', 'datos_empresas.id','=','sector_empresas.enterprise_id')
     ->rightjoin('sectors', 'sectors.id', '=', 'sector_empresas.sector_id')
@@ -3195,6 +3270,7 @@ public function sector_vizualizador($id, $revision){
 }
 
 public function sector_imprenta($id){
+     $this->logs(session('usuario')->id,'Impresion','sector_imprenta');
    $valor=db::table('sector_empresas')
    ->rightjoin('datos_empresas', 'datos_empresas.id','=','sector_empresas.enterprise_id')
     ->rightjoin('sectors', 'sectors.id', '=', 'sector_empresas.sector_id')
@@ -3233,6 +3309,7 @@ public function sector_imprenta($id){
 }
 public function sectores()
     {
+         $this->logs(session('usuario')->id,'Carga de pagina','sectores');
         if(session('usuario')){
             $sectores=sectors::all();
             //dd($sectores);
@@ -3276,12 +3353,14 @@ public function sectores()
             return view('sectores',['empresas'=>$empresas,'pais'=>$pais,'generador'=>$generador,'dc' => $dc,'sectores' => $sectores,'valor' => $valor]);
         }
         else
+             $this->logs(session('usuario')->id,'Redireccionamiento','sectores');
         return $this->index();
     }
 
 
     public function sectores_empresa_registro($id)
-    {
+    {   
+           $this->logs(session('usuario')->id,'Carga de pagina','sectores_empresa_registro');
         if(session('usuario')){
             $sectores=sectors::all()->where('sector',$id)->first();
             //dd($sec);
@@ -3320,6 +3399,7 @@ public function sectores()
             return view('sectores_empresa_registro',['empresas'=>$empresas,'sectores' => $sectores]);
         }
         else
+             $this->logs(session('usuario')->id,'Redireccionamiento','sectores_empresa_registro');
         return $this->index();
     }
 
@@ -3336,41 +3416,66 @@ public function sectores()
       $registry -> ip=$request->ip;
       //dd($registry);
       $registry ->save();
+      $this->logs(session('usuario')->id,'Relacion empresa/sector','sectores_empresa_registrar');
       return redirect()->route('sectores')->with('status','Relacion de sectores creado');
     }
 
 
 
     public function results()
-    {
+    {   $this->logs(session('usuario')->id,'Carga de pagina','results');
         if(session('usuario')){
             return view('results');
         }
         else
+            $this->logs(session('usuario')->id,'Redireccionamiento','results');
         return $this->index();
     }
     public function stadistics()
-    {
-        if(session('usuario') && session('usuario')->role==9 || session('usuario') && session('usuario')->role > 3){
-
-            
-            return view('stadistics');
+    {   
+        $this->logs(session('usuario')->id,'Carga de pagina','stadistics');
+        if(session('usuario') && session('usuario')->role>8){
+           
+            //dd(db::table('users')->where('id',1)->first());
+            $actividades=db::table('logs')
+            ->join('users','users.id','=','logs.usuario')
+            ->select('logs.*','users.email as usuario')
+            ->orderby('logs.id','Desc')
+            ->orderby('logs.created_at','Desc')
+            ->paginate(20);
+            //dd($actividades);
+            return view('stadistics',['actividades'=>$actividades]);
         }
         else
+            $this->logs(session('usuario')->id,'Redireccionamiento','stadistics');
         return $this->index();
 
     }
+
+     public function logs($usuario, $accion ,$controlador)
+    {
+        
+        $log=new logs;
+        $log -> ip = request()->ip();
+        $log -> usuario = $usuario;
+        $log -> accion = $accion;
+        $log -> controlador = $controlador;
+        //dd($log);
+        $log ->save();
+    }
     public function userpanel()
     {
+        $this->logs(session('usuario')->id,'Carga de pagina','userpanel');
         if(session('usuario')){
             return view('Userpanel');
         }
         else
+            $this->logs(session('usuario')->id,'Redireccionamiento','userpanel');
         return $this->index();
     }
     public function logout()
     {
-       
+      // $this->logs(session('usuario')->id,'Salida','logout');
         session()->forget('usuario');
         return $this->index();
         
