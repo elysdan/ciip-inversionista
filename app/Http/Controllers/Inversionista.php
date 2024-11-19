@@ -3444,7 +3444,43 @@ public function sectores()
             ->orderby('logs.created_at','Desc')
             ->paginate(20);
             //dd($actividades);
-            return view('stadistics',['actividades'=>$actividades]);
+            $users= db::table('users')->OrderBy('role','desc')->orderby('id','asc')->get();
+            $datos_empresas= db::table('datos_empresas')->orderby('id','asc')->get();
+            $inversionista_naturals= db::table('inversionista_naturals')->orderby('id','asc')->get();
+            $generos= db::table('generos')->orderby('id','asc')->get();
+            $sectores= db::table('sectors')->orderby('id','asc')->get();
+            $paises= db::table('pais')->orderby('id','asc')->get();
+            $nacionalidades= db::table('nacionalidad')->orderby('id','asc')->get();
+            $estados_civiles= db::table('estados_civiles')->orderby('id','asc')->get();
+            $contenido_empresas= db::table('contenido_empresas')->orderby('id','asc')->get();
+            $contenido_representantes= db::table('contenido_representantes')->orderby('id','asc')->get();
+            $datos_embajadas= db::table('datos_embajadas')->orderby('id','asc')->get();
+            $rrsss= db::table('rrss')->orderby('id','asc')->get();
+            $redes_sociales_delegados= db::table('redes_sociales_delegados')->orderby('id','asc')->get();
+            $redes_sociales_empresas= db::table('redes_sociales_empresas')->orderby('id','asc')->get();
+            $sectores_empresas= db::table('sector_empresas')->orderby('id','asc')->get();
+            $sectores_fases= db::table('sector_fases')->orderby('id','asc')->get();
+            $asociador_empresas_representantes= db::table('asociador_empresas_representantes')->orderby('id','asc')->get();
+            return view('stadistics',[
+                'actividades'=>$actividades,
+                'users'=>$users,
+                'datos_empresas'=>$datos_empresas,
+                'inversionista_naturals'=>$inversionista_naturals,
+                'generos'=>$generos,
+                'sectores'=>$sectores,
+                'paises'=>$paises,
+                'nacionalidades'=>$nacionalidades,
+                'estados_civiles'=>$estados_civiles,
+                'contenido_empresas'=>$contenido_empresas,
+                'contenido_representantes'=>$contenido_representantes,
+                'datos_embajadas'=>$datos_embajadas,
+                'rrsss'=>$rrsss,
+                'redes_sociales_delegados'=>$redes_sociales_delegados,
+                'redes_sociales_empresas'=>$redes_sociales_empresas,
+                'sectores_empresas'=>$sectores_empresas,
+                'sectores_fases'=>$sectores_fases,
+                'asociador_empresas_representantes'=>$asociador_empresas_representantes
+            ]);
         }
         else
            // $this->logs(session('usuario')->id,'Redireccionamiento','stadistics');
