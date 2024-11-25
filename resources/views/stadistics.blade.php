@@ -1,6 +1,11 @@
 @extends('layouts.panel')
 @section('content')
-<meta http-equiv="refresh" content="15">
+
+<link rel="stylesheet" type="text/css" href="    https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css
+    ">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.bootstrap5.css">
+<!-- <meta http-equiv="refresh" content="30">-->
       <div class="midde_cont">
                   <div class="container-fluid">
                      <div class="row column_title">
@@ -18,52 +23,41 @@
                      <li class="active">
                         <a href="#actividad" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-clock-o blue2_color"></i> <span>Actividad</span></a>
                         <div class="collapse list-unstyled" id="actividad">
-                        {{$actividades->links('vendor.pagination.bootstrap-4')}}
-@if($actividades)
+                          
+
+
+                       
         <div class="table_section padding_infor_info">
 
+          
          
 
 
-
-            <table class="table">
-                <thead>
-                    <tr style="background-color: #13579e;color: white;text-align: center;">
+            <div class="card">
+                <div class="card-body"> 
+            <table id="example" class="table table nowrap" style="width:100%">
+                <thead >
+                    <tr style="text-align: center;">
                         <th>#</th>
-                        <th>ip</th>
-                        <th>usuario</th>
+                        <th>Usuario</th>
+                        <th>Ip</th>
 
-                        <th>accion</th>
-                        <th>controlador</th>
-                        <th>fecha</th>
+                        <th>Accion</th>
+                        <th>Controlador</th>
+                        <th>Fecha</th>
                        
                     </tr>
                 </thead>
                 <tbody >
-                    @php $i=1; @endphp
-                    @foreach ($actividades as $actividad)
-
-                 
-                    <tr style="text-align: center;">
-                        <td> {{$actividad->id}}</td>
-                        <td>{{$actividad->ip}}</td>
-                        <td>{{$actividad->usuario}}</td>
-
-                        <td>{{$actividad->accion}}</td>
-                        <td>{{$actividad->controlador}}()</td>
-                        <td>{{ \Carbon\Carbon::parse($actividad->created_at)->locale('es_ES')
-                                                        ->isoFormat('dddd DD [de] MMMM [de] YYYY [a las] hh:mm') }}</td>
-                       
-                    </tr>      
-
-                   @php $i++; @endphp
- @endforeach
- @endif
+                   
+ 
                         </div>
 
          
                 </tbody>
             </table>
+        </div>
+        </div>
 
                </li>
                      
@@ -77,38 +71,26 @@
                         </a>
                         <div class="collapse list-unstyled" id="usuarios">
 
-
-            <table class="table">
+<div class="card">
+    <div class="card-body">
+            <table class="table" id="Usuarios">
                 <thead>
-                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                    <tr >
                         <th>#</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
 
                         <th>Correo</th>
                         <th>Rol</th>
+                        <th>Fecha de Creacion</th>
                         
                        
                     </tr>
                 </thead>
-                <tbody >
-                    @php $i=1; @endphp
-                    @foreach($users as $user)
-                    
-                      <tr style="text-align: center;">
-                        <td> {{$user->id}}</td>
-                        <td>{{$user->name}}</td>
-                        <td>{{$user->surname}}</td>
-
-                        <td>{{$user->email}}</td>
-                        <td>{{$user->role}}</td>
-                       
-                    </tr>      
-
-                   @php $i++; @endphp
- @endforeach
-</tbody>
+              
 </table>
+</div>
+</div>
                         </div>
                </li>
                      
@@ -122,36 +104,26 @@
                         </a>
                         <div class="collapse list-unstyled" id="empresas">
 
-                            <table class="table">
+   <div class="card">
+                <div class="card-body"> 
+                            <table class="table" id="Empresas">
                 <thead>
                     <tr style="background-color: #13579e;color: white;text-align: center;">
                         <th>#</th>
                         <th>Nombre</th>
+                        <th>Identificador</th>
                         <th>Rif</th>
 
                         <th>Correo</th>
+                        <th>Fecha de Creacion</th>
                        
                         
                        
                     </tr>
                 </thead>
-                <tbody >
-                    @php $i=1; @endphp
-                   @foreach($datos_empresas as $datos_empresa)
-                     <tr style="text-align: center;">
-                        <td> {{$datos_empresa->id}}</td>
-                        <td>{{$datos_empresa->razonsocial}}</td>
-                        <td>{{$datos_empresa->rif}}</td>
-
-                        <td>{{$datos_empresa->correo}}</td>
-                        
-                       
-                    </tr>      
-
-                   @php $i++; @endphp
- @endforeach
-</tbody>
+             
 </table>
+</div></div>
                         </div>
                </li>
                      
@@ -164,38 +136,26 @@
                             <span>Representantes</span>
                         </a>
                         <div class="collapse list-unstyled" id="representantes">
-
-                              <table class="table">
+   <div class="card">
+                <div class="card-body"> 
+                              <table class="table" id="Representantes">
                 <thead>
                     <tr style="background-color: #13579e;color: white;text-align: center;">
                         <th>#</th>
                         <th>Nombre</th>
+                        <th>Apellido</th>
                         <th>Cedula</th>
 
                         <th>Correo</th>
+                        <th>Fecha de Creacion</th>
                        
                         
                        
                     </tr>
                 </thead>
-                <tbody >
-                    @php $i=1; @endphp
-                    @foreach($inversionista_naturals as $inversionista_natural)
-                    a
-                     <tr style="text-align: center;">
-                        <td> {{$inversionista_natural->id}}</td>
-                        <td>{{$inversionista_natural->nombre}}</td>
-                        <td>{{$inversionista_natural->doc_identidad}}</td>
-
-                        <td>{{$inversionista_natural->email}}</td>
-                        
-                       
-                    </tr>      
-
-                   @php $i++; @endphp
- @endforeach
-</tbody>
+              
 </table>
+</div></div>
                         </div>
                </li>
                      
@@ -208,9 +168,23 @@
                             <span>Generos</span>
                         </a>
                         <div class="collapse list-unstyled" id="generos">
-                    @foreach($generos as $genero)
-                    a
-                    @endforeach
+                    <div class="card">
+                <div class="card-body"> 
+                              <table class="table" id="Generos">
+                <thead>
+                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                        <th>#</th>
+                        <th>Genero</th>
+                        <th>Fecha de Creacion</th>
+                      
+                       
+                        
+                       
+                    </tr>
+                </thead>
+              
+</table>
+</div></div>
                         </div>
                </li>
                      
@@ -224,9 +198,22 @@
                             <span>Sectores</span>
                         </a>
                         <div class="collapse list-unstyled" id="Sectores">
-                    @foreach($sectores as $sectore)
-                    a
-                    @endforeach
+                   <div class="card">
+                <div class="card-body"> 
+                              <table class="table" id="Sectoress">
+                <thead>
+                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                        <th>#</th>
+                        <th>Sector</th>
+                      
+                       
+                        
+                       
+                    </tr>
+                </thead>
+              
+</table>
+</div></div>
                         </div>
                </li>
                      
@@ -240,9 +227,22 @@
                             <span>paises</span>
                         </a>
                         <div class="collapse list-unstyled" id="paises">
-                  @foreach($paises as $pais)
-                    a
-                    @endforeach
+                   <div class="card">
+                <div class="card-body"> 
+                              <table class="table" id="Paises">
+                <thead>
+                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                        <th>#</th>
+                        <th>Pais</th>
+                      
+                       
+                        
+                       
+                    </tr>
+                </thead>
+              
+</table>
+</div></div>
                         </div>
                </li>
                      
@@ -256,9 +256,24 @@
                             <span>nacionalidades</span>
                         </a>
                         <div class="collapse list-unstyled" id="nacionalidades">
-                    @foreach($nacionalidades as $nacionalidad)
-                    a
-                    @endforeach
+                       <div class="card">
+                <div class="card-body"> 
+                              <table class="table" id="Nacionalidades">
+                <thead>
+                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                        <th>#</th>
+                        <th>Pais</th>
+                        <th>Nacionalidad</th>
+                       
+                      
+                       
+                        
+                       
+                    </tr>
+                </thead>
+              
+</table>
+</div></div>
                         </div>
                </li>
                      
@@ -272,9 +287,23 @@
                             <span>Estados Civiles</span>
                         </a>
                         <div class="collapse list-unstyled" id="Estados_Civiles">
-                  @foreach($estados_civiles as $estados_civil)
-                    a
-                    @endforeach
+                 <div class="card">
+                <div class="card-body"> 
+                              <table class="table" id="Estados_civile">
+                <thead>
+                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                        <th>#</th>
+                        <th>Estado_civil</th>
+                       
+                      
+                       
+                        
+                       
+                    </tr>
+                </thead>
+              
+</table>
+</div></div>
                         </div>
                </li>
                      
@@ -288,9 +317,25 @@
                             <span>Contenido_empresas</span>
                         </a>
                         <div class="collapse list-unstyled" id="Contenido_empresas">
-                    @foreach($contenido_empresas as $contenido_empresa)
-                    a
-                    @endforeach
+                     <div class="card">
+                <div class="card-body"> 
+                              <table class="table" id="Contenido_empresa">
+                <thead>
+                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                        <th>#</th>
+                        <th>Empresa</th>
+                        <th>Status</th>
+                        <th>Fecha de Elaboracion</th>
+                       
+                      
+                       
+                        
+                       
+                    </tr>
+                </thead>
+              
+</table>
+</div></div>
                         </div>
                </li>
                      
@@ -304,9 +349,25 @@
                             <span>contenido_representantes</span>
                         </a>
                         <div class="collapse list-unstyled" id="contenido_representantes">
-                     @foreach($contenido_representantes as $contenido_representante)
-                    a
-                    @endforeach
+                     <div class="card">
+                <div class="card-body"> 
+                              <table class="table" id="Contenido_representantes">
+                <thead>
+                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                        <th>#</th>
+                        <th>Representante</th>
+                        <th>Status</th>
+                        <th>Fecha de Elaboracion</th>
+                       
+                      
+                       
+                        
+                       
+                    </tr>
+                </thead>
+              
+</table>
+</div></div>
                         </div>
                </li>
                      
@@ -320,9 +381,25 @@
                             <span>datos_embajadas</span>
                         </a>
                         <div class="collapse list-unstyled" id="datos_embajadas">
-                     @foreach($datos_embajadas as $datos_embajada)
-                    a
-                    @endforeach
+                       <div class="card">
+                <div class="card-body"> 
+                              <table class="table" id="Datos_embajadas">
+                <thead>
+                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                        <th>#</th>
+                        <th>Empresas</th>
+                    
+                        <th>Fecha de Elaboracion</th>
+                       
+                      
+                       
+                        
+                       
+                    </tr>
+                </thead>
+              
+</table>
+</div></div>
                         </div>
                </li>
                      
@@ -336,9 +413,23 @@
                             <span>redes_sociales</span>
                         </a>
                         <div class="collapse list-unstyled" id="redes_sociales">
-                    @foreach($rrsss as $rrss)
-                    a
-                    @endforeach
+                    <div class="card">
+                <div class="card-body"> 
+                              <table class="table" id="Redes_sociales">
+                <thead>
+                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                        <th>#</th>
+                        <th>Red Social</th>
+                       
+                      
+                       
+                        
+                       
+                    </tr>
+                </thead>
+              
+</table>
+</div></div>
                         </div>
                </li>
                      
@@ -347,14 +438,30 @@
  <div style="width:100%;border-bottom: 1px dotted black;margin: 1%;"></div>
   <ul class="list-unstyled components">
                      <li class="active">
-                        <a href="#redes sociales_delegados" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <a href="#redes_sociales_delegados" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             <i class="fa fa-mobile-phone blue1_color"></i> 
                             <span>redes sociales_delegados</span>
                         </a>
-                        <div class="collapse list-unstyled" id="redes sociales_delegados">
-                    @foreach($redes_sociales_delegados as $redes_sociales_delegado)
-                    a
-                    @endforeach
+                        <div class="collapse list-unstyled" id="redes_sociales_delegados">
+                      <div class="card">
+                <div class="card-body"> 
+                              <table class="table" id="Redes_SD">
+                <thead>
+                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                        <th>#</th>
+                        <th>Usuario</th>
+                        <th>Red Social</th>
+                        <th>Nombre de Usuario</th>
+                       
+                      
+                       
+                        
+                       
+                    </tr>
+                </thead>
+              
+</table>
+</div></div>
                         </div>
                </li>
                      
@@ -368,9 +475,25 @@
                             <span>Redes_sociales_empresas</span>
                         </a>
                         <div class="collapse list-unstyled" id="Redes_sociales_empresas">
-                    @foreach($redes_sociales_empresas as $redes_sociales_empresa)
-                    a
-                    @endforeach
+                   <div class="card">
+                <div class="card-body"> 
+                              <table class="table" id="Redes_SE">
+                <thead>
+                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                        <th>#</th>
+                        <th>Usuario</th>
+                        <th>Red Social</th>
+                        <th>Nombre de Usuario</th>
+                       
+                      
+                       
+                        
+                       
+                    </tr>
+                </thead>
+              
+</table>
+</div></div>
                         </div>
                </li>
                      
@@ -384,9 +507,25 @@
                             <span>Sectores_empresas</span>
                         </a>
                         <div class="collapse list-unstyled" id="Sectores_empresas">
-                    @foreach($sectores_empresas as $sectores_empresa)
-                    a
-                    @endforeach
+                   <div class="card">
+                <div class="card-body"> 
+                              <table class="table" id="Sectores_empresass">
+                <thead>
+                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                        <th>#</th>
+                        <th>Empresa</th>
+                        <th></th>
+                        <th>Nombre de Usuario</th>
+                       
+                      
+                       
+                        
+                       
+                    </tr>
+                </thead>
+              
+</table>
+</div></div>
                         </div>
                </li>
                      
@@ -400,9 +539,30 @@
                             <span>Fases_de_sectores</span>
                         </a>
                         <div class="collapse list-unstyled" id="Fases_de_sectores">
-                     @foreach($sectores_fases as $sectores_fase)
-                    a
-                    @endforeach
+                     <div class="card">
+                <div class="card-body"> 
+                              <table class="table" id="Sectores_fases">
+                <thead>
+                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                        <th>#</th>
+                        <th>Fase 1</th>
+                        <th>Fase 2</th>
+                        <th>Fase 3</th>
+                        <th>Fase 4</th>
+                        <th>Fase 5</th>
+                        <th>Fase 6</th>
+                        <th>Fase 7</th>
+                        <th>Nombre de Usuario</th>
+                       
+                      
+                       
+                        
+                       
+                    </tr>
+                </thead>
+              
+</table>
+</div></div>
                         </div>
                </li>
                      
@@ -416,9 +576,30 @@
                             <span>Delegados_asociados_a_empresas</span>
                         </a>
                         <div class="collapse list-unstyled" id="Delegados_asociados_a_empresas">
-                    @foreach($asociador_empresas_representantes as $asociador_empresas_representante)
-                    a
-                    @endforeach
+                    <div class="card">
+                <div class="card-body"> 
+                              <table class="table" id="Asociador_ED">
+                <thead>
+                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                        <th>#</th>
+                        <th>Fase 1</th>
+                        <th>Fase 2</th>
+                        <th>Fase 3</th>
+                        <th>Fase 4</th>
+                        <th>Fase 5</th>
+                        <th>Fase 6</th>
+                        <th>Fase 7</th>
+                        <th>Nombre de Usuario</th>
+                       
+                      
+                       
+                        
+                       
+                    </tr>
+                </thead>
+              
+</table>
+</div></div>
                         </div>
                </li>
                      
@@ -427,6 +608,958 @@
  
         </div>
     </div>
+
+    <script type="text/javascript" src="    https://code.jquery.com/jquery-3.7.1.js"></script>
+     <script type="text/javascript" src="    https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+      <script type="text/javascript" src="    https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+       <script type="text/javascript" src="    https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
+       <script type="text/javascript" src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.js"></script>
+       <script type="text/javascript" src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.bootstrap5.js"></script>
+       <script type="text/javascript">
+            
+new DataTable('#example', {
+     ajax: "{{route('actividades')}}",
+     columns:[
+        {data:'id'},
+        {data:'usuario'},
+        {data:'ip'},
+
+        {data:'accion'},
+        {data:'controlador'},
+        {data:'created_at'}
+        ],
+    responsive: true,
+    autowidth:false,
+    language: {
+
+            "decimal": "",
+
+            "emptyTable": "No hay información",
+
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+
+            "infoPostFix": "",
+
+            "thousands": ",",
+
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+
+            "loadingRecords": "Cargando...",
+
+            "processing": "Procesando...",
+
+            "search": "Buscar:",
+
+            "zeroRecords": "Sin resultados encontrados",
+
+            "paginate": {
+
+                "first": "Primero",
+
+                "last": "Ultimo",
+
+                "next": ">",
+
+                "previous": "<"
+
+            }
+
+          }
+});
+
+new DataTable('#Usuarios', {
+     ajax: "{{route('usuarios')}}",
+     columns:[
+        {data:'id'},
+        {data:'name'},
+        {data:'surname'},
+
+        {data:'email'},
+        {data:'role'},
+        {data:'created_at'}
+        ],
+    responsive: true,
+    autowidth:false,
+    language: {
+
+            "decimal": "",
+
+            "emptyTable": "No hay información",
+
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+
+            "infoPostFix": "",
+
+            "thousands": ",",
+
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+
+            "loadingRecords": "Cargando...",
+
+            "processing": "Procesando...",
+
+            "search": "Buscar:",
+
+            "zeroRecords": "Sin resultados encontrados",
+
+            "paginate": {
+
+                "first": "Primero",
+
+                "last": "Ultimo",
+
+                "next": ">",
+
+                "previous": "<"
+
+            }
+
+          }
+});
+
+new DataTable('#Empresas', {
+     ajax: "{{route('empresas')}}",
+     columns:[
+        {data:'id'},
+        {data:'razonsocial'},
+        {data:'identificador'},
+
+        {data:'rif'},
+        {data:'correo'},
+        {data:'created_at'}
+        ],
+    responsive: true,
+    autowidth:false,
+    language: {
+
+            "decimal": "",
+
+            "emptyTable": "No hay información",
+
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+
+            "infoPostFix": "",
+
+            "thousands": ",",
+
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+
+            "loadingRecords": "Cargando...",
+
+            "processing": "Procesando...",
+
+            "search": "Buscar:",
+
+            "zeroRecords": "Sin resultados encontrados",
+
+            "paginate": {
+
+                "first": "Primero",
+
+                "last": "Ultimo",
+
+                "next": ">",
+
+                "previous": "<"
+
+            }
+
+          }
+});
+
+new DataTable('#Representantes', {
+     ajax: "{{route('representantes')}}",
+     columns:[
+        {data:'id'},
+        {data:'nombre'},
+        {data:'apellido'},
+
+        {data:'doc_identidad'},
+        {data:'email'},
+        {data:'created_at'}
+        ],
+    responsive: true,
+    autowidth:false,
+    language: {
+
+            "decimal": "",
+
+            "emptyTable": "No hay información",
+
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+
+            "infoPostFix": "",
+
+            "thousands": ",",
+
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+
+            "loadingRecords": "Cargando...",
+
+            "processing": "Procesando...",
+
+            "search": "Buscar:",
+
+            "zeroRecords": "Sin resultados encontrados",
+
+            "paginate": {
+
+                "first": "Primero",
+
+                "last": "Ultimo",
+
+                "next": ">",
+
+                "previous": "<"
+
+            }
+
+          }
+});
+
+new DataTable('#Generos', {
+     ajax: "{{route('generos')}}",
+     columns:[
+        {data:'id'},
+      
+        {data:'genero'},
+        {data:'created_at'}
+        ],
+    responsive: true,
+    autowidth:false,
+    language: {
+
+            "decimal": "",
+
+            "emptyTable": "No hay información",
+
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+
+            "infoPostFix": "",
+
+            "thousands": ",",
+
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+
+            "loadingRecords": "Cargando...",
+
+            "processing": "Procesando...",
+
+            "search": "Buscar:",
+
+            "zeroRecords": "Sin resultados encontrados",
+
+            "paginate": {
+
+                "first": "Primero",
+
+                "last": "Ultimo",
+
+                "next": ">",
+
+                "previous": "<"
+
+            }
+
+          }
+});
+
+new DataTable('#Sectoress', {
+     ajax: "{{route('sectores_d')}}",
+     columns:[
+        {data:'id'},
+      
+        {data:'sector'}
+        ],
+    responsive: true,
+    autowidth:false,
+    language: {
+
+            "decimal": "",
+
+            "emptyTable": "No hay información",
+
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+
+            "infoPostFix": "",
+
+            "thousands": ",",
+
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+
+            "loadingRecords": "Cargando...",
+
+            "processing": "Procesando...",
+
+            "search": "Buscar:",
+
+            "zeroRecords": "Sin resultados encontrados",
+
+            "paginate": {
+
+                "first": "Primero",
+
+                "last": "Ultimo",
+
+                "next": ">",
+
+                "previous": "<"
+
+            }
+
+          }
+});
+new DataTable('#Paises', {
+     ajax: "{{route('paises')}}",
+     columns:[
+        {data:'id'},
+      
+        {data:'paisnombre'}
+        ],
+    responsive: true,
+    autowidth:false,
+    language: {
+
+            "decimal": "",
+
+            "emptyTable": "No hay información",
+
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+
+            "infoPostFix": "",
+
+            "thousands": ",",
+
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+
+            "loadingRecords": "Cargando...",
+
+            "processing": "Procesando...",
+
+            "search": "Buscar:",
+
+            "zeroRecords": "Sin resultados encontrados",
+
+            "paginate": {
+
+                "first": "Primero",
+
+                "last": "Ultimo",
+
+                "next": ">",
+
+                "previous": "<"
+
+            }
+
+          }
+});
+new DataTable('#Nacionalidades', {
+     ajax: "{{route('nacionalidades')}}",
+     columns:[
+        {data:'id'},
+      
+        {data:'PAIS_NAC'},
+        {data:'GENTILICIO_NAC'}
+        ],
+    responsive: true,
+    autowidth:false,
+    language: {
+
+            "decimal": "",
+
+            "emptyTable": "No hay información",
+
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+
+            "infoPostFix": "",
+
+            "thousands": ",",
+
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+
+            "loadingRecords": "Cargando...",
+
+            "processing": "Procesando...",
+
+            "search": "Buscar:",
+
+            "zeroRecords": "Sin resultados encontrados",
+
+            "paginate": {
+
+                "first": "Primero",
+
+                "last": "Ultimo",
+
+                "next": ">",
+
+                "previous": "<"
+
+            }
+
+          }
+});
+
+new DataTable('#Estados_civile', {
+     ajax: "{{route('estados_civiles')}}",
+     columns:[
+        {data:'id'},
+      
+        {data:'estado'}
+        ],
+    responsive: true,
+    autowidth:false,
+    language: {
+
+            "decimal": "",
+
+            "emptyTable": "No hay información",
+
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+
+            "infoPostFix": "",
+
+            "thousands": ",",
+
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+
+            "loadingRecords": "Cargando...",
+
+            "processing": "Procesando...",
+
+            "search": "Buscar:",
+
+            "zeroRecords": "Sin resultados encontrados",
+
+            "paginate": {
+
+                "first": "Primero",
+
+                "last": "Ultimo",
+
+                "next": ">",
+
+                "previous": "<"
+
+            }
+
+          }
+});
+
+new DataTable('#Contenido_empresa', {
+     ajax: "{{route('contenido_empresas')}}",
+     columns:[
+        {data:'id'},
+      
+        {data:'enterprise_id'},
+        {data:'status'},
+        {data:'created_at'}
+        ],
+    responsive: true,
+    autowidth:false,
+    language: {
+
+            "decimal": "",
+
+            "emptyTable": "No hay información",
+
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+
+            "infoPostFix": "",
+
+            "thousands": ",",
+
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+
+            "loadingRecords": "Cargando...",
+
+            "processing": "Procesando...",
+
+            "search": "Buscar:",
+
+            "zeroRecords": "Sin resultados encontrados",
+
+            "paginate": {
+
+                "first": "Primero",
+
+                "last": "Ultimo",
+
+                "next": ">",
+
+                "previous": "<"
+
+            }
+
+          }
+});
+
+new DataTable('#Contenido_representantes', {
+     ajax: "{{route('contenido_representantes')}}",
+     columns:[
+        {data:'id'},
+      
+        {data:'delegate_id'},
+        {data:'status'},
+        {data:'created_at'}
+        ],
+    responsive: true,
+    autowidth:false,
+    language: {
+
+            "decimal": "",
+
+            "emptyTable": "No hay información",
+
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+
+            "infoPostFix": "",
+
+            "thousands": ",",
+
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+
+            "loadingRecords": "Cargando...",
+
+            "processing": "Procesando...",
+
+            "search": "Buscar:",
+
+            "zeroRecords": "Sin resultados encontrados",
+
+            "paginate": {
+
+                "first": "Primero",
+
+                "last": "Ultimo",
+
+                "next": ">",
+
+                "previous": "<"
+
+            }
+
+          }
+});
+
+new DataTable('#Datos_embajadas', {
+     ajax: "{{route('datos_embajadas')}}",
+     columns:[
+        {data:'id'},
+      
+        {data:'enterprise_id'},
+        {data:'created_at'}
+        ],
+    responsive: true,
+    autowidth:false,
+    language: {
+
+            "decimal": "",
+
+            "emptyTable": "No hay información",
+
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+
+            "infoPostFix": "",
+
+            "thousands": ",",
+
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+
+            "loadingRecords": "Cargando...",
+
+            "processing": "Procesando...",
+
+            "search": "Buscar:",
+
+            "zeroRecords": "Sin resultados encontrados",
+
+            "paginate": {
+
+                "first": "Primero",
+
+                "last": "Ultimo",
+
+                "next": ">",
+
+                "previous": "<"
+
+            }
+
+          }
+});
+
+new DataTable('#Redes_sociales', {
+     ajax: "{{route('redes_sociales')}}",
+     columns:[
+        {data:'id'},
+      
+        {data:'red'}
+        ],
+    responsive: true,
+    autowidth:false,
+    language: {
+
+            "decimal": "",
+
+            "emptyTable": "No hay información",
+
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+
+            "infoPostFix": "",
+
+            "thousands": ",",
+
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+
+            "loadingRecords": "Cargando...",
+
+            "processing": "Procesando...",
+
+            "search": "Buscar:",
+
+            "zeroRecords": "Sin resultados encontrados",
+
+            "paginate": {
+
+                "first": "Primero",
+
+                "last": "Ultimo",
+
+                "next": ">",
+
+                "previous": "<"
+
+            }
+
+          }
+});
+
+new DataTable('#Redes_SD', {
+     ajax: "{{route('redes_sociales_delegados')}}",
+     columns:[
+        {data:'id'},
+      
+        {data:'delegate_id'},
+      
+        {data:'username'},
+      
+        {data:'site'}
+
+        ],
+    responsive: true,
+    autowidth:false,
+    language: {
+
+            "decimal": "",
+
+            "emptyTable": "No hay información",
+
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+
+            "infoPostFix": "",
+
+            "thousands": ",",
+
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+
+            "loadingRecords": "Cargando...",
+
+            "processing": "Procesando...",
+
+            "search": "Buscar:",
+
+            "zeroRecords": "Sin resultados encontrados",
+
+            "paginate": {
+
+                "first": "Primero",
+
+                "last": "Ultimo",
+
+                "next": ">",
+
+                "previous": "<"
+
+            }
+
+          }
+});
+
+new DataTable('#Redes_SE', {
+     ajax: "{{route('redes_sociales_empresas')}}",
+     columns:[
+        {data:'id'},
+      
+        {data:'enterprise_id'},
+      
+        {data:'username'},
+      
+        {data:'site'}
+
+        ],
+    responsive: true,
+    autowidth:false,
+    language: {
+
+            "decimal": "",
+
+            "emptyTable": "No hay información",
+
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+
+            "infoPostFix": "",
+
+            "thousands": ",",
+
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+
+            "loadingRecords": "Cargando...",
+
+            "processing": "Procesando...",
+
+            "search": "Buscar:",
+
+            "zeroRecords": "Sin resultados encontrados",
+
+            "paginate": {
+
+                "first": "Primero",
+
+                "last": "Ultimo",
+
+                "next": ">",
+
+                "previous": "<"
+
+            }
+
+          }
+});
+
+new DataTable('#Sectores_empresass', {
+     ajax: "{{route('sectores_empresas')}}",
+     columns:[
+        {data:'id'},
+      
+        {data:'enterprise_id'},
+        {data:'created_at'}
+
+        ],
+    responsive: true,
+    autowidth:false,
+    language: {
+
+            "decimal": "",
+
+            "emptyTable": "No hay información",
+
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+
+            "infoPostFix": "",
+
+            "thousands": ",",
+
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+
+            "loadingRecords": "Cargando...",
+
+            "processing": "Procesando...",
+
+            "search": "Buscar:",
+
+            "zeroRecords": "Sin resultados encontrados",
+
+            "paginate": {
+
+                "first": "Primero",
+
+                "last": "Ultimo",
+
+                "next": ">",
+
+                "previous": "<"
+
+            }
+
+          }
+});
+
+new DataTable('#Sectores_fases', {
+     ajax: "{{route('sectores_fases')}}",
+     columns:[
+        {data:'id'},
+      
+        {data:'enterprise_id'},
+      
+        {data:'username'},
+      
+        {data:'site'}
+
+        ],
+    responsive: true,
+    autowidth:false,
+    language: {
+
+            "decimal": "",
+
+            "emptyTable": "No hay información",
+
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+
+            "infoPostFix": "",
+
+            "thousands": ",",
+
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+
+            "loadingRecords": "Cargando...",
+
+            "processing": "Procesando...",
+
+            "search": "Buscar:",
+
+            "zeroRecords": "Sin resultados encontrados",
+
+            "paginate": {
+
+                "first": "Primero",
+
+                "last": "Ultimo",
+
+                "next": ">",
+
+                "previous": "<"
+
+            }
+
+          }
+});
+new DataTable('#Asociador_ED', {
+     ajax: "{{route('asociador_er')}}",
+     columns:[
+        {data:'id'},
+      
+        {data:'enterprise_id'},
+      
+        {data:'username'},
+      
+        {data:'site'}
+
+        ],
+    responsive: true,
+    autowidth:false,
+    language: {
+
+            "decimal": "",
+
+            "emptyTable": "No hay información",
+
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+
+            "infoPostFix": "",
+
+            "thousands": ",",
+
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+
+            "loadingRecords": "Cargando...",
+
+            "processing": "Procesando...",
+
+            "search": "Buscar:",
+
+            "zeroRecords": "Sin resultados encontrados",
+
+            "paginate": {
+
+                "first": "Primero",
+
+                "last": "Ultimo",
+
+                "next": ">",
+
+                "previous": "<"
+
+            }
+
+          }
+});
+
+       </script>
 
 
 

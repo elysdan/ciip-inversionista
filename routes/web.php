@@ -18,7 +18,27 @@ Route::get('/', function () {
     return view('index');
 });
 
+
 Route::post('/', [inversionista::class, 'index'])->name('index');
+
+Route::get('/actividades', [inversionista::class, 'actividades'])->name('actividades');
+Route::get('/usuarios', [inversionista::class, 'usuarios'])->name('usuarios');
+Route::get('/empresas', [inversionista::class, 'empresas'])->name('empresas');
+Route::get('/representantes', [inversionista::class, 'representantes'])->name('representantes');
+Route::get('/generos', [inversionista::class, 'generos'])->name('generos');
+Route::get('/sectores_d', [inversionista::class, 'sectores_d'])->name('sectores_d');
+Route::get('/estados_civiles', [inversionista::class, 'estados_civiles'])->name('estados_civiles');
+Route::get('/contenido_empresas', [inversionista::class, 'contenido_empresas'])->name('contenido_empresas');
+Route::get('/contenido_representantes', [inversionista::class, 'contenido_representantes'])->name('contenido_representantes');
+Route::get('/datos_embajadas', [inversionista::class, 'datos_embajadas'])->name('datos_embajadas');
+Route::get('/redes_sociales', [inversionista::class, 'redes_sociales'])->name('redes_sociales');
+Route::get('/redes_sociales_delegados', [inversionista::class, 'redes_sociales_delegados'])->name('redes_sociales_delegados');
+Route::get('/redes_sociales_empresas', [inversionista::class, 'redes_sociales_empresas'])->name('redes_sociales_empresas');
+Route::get('/sectores_empresas', [inversionista::class, 'sectores_empresas'])->name('sectores_empresas');
+Route::get('/sectores_fases', [inversionista::class, 'sectores_fases'])->name('sectores_fases');
+Route::get('/asociador_er', [inversionista::class, 'asociador_er'])->name('asociador_er');
+Route::get('/paises', [inversionista::class, 'paises'])->name('paises');
+Route::get('/nacionalidades', [inversionista::class, 'nacionalidades'])->name('nacionalidades');
 
 Route::post('/dashboard', [inversionista::class, 'login'])->name('login');
 

@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Storage;
 Use PDF;
+use Yajra\DataTables\Facades\DataTables;
 
 use App\Models\User;
 use App\Models\inversionistanatural;
@@ -3431,56 +3432,226 @@ public function sectores()
            // $this->logs(session('usuario')->id,'Redireccionamiento','results');
         return $this->index();
     }
+
+   public function actividades()
+{
+    $actividades = DB::table('logs')
+        ->join('users', 'users.id', '=', 'logs.usuario')
+        ->select('logs.*','logs.created_at', DB::raw('users.email AS usuario'))
+        ->orderBy('logs.id', 'DESC')
+        ->orderBy('logs.created_at', 'DESC')
+        ->get();
+
+      
+
+   
+
+    return datatables()->of($actividades)->toJson() ; 
+
+}
+
+public function usuarios()
+{
+ 
+
+        $users= db::table('users')->OrderBy('role','desc')->orderby('id','asc')->get();
+
+   
+
+    return datatables()->of($users)->toJson() ; 
+    
+}
+public function empresas()
+{
+ 
+
+       $datos_empresas= db::table('datos_empresas')->orderby('id','asc')->get();
+
+   
+
+    return datatables()->of($datos_empresas)->toJson() ; 
+    
+}
+public function representantes()
+{
+ 
+
+       $inversionista_naturals= db::table('inversionista_naturals')->orderby('id','asc')->get();
+
+   
+
+    return datatables()->of( $inversionista_naturals)->toJson() ; 
+    
+}
+
+public function generos()
+{
+ 
+
+        $generos= db::table('generos')->orderby('id','asc')->get();
+
+   
+
+    return datatables()->of( $generos)->toJson() ; 
+    
+}
+public function paises()
+{
+ 
+
+       $paises= db::table('pais')->orderby('id','asc')->get();
+
+   
+
+    return datatables()->of( $paises)->toJson() ; 
+    
+}
+
+public function nacionalidades()
+{
+ 
+
+       $nacionalidades= db::table('nacionalidad')->orderby('id','asc')->get();
+
+   
+
+    return datatables()->of($nacionalidades)->toJson() ; 
+    
+}
+public function sectores_d()
+{
+ 
+
+        $sectores= db::table('sectors')->orderby('id','asc')->get();
+
+   
+
+    return datatables()->of($sectores)->toJson() ; 
+    
+}
+public function estados_civiles()
+{
+ 
+
+        $estados_civiles= db::table('estados_civiles')->orderby('id','asc')->get();
+
+   
+
+    return datatables()->of($estados_civiles)->toJson() ; 
+    
+}
+
+public function contenido_empresas()
+{
+ 
+
+        $contenido_empresas= db::table('contenido_empresas')->orderby('id','asc')->get();
+
+   
+
+    return datatables()->of(  $contenido_empresas)->toJson() ; 
+    
+}
+public function contenido_representantes()
+{
+ 
+
+        $contenido_representantes= db::table('contenido_representantes')->orderby('id','asc')->get();
+
+   
+
+    return datatables()->of(   $contenido_representantes)->toJson() ; 
+    
+}
+
+public function datos_embajadas()
+{
+ 
+
+      $datos_embajadas= db::table('datos_embajadas')->orderby('id','asc')->get();
+
+   
+
+    return datatables()->of($datos_embajadas)->toJson() ; 
+    
+}
+public function redes_sociales()
+{
+ 
+
+        $rrsss= db::table('rrss')->orderby('id','asc')->get();
+
+   
+
+    return datatables()->of( $rrsss)->toJson() ; 
+    
+}
+public function redes_sociales_delegados()
+{
+ 
+
+       $redes_sociales_delegados= db::table('redes_sociales_delegados')->orderby('id','asc')->get();
+
+   
+
+    return datatables()->of($redes_sociales_delegados)->toJson() ; 
+    
+}
+public function redes_sociales_empresas()
+{
+ 
+
+       $redes_sociales_empresas= db::table('redes_sociales_empresas')->orderby('id','asc')->get();
+
+   
+
+    return datatables()->of( $redes_sociales_empresas)->toJson() ; 
+    
+}
+
+public function sectores_empresas()
+{
+ 
+
+      $sectores_empresas= db::table('sector_empresas')->orderby('id','asc')->get();
+
+   
+
+    return datatables()->of($sectores_empresas)->toJson() ; 
+    
+}
+public function sectores_fases()
+{
+ 
+
+        $sectores_fases= db::table('sector_fases')->orderby('id','asc')->get();
+
+   
+
+    return datatables()->of($sectores_fases)->toJson() ; 
+    
+}
+public function asociador_er()
+{
+ 
+
+        $asociador_empresas_representantes= db::table('asociador_empresas_representantes')->orderby('id','asc')->get();
+
+   
+
+    return datatables()->of( $asociador_empresas_representantes)->toJson() ; 
+    
+}
+
+
     public function stadistics()
     {   
         //$this->logs(session('usuario')->id,'Carga de pagina','stadistics');
         if(session('usuario') && session('usuario')->role>8){
            
-            //dd(db::table('users')->where('id',1)->first());
-            $actividades=db::table('logs')
-            ->join('users','users.id','=','logs.usuario')
-            ->select('logs.*','users.email as usuario')
-            ->orderby('logs.id','Desc')
-            ->orderby('logs.created_at','Desc')
-            ->paginate(20);
-            //dd($actividades);
-            $users= db::table('users')->OrderBy('role','desc')->orderby('id','asc')->get();
-            $datos_empresas= db::table('datos_empresas')->orderby('id','asc')->get();
-            $inversionista_naturals= db::table('inversionista_naturals')->orderby('id','asc')->get();
-            $generos= db::table('generos')->orderby('id','asc')->get();
-            $sectores= db::table('sectors')->orderby('id','asc')->get();
-            $paises= db::table('pais')->orderby('id','asc')->get();
-            $nacionalidades= db::table('nacionalidad')->orderby('id','asc')->get();
-            $estados_civiles= db::table('estados_civiles')->orderby('id','asc')->get();
-            $contenido_empresas= db::table('contenido_empresas')->orderby('id','asc')->get();
-            $contenido_representantes= db::table('contenido_representantes')->orderby('id','asc')->get();
-            $datos_embajadas= db::table('datos_embajadas')->orderby('id','asc')->get();
-            $rrsss= db::table('rrss')->orderby('id','asc')->get();
-            $redes_sociales_delegados= db::table('redes_sociales_delegados')->orderby('id','asc')->get();
-            $redes_sociales_empresas= db::table('redes_sociales_empresas')->orderby('id','asc')->get();
-            $sectores_empresas= db::table('sector_empresas')->orderby('id','asc')->get();
-            $sectores_fases= db::table('sector_fases')->orderby('id','asc')->get();
-            $asociador_empresas_representantes= db::table('asociador_empresas_representantes')->orderby('id','asc')->get();
-            return view('stadistics',[
-                'actividades'=>$actividades,
-                'users'=>$users,
-                'datos_empresas'=>$datos_empresas,
-                'inversionista_naturals'=>$inversionista_naturals,
-                'generos'=>$generos,
-                'sectores'=>$sectores,
-                'paises'=>$paises,
-                'nacionalidades'=>$nacionalidades,
-                'estados_civiles'=>$estados_civiles,
-                'contenido_empresas'=>$contenido_empresas,
-                'contenido_representantes'=>$contenido_representantes,
-                'datos_embajadas'=>$datos_embajadas,
-                'rrsss'=>$rrsss,
-                'redes_sociales_delegados'=>$redes_sociales_delegados,
-                'redes_sociales_empresas'=>$redes_sociales_empresas,
-                'sectores_empresas'=>$sectores_empresas,
-                'sectores_fases'=>$sectores_fases,
-                'asociador_empresas_representantes'=>$asociador_empresas_representantes
-            ]);
+           
+          
+            return view('stadistics');
         }
         else
            // $this->logs(session('usuario')->id,'Redireccionamiento','stadistics');
