@@ -35,9 +35,9 @@
 
             <div class="card">
                 <div class="card-body"> 
-            <table id="example" class="table table nowrap" style="width:100%">
+            <table id="ActividDad" class="table table-striped nowrap" style="width:100%">
                 <thead >
-                    <tr style="text-align: center;">
+                    <tr >
                         <th>#</th>
                         <th>Usuario</th>
                         <th>Ip</th>
@@ -62,7 +62,7 @@
                </li>
                      
  </ul>
-<div style="width:100%;border-bottom: 1px dotted black;margin: 1%;"></div>
+<div style="width:100%;border-bottom: 1px dotted black;margin: 2%;"></div>
   <ul class="list-unstyled components">
                      <li class="active">
                         <a href="#usuarios" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -70,10 +70,10 @@
                             <span>Usuarios</span>
                         </a>
                         <div class="collapse list-unstyled" id="usuarios">
-
+ <div class="table_section padding_infor_info">
 <div class="card">
     <div class="card-body">
-            <table class="table" id="Usuarios">
+            <table class="table table-striped nowrap" id="Usuarios">
                 <thead>
                     <tr >
                         <th>#</th>
@@ -95,7 +95,7 @@
                </li>
                      
  </ul>
- <div style="width:100%;border-bottom: 1px dotted black;margin: 1%;"></div>
+ <div style="width:100%;border-bottom: 1px dotted black;margin: 2%;"></div>
   <ul class="list-unstyled components">
                      <li class="active">
                         <a href="#empresas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -103,12 +103,12 @@
                             <span>Empresas</span>
                         </a>
                         <div class="collapse list-unstyled" id="empresas">
-
+ <div class="table_section padding_infor_info">
    <div class="card">
                 <div class="card-body"> 
-                            <table class="table" id="Empresas">
+                            <table class="table table-striped nowrap" id="Empresas">
                 <thead>
-                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                    <tr  >
                         <th>#</th>
                         <th>Nombre</th>
                         <th>Identificador</th>
@@ -128,7 +128,7 @@
                </li>
                      
  </ul>
- <div style="width:100%;border-bottom: 1px dotted black;margin: 1%;"></div>
+ <div style="width:100%;border-bottom: 1px dotted black;margin: 2%;"></div>
   <ul class="list-unstyled components">
                      <li class="active">
                         <a href="#representantes" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -136,11 +136,12 @@
                             <span>Representantes</span>
                         </a>
                         <div class="collapse list-unstyled" id="representantes">
+                             <div class="table_section padding_infor_info">
    <div class="card">
                 <div class="card-body"> 
-                              <table class="table" id="Representantes">
+                              <table class="table table-striped nowrap" id="Representantes">
                 <thead>
-                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                    <tr  >
                         <th>#</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
@@ -160,7 +161,7 @@
                </li>
                      
  </ul>
- <div style="width:100%;border-bottom: 1px dotted black;margin: 1%;"></div>
+ <div style="width:100%;border-bottom: 1px dotted black;margin: 2%;"></div>
   <ul class="list-unstyled components">
                      <li class="active">
                         <a href="#generos" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -168,11 +169,12 @@
                             <span>Generos</span>
                         </a>
                         <div class="collapse list-unstyled" id="generos">
+                             <div class="table_section padding_infor_info">
                     <div class="card">
                 <div class="card-body"> 
-                              <table class="table" id="Generos">
+                              <table class="table table-striped nowrap" id="Generos">
                 <thead>
-                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                    <tr  >
                         <th>#</th>
                         <th>Genero</th>
                         <th>Fecha de Creacion</th>
@@ -190,7 +192,7 @@
                      
  </ul>
 
- <div style="width:100%;border-bottom: 1px dotted black;margin: 1%;"></div>
+ <div style="width:100%;border-bottom: 1px dotted black;margin: 2%;"></div>
   <ul class="list-unstyled components">
                      <li class="active">
                         <a href="#Sectores" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -198,11 +200,12 @@
                             <span>Sectores</span>
                         </a>
                         <div class="collapse list-unstyled" id="Sectores">
+                             <div class="table_section padding_infor_info">
                    <div class="card">
                 <div class="card-body"> 
-                              <table class="table" id="Sectoress">
+                              <table class="table table-striped nowrap" id="Sectoress">
                 <thead>
-                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                    <tr  >
                         <th>#</th>
                         <th>Sector</th>
                       
@@ -219,7 +222,7 @@
                      
  </ul>
 
- <div style="width:100%;border-bottom: 1px dotted black;margin: 1%;"></div>
+ <div style="width:100%;border-bottom: 1px dotted black;margin: 2%;"></div>
   <ul class="list-unstyled components">
                      <li class="active">
                         <a href="#paises" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -227,11 +230,12 @@
                             <span>paises</span>
                         </a>
                         <div class="collapse list-unstyled" id="paises">
+                             <div class="table_section padding_infor_info">
                    <div class="card">
                 <div class="card-body"> 
-                              <table class="table" id="Paises">
+                              <table class="table table-striped nowrap" id="Paises">
                 <thead>
-                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                    <tr  >
                         <th>#</th>
                         <th>Pais</th>
                       
@@ -248,7 +252,7 @@
                      
  </ul>
 
- <div style="width:100%;border-bottom: 1px dotted black;margin: 1%;"></div>
+ <div style="width:100%;border-bottom: 1px dotted black;margin: 2%;"></div>
   <ul class="list-unstyled components">
                      <li class="active">
                         <a href="#nacionalidades" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -256,11 +260,12 @@
                             <span>nacionalidades</span>
                         </a>
                         <div class="collapse list-unstyled" id="nacionalidades">
+                             <div class="table_section padding_infor_info">
                        <div class="card">
                 <div class="card-body"> 
-                              <table class="table" id="Nacionalidades">
+                              <table class="table table-striped nowrap" id="Nacionalidades">
                 <thead>
-                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                    <tr  >
                         <th>#</th>
                         <th>Pais</th>
                         <th>Nacionalidad</th>
@@ -279,7 +284,7 @@
                      
  </ul>
 
- <div style="width:100%;border-bottom: 1px dotted black;margin: 1%;"></div>
+ <div style="width:100%;border-bottom: 1px dotted black;margin: 2%;"></div>
   <ul class="list-unstyled components">
                      <li class="active">
                         <a href="#Estados_Civiles" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -287,11 +292,12 @@
                             <span>Estados Civiles</span>
                         </a>
                         <div class="collapse list-unstyled" id="Estados_Civiles">
+                             <div class="table_section padding_infor_info">
                  <div class="card">
                 <div class="card-body"> 
-                              <table class="table" id="Estados_civile">
+                              <table class="table table-striped nowrap" id="Estados_civile">
                 <thead>
-                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                    <tr  >
                         <th>#</th>
                         <th>Estado_civil</th>
                        
@@ -309,7 +315,7 @@
                      
  </ul>
 
- <div style="width:100%;border-bottom: 1px dotted black;margin: 1%;"></div>
+ <div style="width:100%;border-bottom: 1px dotted black;margin: 2%;"></div>
   <ul class="list-unstyled components">
                      <li class="active">
                         <a href="#Contenido_empresas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -317,11 +323,12 @@
                             <span>Contenido_empresas</span>
                         </a>
                         <div class="collapse list-unstyled" id="Contenido_empresas">
+                             <div class="table_section padding_infor_info">
                      <div class="card">
                 <div class="card-body"> 
-                              <table class="table" id="Contenido_empresa">
+                              <table class="table table-striped nowrap" id="Contenido_empresa">
                 <thead>
-                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                    <tr  >
                         <th>#</th>
                         <th>Empresa</th>
                         <th>Status</th>
@@ -341,7 +348,7 @@
                      
  </ul>
 
- <div style="width:100%;border-bottom: 1px dotted black;margin: 1%;"></div>
+ <div style="width:100%;border-bottom: 1px dotted black;margin: 2%;"></div>
   <ul class="list-unstyled components">
                      <li class="active">
                         <a href="#contenido_representantes" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -349,11 +356,12 @@
                             <span>contenido_representantes</span>
                         </a>
                         <div class="collapse list-unstyled" id="contenido_representantes">
+                             <div class="table_section padding_infor_info">
                      <div class="card">
                 <div class="card-body"> 
-                              <table class="table" id="Contenido_representantes">
+                              <table class="table table-striped nowrap" id="Contenido_representantes">
                 <thead>
-                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                    <tr  >
                         <th>#</th>
                         <th>Representante</th>
                         <th>Status</th>
@@ -373,7 +381,7 @@
                      
  </ul>
 
- <div style="width:100%;border-bottom: 1px dotted black;margin: 1%;"></div>
+ <div style="width:100%;border-bottom: 1px dotted black;margin: 2%;"></div>
   <ul class="list-unstyled components">
                      <li class="active">
                         <a href="#datos_embajadas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -381,11 +389,12 @@
                             <span>datos_embajadas</span>
                         </a>
                         <div class="collapse list-unstyled" id="datos_embajadas">
+                             <div class="table_section padding_infor_info">
                        <div class="card">
                 <div class="card-body"> 
-                              <table class="table" id="Datos_embajadas">
+                              <table class="table table-striped nowrap" id="Datos_embajadas">
                 <thead>
-                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                    <tr  >
                         <th>#</th>
                         <th>Empresas</th>
                     
@@ -405,7 +414,7 @@
                      
  </ul>
 
- <div style="width:100%;border-bottom: 1px dotted black;margin: 1%;"></div>
+ <div style="width:100%;border-bottom: 1px dotted black;margin: 2%;"></div>
   <ul class="list-unstyled components">
                      <li class="active">
                         <a href="#redes_sociales" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -413,11 +422,12 @@
                             <span>redes_sociales</span>
                         </a>
                         <div class="collapse list-unstyled" id="redes_sociales">
+                             <div class="table_section padding_infor_info">
                     <div class="card">
                 <div class="card-body"> 
-                              <table class="table" id="Redes_sociales">
+                              <table class="table table-striped nowrap" id="Redes_sociales">
                 <thead>
-                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                    <tr  >
                         <th>#</th>
                         <th>Red Social</th>
                        
@@ -435,7 +445,7 @@
                      
  </ul>
 
- <div style="width:100%;border-bottom: 1px dotted black;margin: 1%;"></div>
+ <div style="width:100%;border-bottom: 1px dotted black;margin: 2%;"></div>
   <ul class="list-unstyled components">
                      <li class="active">
                         <a href="#redes_sociales_delegados" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -443,11 +453,12 @@
                             <span>redes sociales_delegados</span>
                         </a>
                         <div class="collapse list-unstyled" id="redes_sociales_delegados">
+                             <div class="table_section padding_infor_info">
                       <div class="card">
                 <div class="card-body"> 
-                              <table class="table" id="Redes_SD">
+                              <table class="table table-striped nowrap" id="Redes_SD">
                 <thead>
-                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                    <tr  >
                         <th>#</th>
                         <th>Usuario</th>
                         <th>Red Social</th>
@@ -467,7 +478,7 @@
                      
  </ul>
 
- <div style="width:100%;border-bottom: 1px dotted black;margin: 1%;"></div>
+ <div style="width:100%;border-bottom: 1px dotted black;margin: 2%;"></div>
   <ul class="list-unstyled components">
                      <li class="active">
                         <a href="#Redes_sociales_empresas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -475,11 +486,12 @@
                             <span>Redes_sociales_empresas</span>
                         </a>
                         <div class="collapse list-unstyled" id="Redes_sociales_empresas">
+                             <div class="table_section padding_infor_info">
                    <div class="card">
                 <div class="card-body"> 
-                              <table class="table" id="Redes_SE">
+                              <table class="table table-striped nowrap" id="Redes_SE">
                 <thead>
-                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                    <tr  >
                         <th>#</th>
                         <th>Usuario</th>
                         <th>Red Social</th>
@@ -499,7 +511,7 @@
                      
  </ul>
 
- <div style="width:100%;border-bottom: 1px dotted black;margin: 1%;"></div>
+ <div style="width:100%;border-bottom: 1px dotted black;margin: 2%;"></div>
   <ul class="list-unstyled components">
                      <li class="active">
                         <a href="#Sectores_empresas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -507,11 +519,12 @@
                             <span>Sectores_empresas</span>
                         </a>
                         <div class="collapse list-unstyled" id="Sectores_empresas">
+                             <div class="table_section padding_infor_info">
                    <div class="card">
                 <div class="card-body"> 
-                              <table class="table" id="Sectores_empresass">
+                              <table class="table table-striped nowrap" id="Sectores_empresass">
                 <thead>
-                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                    <tr  >
                         <th>#</th>
                         <th>Empresa</th>
                         <th></th>
@@ -531,7 +544,7 @@
                      
  </ul>
 
- <div style="width:100%;border-bottom: 1px dotted black;margin: 1%;"></div>
+ <div style="width:100%;border-bottom: 1px dotted black;margin: 2%;"></div>
   <ul class="list-unstyled components">
                      <li class="active">
                         <a href="#Fases_de_sectores" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -539,12 +552,14 @@
                             <span>Fases_de_sectores</span>
                         </a>
                         <div class="collapse list-unstyled" id="Fases_de_sectores">
+                             <div class="table_section padding_infor_info">
                      <div class="card">
                 <div class="card-body"> 
-                              <table class="table" id="Sectores_fases">
+                              <table class="table table-striped nowrap" id="Sectores_fases">
                 <thead>
-                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                    <tr  >
                         <th>#</th>
+                        <th>Sector</th>
                         <th>Fase 1</th>
                         <th>Fase 2</th>
                         <th>Fase 3</th>
@@ -552,7 +567,7 @@
                         <th>Fase 5</th>
                         <th>Fase 6</th>
                         <th>Fase 7</th>
-                        <th>Nombre de Usuario</th>
+                        
                        
                       
                        
@@ -568,7 +583,7 @@
                      
  </ul>
 
- <div style="width:100%;border-bottom: 1px dotted black;margin: 1%;"></div>
+ <div style="width:100%;border-bottom: 1px dotted black;margin: 2%;"></div>
   <ul class="list-unstyled components">
                      <li class="active">
                         <a href="#Delegados_asociados_a_empresas" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -576,21 +591,16 @@
                             <span>Delegados_asociados_a_empresas</span>
                         </a>
                         <div class="collapse list-unstyled" id="Delegados_asociados_a_empresas">
+                             <div class="table_section padding_infor_info">
                     <div class="card">
                 <div class="card-body"> 
-                              <table class="table" id="Asociador_ED">
+                              <table class="table table-striped nowrap" id="Asociador_ED">
                 <thead>
-                    <tr style="background-color: #13579e;color: white;text-align: center;">
+                    <tr  >
                         <th>#</th>
-                        <th>Fase 1</th>
-                        <th>Fase 2</th>
-                        <th>Fase 3</th>
-                        <th>Fase 4</th>
-                        <th>Fase 5</th>
-                        <th>Fase 6</th>
-                        <th>Fase 7</th>
-                        <th>Nombre de Usuario</th>
-                       
+                        <th>Empresa</th>
+                        <th>Representante</th>
+                        <th>Fecha de creacion</th>                       
                       
                        
                         
@@ -617,7 +627,7 @@
        <script type="text/javascript" src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.bootstrap5.js"></script>
        <script type="text/javascript">
             
-new DataTable('#example', {
+new DataTable('#ActividDad', {
      ajax: "{{route('actividades')}}",
      columns:[
         {data:'id'},
@@ -1404,6 +1414,11 @@ new DataTable('#Sectores_empresass', {
         {data:'id'},
       
         {data:'enterprise_id'},
+
+      
+        {data:'delegate_id'},
+      
+        {data:'sector_id'},
         {data:'created_at'}
 
         ],
@@ -1455,11 +1470,15 @@ new DataTable('#Sectores_fases', {
      columns:[
         {data:'id'},
       
-        {data:'enterprise_id'},
+        {data:'sector_id'},
       
-        {data:'username'},
-      
-        {data:'site'}
+        {data:'fase1status'},
+        {data:'fase2status'},
+        {data:'fase3status'},
+        {data:'fase4status'},
+        {data:'fase5status'},
+        {data:'fase6status'},
+        {data:'fase7status'}
 
         ],
     responsive: true,
@@ -1504,16 +1523,16 @@ new DataTable('#Sectores_fases', {
 
           }
 });
-new DataTable('#Asociador_ED', {
+new DataTable('#Asociador_ED', { 
      ajax: "{{route('asociador_er')}}",
      columns:[
         {data:'id'},
       
         {data:'enterprise_id'},
       
-        {data:'username'},
+        {data:'delegate_id'},
       
-        {data:'site'}
+        {data:'created_at'}
 
         ],
     responsive: true,

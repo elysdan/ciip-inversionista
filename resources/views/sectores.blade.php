@@ -1,6 +1,10 @@
 @extends('layouts.panel')
 @section('content')
-
+                <link rel="stylesheet" type="text/css" href="    https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css
+    ">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.bootstrap5.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css">
   <style>
           .table td{vertical-align: inherit;"}
 
@@ -58,15 +62,14 @@
 @if($sectorEmpresas->first()->revision != null)
         <div class="table_section padding_infor_info">
 
-            <input type="text" class="form-control  w-50 m-auto"  style="text-align:center;border-top-right-radius: 2rem;border-bottom-right-radius: 2rem;border-top-left-radius: 2rem;border-bottom-left-radius: 2rem;"   id="busqueda_{{ $sectorEmpresas->first()->sector_valor }}" placeholder="Buscar Empresa, Rif o Identificador">
 
         <a href="{{ route('sectores_empresa_registro', $sectorId) }}">
-           <button class="btn btn-outline-primary mb-2">Añadir</button>   
+           <button class="btn btn-outline-primary mb-2">+</button>   
        </a>
 
 
 
-            <table class="table">
+            <table class="table" id="Tabla{{$sectorEmpresas->first()->sector_valor}}" style="text-align:center;vertical-align: middle;">
                 <thead>
                     <tr style="background-color: #13579e;color: white;text-align: center;">
                         <th>#</th>
@@ -103,7 +106,68 @@
 
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+   <script type="text/javascript" src="    https://code.jquery.com/jquery-3.7.1.js"></script>
+     <script type="text/javascript" src="    https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+      <script type="text/javascript" src="    https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+       <script type="text/javascript" src="    https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
+       <script type="text/javascript" src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.js"></script>
+       <script type="text/javascript" src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.bootstrap5.js"></script>
+
+
+  <script type="text/javascript">
+        /*
+        ,
+                render: function ( data, type, row ) {
+                    return data + ' <button class="btn btn-primary">Action</button>';
+                }
+                */
+      new DataTable('#Tabla{{$sectorEmpresas->first()->sector_valor}}',{ 
+    
+    responsive: true,
+    autowidth:false,
+    language: {
+
+            "decimal": "",
+
+            "emptyTable": "No hay información",
+
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+
+            "infoPostFix": "",
+
+            "thousands": ",",
+
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+
+            "loadingRecords": "Cargando...",
+
+            "processing": "Procesando...",
+
+            "search": "Buscar:",
+
+            "zeroRecords": "Sin resultados encontrados",
+
+            "paginate": {
+
+                "first": "Primero",
+
+                "last": "Ultimo",
+
+                "next": ">",
+
+                "previous": "<"
+
+            }
+
+          }
+});
+       </script>
+
+
 
 <script>
  $(document).ready(function()   

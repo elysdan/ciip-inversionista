@@ -371,12 +371,13 @@
     var campo11= document.getElementById("Ex");
     var campo12= document.getElementById("Ipol");
     var campo13= document.getElementById("Dii");
+    var campo14= document.getElementById("delegate_id");
     var submitBtn = document.getElementById('submitBtn');
 
     function validarCampos() {
      
       
-      var valido = campo1.checkValidity() && campo2.checkValidity() && campo3.checkValidity() && campo4.checkValidity() && campo5.checkValidity() && campo6.checkValidity() && campo7.checkValidity() && campo8.checkValidity() && campo9.checkValidity() && campo10.checkValidity() && campo11.checkValidity() ;
+      var valido = campo1.checkValidity() && campo2.checkValidity() && campo3.checkValidity() && campo4.checkValidity() && campo5.checkValidity() && campo6.checkValidity() && campo7.checkValidity() && campo8.checkValidity() && campo9.checkValidity() && campo10.checkValidity() && campo11.checkValidity() && campo14;
 
       submitBtn.disabled = !valido;
   }

@@ -7,7 +7,11 @@
 <html lang="en">
    <head>
       <!-- basic -->
-      
+                <link rel="stylesheet" type="text/css" href="    https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css
+    ">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.bootstrap5.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css">
         <style>
           .table td{vertical-align: inherit;"}
         </style>
@@ -54,7 +58,7 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
                               </div>
                               <div class="table_section padding_infor_info">
                                  <div class="table-responsive-sm">
-                                    <table class="table">
+                                    <table class="table table-striped" id="Delegadoss">
                                        <thead class="thead" >
                                           <tr style="background-color: #13579e;color: white;">
                                             <th  >#</th>
@@ -69,14 +73,17 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
               <th >Redes Sociales</th>
               @endif
                @if(session('usuario')->role >=3)
-               <th colspan="2">Reporte</th>
+               <th >Ficha del Representante</th>
+                <th >Ficha del Representante</th>
                @endif
                @if(session('usuario')->role >= 8 )
               <th>Status</th>
               @endif
               @if(session('usuario')->role >= 5 )
          
-              <th  colspan="2">Gestion Administrativa</th>
+              <th  >Modificacion</th>
+              <th  >Suspension</th>
+
               @endif
                                           </tr>
                                        </thead>
@@ -329,7 +336,67 @@ data-toggle="modal" data-target="#DelModal{{$delegado->id}}" data-whatever="@mdo
         </div>
       </div>
 
-  
+  <script type="text/javascript" src="    https://code.jquery.com/jquery-3.7.1.js"></script>
+     <script type="text/javascript" src="    https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+      <script type="text/javascript" src="    https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+       <script type="text/javascript" src="    https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
+       <script type="text/javascript" src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.js"></script>
+       <script type="text/javascript" src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.bootstrap5.js"></script>
+
+  <script type="text/javascript">
+        /*
+        ,
+                render: function ( data, type, row ) {
+                    return data + ' <button class="btn btn-primary">Action</button>';
+                }
+                */
+      new DataTable('#Delegadoss', { 
+   
+    responsive: true,
+    autowidth:false,
+    language: {
+
+            "decimal": "",
+
+            "emptyTable": "No hay información",
+
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+
+            "infoPostFix": "",
+
+            "thousands": ",",
+
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+
+            "loadingRecords": "Cargando...",
+
+            "processing": "Procesando...",
+
+            "search": "Buscar:",
+
+            "zeroRecords": "Sin resultados encontrados",
+
+            "paginate": {
+
+                "first": "Primero",
+
+                "last": "Ultimo",
+
+                "next": ">",
+
+                "previous": "<"
+
+            }
+
+          }
+});
+       </script>
+
+ 
     
 <script>
   var campo10 = document.getElementById('campo10'); //direccion

@@ -442,12 +442,12 @@ else
             if(session('usuario')->role >= 8)
         {
 
-            $usuarios=db::table('users')->OrderBy('role','desc')->OrderBy('id','asc')->paginate(5);
+            $usuarios=db::table('users')->OrderBy('role','desc')->OrderBy('id','asc')->get();
         }
     else
       {
 
-        $usuarios=db::table('users')->where('role', '!=', 8)->where('role', '!=', 9)->where('status', '!=', 0)->OrderBy('role','desc')->OrderBy('id','asc')->paginate(5);
+        $usuarios=db::table('users')->where('role', '!=', 8)->where('role', '!=', 9)->where('status', '!=', 0)->OrderBy('role','desc')->OrderBy('id','asc')->get();
            //dd(session('usuario')->role );
 }
         $uc=db::table('users')->count();
@@ -2747,12 +2747,12 @@ public function embajada_modificar($id)
         if(session('usuario')){
 
             $previa=DB::table('datos_empresas')
-            ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
-            ->join('pais as registro','datos_empresas.lregistro','=','registro.id')
-            ->join('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
-            ->join('datos_embajadas','datos_embajadas.enterprise_id','=','datos_empresas.id')
-            ->join('pais as embajada','datos_embajadas.pais','=','embajada.id')
-            ->join('inversionista_naturals as delegado','delegado.id','=','contenido_empresas.delegate_id')
+            ->leftjoin('pais as origen','datos_empresas.pais_origen','=','origen.id')
+            ->leftjoin('pais as registro','datos_empresas.lregistro','=','registro.id')
+            ->leftjoin('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
+            ->leftjoin('datos_embajadas','datos_embajadas.enterprise_id','=','datos_empresas.id')
+            ->leftjoin('pais as embajada','datos_embajadas.pais','=','embajada.id')
+            ->leftjoin('inversionista_naturals as delegado','delegado.id','=','contenido_empresas.delegate_id')
             ->where('datos_empresas.id',$id)
            
             ->select('datos_embajadas.id as dato_embajada',

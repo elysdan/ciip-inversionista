@@ -15,7 +15,10 @@
       <meta name="keywords" content="">
       <meta name="description" content="">
       <meta name="author" content="">
-      
+          <link rel="stylesheet" type="text/css" href="    https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css
+    ">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.bootstrap5.css">
         <style>
           .table td{vertical-align: inherit;"}
         </style>
@@ -129,7 +132,7 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
       @if($uc>0)
                            <div class="white_shd full margin_bottom_30">
 
-{{$usuarios->links('vendor.pagination.bootstrap-4')}}
+
                               <div class="full graph_head">
                                  <div class="heading1 margin_0">
                                     <h2>Usuarios del Sistema</h2>
@@ -137,7 +140,7 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
                               </div>
                               <div class="table_section padding_infor_info">
                                  <div class="table-responsive-sm">
-                                    <table class="table">
+                                    <table class="table" style="text-align:center;vertical-align:middle" id="Usuarioss">
                                        <thead class="thead" >
                                           <tr style="background-color: #13579e;color: white;">
                                              <th>#</th>
@@ -152,7 +155,8 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
                                               <th>Status</th>
                                               @endif
                                                @if(session('usuario')->role >= 5 )
-                                             <th colspan="2">Gestion de administradores</th>
+                                             <th >Modificar</th>
+                                              <th >Eliminar</th>
                                             @endif
                                           </tr>
                                        </thead>
@@ -181,7 +185,7 @@ data-toggle="modal" data-target="#RegModal" data-whatever="@mdo">
               @endif</td>
               @endif
               
-              <td style="vertical-align: top;align-items: center;
+              <td style="vertical-align: middle;align-items: center;
   justify-content: center;
   align-content: center;"> <img src="{{$usuario->file}}" style="border-radius: 50%;
   align-items: center;
@@ -527,6 +531,7 @@ class="btn btn-outline-danger mt-3 mb-3 p-0"
             
                                        </tbody>
                                     </table>
+                                
                                  </div>
                               </div>
                            </div>
@@ -535,7 +540,66 @@ class="btn btn-outline-danger mt-3 mb-3 p-0"
       @endif
 
 
+   
+    <script type="text/javascript" src="    https://code.jquery.com/jquery-3.7.1.js"></script>
+     <script type="text/javascript" src="    https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+      <script type="text/javascript" src="    https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
+       <script type="text/javascript" src="    https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.js"></script>
+       <script type="text/javascript" src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.js"></script>
+       <script type="text/javascript" src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.bootstrap5.js"></script>
 
+       <script type="text/javascript">
+        /*
+        ,
+                render: function ( data, type, row ) {
+                    return data + ' <button class="btn btn-primary">Action</button>';
+                }
+                */
+      new DataTable('#Usuarioss', { 
+   
+    responsive: true,
+    autowidth:false,
+    language: {
+
+            "decimal": "",
+
+            "emptyTable": "No hay información",
+
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+
+            "infoPostFix": "",
+
+            "thousands": ",",
+
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+
+            "loadingRecords": "Cargando...",
+
+            "processing": "Procesando...",
+
+            "search": "Buscar:",
+
+            "zeroRecords": "Sin resultados encontrados",
+
+            "paginate": {
+
+                "first": "Primero",
+
+                "last": "Ultimo",
+
+                "next": ">",
+
+                "previous": "<"
+
+            }
+
+          }
+});
+       </script>
 <script>
   function validarCampos() {
       var campo1 = document.getElementById('campo1');
