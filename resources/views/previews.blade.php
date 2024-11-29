@@ -377,7 +377,7 @@
     function validarCampos() {
      
       
-      var valido = campo1.checkValidity() && campo2.checkValidity() && campo3.checkValidity() && campo4.checkValidity() && campo5.checkValidity() && campo6.checkValidity() && campo7.checkValidity() && campo8.checkValidity() && campo9.checkValidity() && campo10.checkValidity() && campo11.checkValidity() && campo14;
+      var valido = campo1.checkValidity() && campo2.checkValidity() && campo3.checkValidity() && campo4.checkValidity() && campo5.checkValidity() && campo6.checkValidity() && campo7.checkValidity() && campo8.checkValidity() && campo9.checkValidity() && campo10.checkValidity() && campo11.checkValidity() && campo13;
 
       submitBtn.disabled = !valido;
   }
