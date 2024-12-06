@@ -917,7 +917,7 @@ a[data-toggle="collapse"] {
     transition: ease all 0.3s;
     position: relative;
     padding: 60px 25px 25px 305px;
-    background: #f8f8f8;
+    
 }
 
 .page_title {
@@ -3257,7 +3257,7 @@ table.projects tr td:first-child {
 -------------------------------------------------------------------*/
 
 .login {
-    background: #eee;
+    
 }
 
 .full_height {
@@ -3265,8 +3265,8 @@ table.projects tr td:first-child {
 }
 
 .login_section {
-    max-width: 640px;
-    background: #fff;
+    max-width: 60%;
+    background: white;
     min-height: 540px;
     width: 100%;
     box-shadow: 0px 0 10px -8px #000;
@@ -3274,6 +3274,7 @@ table.projects tr td:first-child {
     padding: 0;
     border-radius: 10px;
     overflow: hidden;
+
 }
 
 .logo_login {

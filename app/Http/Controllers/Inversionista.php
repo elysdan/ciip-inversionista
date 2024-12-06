@@ -53,10 +53,10 @@ class Inversionista extends Controller
         $this->logs(session('usuario')->id,'inicio de sesion','Login'); 
         if(session('usuario')->role==9 || session('usuario')->role > 3)
         {
-            return view('dashboard');
+            return view('dashboard')->with('status','Bienvenido');
         }
         else
-        return view('search');
+        return view('search')->with('status','Bienvenido');
     }
     else
     {
@@ -106,7 +106,7 @@ class Inversionista extends Controller
             ->join('nacionalidad','nacionalidad.id','=','inversionista_naturals.nacionalidad')
             ->join('contenido_representantes','contenido_representantes.delegate_id','=','inversionista_naturals.id')
            ->join('users as elaborado','elaborado.id','=','contenido_representantes.elaborado')
-           ->where('contenido_representantes.status', '!=', 0)
+           ->where('contenido_representantes.status', '=', 4)
            ->first()!=null)
 
 {
@@ -119,7 +119,7 @@ class Inversionista extends Controller
            ->leftjoin('users as revisado','revisado.id','=','contenido_representantes.revisado')
            ->leftjoin('users as certificado','certificado.id','=','contenido_representantes.certificado')
            ->leftjoin('users as aprobado','aprobado.id','=','contenido_representantes.aprobado')
-             ->where('contenido_representantes.status', '!=', 0)
+             ->where('contenido_representantes.status', '=', 4)
              ->select(
             'inversionista_naturals.*',
             'nacionalidad.GENTILICIO_NAC as GENTILICIO_NAC',
@@ -214,7 +214,7 @@ $twitter=db::table('inversionista_naturals')
 }       
 elseif (db::table('inversionista_naturals')->where('doc_identidad',$request->busqueda)   ->join('nacionalidad','nacionalidad.id','=','inversionista_naturals.nacionalidad')
             ->join('contenido_representantes','contenido_representantes.delegate_id','=','inversionista_naturals.id')
-           ->join('users as elaborado','elaborado.id','=','contenido_representantes.elaborado')->where('contenido_representantes.status', '!=', 0)
+           ->join('users as elaborado','elaborado.id','=','contenido_representantes.elaborado')->where('contenido_representantes.status', '=', 4)
            
              
            ->first()!=null) {
@@ -226,7 +226,7 @@ elseif (db::table('inversionista_naturals')->where('doc_identidad',$request->bus
            ->leftjoin('users as revisado','revisado.id','=','contenido_representantes.revisado')
            ->leftjoin('users as certificado','certificado.id','=','contenido_representantes.certificado')
            ->leftjoin('users as aprobado','aprobado.id','=','contenido_representantes.aprobado')
-             ->where('contenido_representantes.status', '!=', 0)
+             ->where('contenido_representantes.status', '=', 4)
              ->select(
             'inversionista_naturals.*',
             'nacionalidad.GENTILICIO_NAC as GENTILICIO_NAC',
@@ -322,7 +322,7 @@ elseif(db::table('datos_empresas')->where('datos_empresas.rif',$request->busqued
             ->join('pais as registro','datos_empresas.lregistro','=','registro.id')
             ->join('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')
             ->join('users as elaborado','elaborado.id','=','contenido_empresas.elaborado')
-            ->where('contenido_empresas.status', '!=', 0)
+            ->where('contenido_empresas.status', '=', 4)
         
 ->first()!=null)
 {
@@ -336,7 +336,7 @@ elseif(db::table('datos_empresas')->where('datos_empresas.rif',$request->busqued
             ->leftjoin('users as certificado','certificado.id','=','contenido_empresas.certificado')
             ->leftjoin('users as aprobado','aprobado.id','=','contenido_empresas.aprobado')
             ->leftjoin('inversionista_naturals as delegado','delegado.id','=','contenido_empresas.delegate_id')
-            ->where('contenido_empresas.status', '!=', 0)
+            ->where('contenido_empresas.status', '=', 4)
             ->select(
             'datos_empresas.*',
             'contenido_empresas.*',
@@ -3344,7 +3344,7 @@ public function sectores()
             ->count()
            ;
           // dd($empresas);
- $valor=DB::table('datos_empresas')->count();
+ $valor=DB::table('datos_empresas')->join('contenido_empresas','contenido_empresas.enterprise_id','=','datos_empresas.id')->count();
            
 
            
@@ -3644,14 +3644,14 @@ public function asociador_er()
 }
 
 
-    public function stadistics()
+    public function logss()
     {   
         //$this->logs(session('usuario')->id,'Carga de pagina','stadistics');
         if(session('usuario') && session('usuario')->role>8){
            
            
           
-            return view('stadistics');
+            return view('logss');
         }
         else
            // $this->logs(session('usuario')->id,'Redireccionamiento','stadistics');

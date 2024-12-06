@@ -1,8 +1,9 @@
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" data-bs-theme="auto">
    <head>
+      <script src="../assets/js/color-modes.js"></script>
       <!-- basic -->
       <meta charset="utf-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,7 +20,7 @@
       <!-- bootstrap css -->
       <link rel="stylesheet" href="css/bootstrap.min.css" />
       <!-- site css -->
-      <link rel="stylesheet" href="style.css" />
+
       <!-- responsive css -->
       <link rel="stylesheet" href="css/responsive.css" />
       <!-- color css -->
@@ -32,6 +33,11 @@
       <link rel="stylesheet" href="css/custom.css" />
       <!-- calendar file css -->
       <link rel="stylesheet" href="js/semantic.min.css" />
+      <link rel="stylesheet" href="style.css" />
+         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+
+
+
       <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -42,15 +48,50 @@
   background-size: cover;">
       <div class="full_container">
          <div class="container">
+
             <div class="center verticle_center full_height">
-               <div class="login_section">
+
+               <div class="login_section" >
+
                   <div class="logo_login">
+
                      <div class="center">
                         <img width="210" src="asset_original/logo-blanco-01.png" alt="#" />
                      </div>
                   </div>
                   <div class="login_form ">
-                     <form method="POST" action="{{route('login')}}" id="miFormulario" > 
+                        @if (session('status'))
+
+
+
+    <div id="alerta" class="alert alert-primary  fade show"  role="alert">
+        {{ session('status') }}
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%" aria-valuenow="0"   
+ aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+   
+
+</div>
+
+<script>
+    window.onload = function() {
+        var alerta = document.getElementById('alerta');
+        var progressBar = document.querySelector('.progress-bar');
+        var width = 0;
+
+        var interval = setInterval(function() {
+            width = width + 15;
+            progressBar.style.width = width + '%';
+            if (width >= 150) {
+                clearInterval(interval);
+                alerta.remove();
+            }
+        }, 400);
+    };
+</script>
+@endif 
+                     <form method="POST" action="{{route('login')}}" id="miFormulario" data-bs-theme="dark"> 
                       @csrf
                         <fieldset>
                            <div class="field">
@@ -58,7 +99,7 @@
                               <input name="correo" id="campo1" placeholder="Correo Electronico" pattern="[A-Za-z0-9@.áÁéÉíÍóÓúÚ]{4,256}" maxlength="256" required/>
                            </div>
                            <div class="field">
-                              <label class="label_field">Contrasenña</label>
+                              <label class="label_field">Contraseña</label>
                               <input type="password" name="contrasena"  id="campo2" placeholder="Contraseña" pattern="[A-Za-z0-9@.*_'-'+áÁéÉíÍóÓúÚ]{8,100}" maxlength="100" required />
                            </div>
                            <div class="field">
@@ -71,10 +112,17 @@
                            </div>
                         </fieldset>
                      </form>
+                   
                   </div>
+
+
                </div>
+
+
             </div>
+
          </div>
+        
       </div>
       <!-- jQuery -->
       <script src="../assets/js/validador_login.js"></script>
@@ -94,5 +142,3 @@
       <script src="js/custom.js"></script>
    </body>
 </html>
-
-

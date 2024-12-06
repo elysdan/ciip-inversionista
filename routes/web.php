@@ -111,7 +111,7 @@ Route::put('/update_web_inner_{id}', [inversionista::class, 'update_web_inner'])
 
 Route::put('/delete_web_register_{id}', [inversionista::class, 'delete_web_register'])->name('delete_web_register');
 
-Route::get('/stadistics', [inversionista::class, 'stadistics'])->name('stadistics');
+Route::get('/logss', [inversionista::class, 'logss'])->name('logss');
 
 Route::get('/previews_delegates_{id}', [inversionista::class, 'previews_delegates'])->name('previews_delegates');
 

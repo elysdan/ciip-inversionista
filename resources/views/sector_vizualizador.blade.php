@@ -106,7 +106,7 @@
                                                     </th>
                                                 
                                                     <td  style="text-align: left;min-width: 50%;max-width: 50%;">
-                                                            {{$valor->cii}}                             
+                                                            {{number_format($valor->cii)}} $                            
                                                     </td>
                                                     
                                             </tr>
