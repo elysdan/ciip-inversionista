@@ -26,10 +26,10 @@
                         <div class="col-md-12">
                            <div class="white_shd full margin_bottom_30">
                               
-                              <div class="full inbox_inner_section">
+                              <div class="full inbox_inner_section" >
                                  <div class="row">
                                     <div class="col-md-12">
-                                       <div class="full padding_infor_info">
+                                       <div class="full padding_infor_info" >
                                           <div class="mail-box">
                                            
                                              <aside class="lg-side">
@@ -38,7 +38,7 @@
                                                   
                                                    <form action="{{route('result')}}" class="pull-left position search_inbox w-100">
                                                       @csrf
-                                                      <div class="input-append w-100">
+                                                      <div class="input-append w-100" >
 
                                                          <input type="text" class="sr-input  " name="busqueda" placeholder="Busque por Cedula, Rif o Correo" style="width:90%;border-top-left-radius: 2rem;border-bottom-left-radius: 2rem;">
 
