@@ -56,7 +56,7 @@ class Inversionista extends Controller
             return view('dashboard')->with('status','Bienvenido');
         }
         else
-        return view('search')->with('status','Bienvenido');
+        return view('busqueda.search')->with('status','Bienvenido');
     }
     else
     {
@@ -83,14 +83,14 @@ class Inversionista extends Controller
         }
         else
            // $this->logs(session('usuario')->id,'Redireccionamiento','dashboard'); 
-        return view('search');
+        return view('busqueda.search');
     }
 
     public function search()
     {
         if(session('usuario')){
              //$this->logs(session('usuario')->id,'Carga de pagina','search'); 
-            return view('search');
+            return view('busqueda.search');
         }
         else
            // $this->logs(session('usuario')->id,'Redireccionamiento','search'); 
@@ -210,7 +210,7 @@ $twitter=db::table('inversionista_naturals')
 
         //dd($resultado);
             $this->logs(session('usuario')->id,'Busqueda Empresa Rif','results'); 
-        return view('elaborador',['versiones'=> $versiones,'previa'=> $resultado,'instagram' =>$instagram,'twitter' =>$twitter,'facebook' =>$facebook ,'linkedin' =>$linkedin,'correo' =>$correo,'telefono' =>$telefono]);
+        return view('empresas.documentos.elaborador',['versiones'=> $versiones,'previa'=> $resultado,'instagram' =>$instagram,'twitter' =>$twitter,'facebook' =>$facebook ,'linkedin' =>$linkedin,'correo' =>$correo,'telefono' =>$telefono]);
 }       
 elseif (db::table('inversionista_naturals')->where('doc_identidad',$request->busqueda)   ->join('nacionalidad','nacionalidad.id','=','inversionista_naturals.nacionalidad')
             ->join('contenido_representantes','contenido_representantes.delegate_id','=','inversionista_naturals.id')
@@ -315,7 +315,7 @@ $twitter=db::table('inversionista_naturals')
 
         //dd($resultado);
             $this->logs(session('usuario')->id,'Busqueda Delegado Cedula','results'); 
-        return view('elaborador_delegados',['versiones'=> $versiones,'previa'=> $resultado,'instagram' =>$instagram,'twitter' =>$twitter,'facebook' =>$facebook ,'linkedin' =>$linkedin,'correo' =>$correo,'telefono' =>$telefono]);
+        return view('delegados.documentos.elaborador_delegados',['versiones'=> $versiones,'previa'=> $resultado,'instagram' =>$instagram,'twitter' =>$twitter,'facebook' =>$facebook ,'linkedin' =>$linkedin,'correo' =>$correo,'telefono' =>$telefono]);
 }
 elseif(db::table('datos_empresas')->where('datos_empresas.rif',$request->busqueda)
         ->join('pais as origen','datos_empresas.pais_origen','=','origen.id')
@@ -428,11 +428,11 @@ elseif(db::table('datos_empresas')->where('datos_empresas.rif',$request->busqued
 
 
             $this->logs(session('usuario')->id,'Busqueda Delegado Rif','results'); 
-            return view('elaborador' ,['versiones' => $versiones,'instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
+            return view('empresas.documentos.elaborador' ,['versiones' => $versiones,'instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
 }
 else
     $this->logs(session('usuario')->id,'Fallo Busqueda','results'); 
-    return back()->with('status','Dato no encontrado');
+    return back()->with('status','Dato no encontrado, Revise los datos e intente de nuevo');
     }
 
     public function users()
@@ -454,7 +454,7 @@ else
         $nacionalidad=db::table('nacionalidad')->get();
 
             
-            return view('users',['usuarios' => $usuarios,'nacionalidad' => $nacionalidad,'uc' => $uc]);
+            return view('usuarios.users',['usuarios' => $usuarios,'nacionalidad' => $nacionalidad,'uc' => $uc]);
        }
         else
             // $this->logs(session('usuario')->id,'Redireccionamiento','users'); 
@@ -477,7 +477,7 @@ else
     {   //$this->logs(session('usuario')->id,'Carga de pagina','edit_users'); 
         $usuario = user::findorfail($id);
         //dd($usuario);
-            return view('edit_users',['usuario' => $usuario]);
+            return view('usuarios.edit_users',['usuario' => $usuario]);
         
     }
 
@@ -536,7 +536,7 @@ else
 
   
         
-            return redirect()->to('users')->with('status','Usuario Modificado');
+            return redirect()->to('usuarios.users')->with('status','Usuario Modificado');
         
     }
 
@@ -676,7 +676,7 @@ else
        $estados_civiles=db::table('estados_civiles')->get();
        $generos=db::table('generos')->get();
         //dd($delegados);
-            return view('delegates',['delegados' => $delegados,'nacionalidad' => $nacionalidad,'generador' => $generador,'estados_civiles' => $estados_civiles,'generos' => $generos,'dc' => $dc]);
+            return view('delegados.delegates',['delegados' => $delegados,'nacionalidad' => $nacionalidad,'generador' => $generador,'estados_civiles' => $estados_civiles,'generos' => $generos,'dc' => $dc]);
         }
         else
            // $this->logs(session('usuario')->id,'Redireccionamiento','delegates'); 
@@ -736,7 +736,7 @@ $registry->edad = $edad;
        $generos=db::table('generos')->get();
         
         //dd($delegado);
-            return view('edit_delegates',['delegado' => $delegado,'nacionalidad' => $nacionalidad,'estados_civiles'=>$estados_civiles,'generos'=>$generos]);
+            return view('delegados.edit_delegates',['delegado' => $delegado,'nacionalidad' => $nacionalidad,'estados_civiles'=>$estados_civiles,'generos'=>$generos]);
         
     }
 
@@ -886,7 +886,7 @@ $edad = $fechaNacimientoCarbon->age;
         $sitios=db::table('rrss')->get();
         
       //  dd($sitios);
-            return view('add_socialweb',['delegado' => $delegado,'redes' => $redes,'sitios' => $sitios]);
+            return view('delegados.rrss.add_socialweb',['delegado' => $delegado,'redes' => $redes,'sitios' => $sitios]);
         
     }
     public function web_register(request $request)
@@ -914,7 +914,7 @@ $edad = $fechaNacimientoCarbon->age;
         $delegado = redessocialesdelegado::findorfail($id);
         //dd($delegado);
          $sitios=db::table('rrss')->get();
-            return view('edit_web',['delegado' => $delegado,'sitios' =>$sitios]);
+            return view('delegados.rrss.edit_web',['delegado' => $delegado,'sitios' =>$sitios]);
         
     }
 
@@ -962,7 +962,7 @@ $edad = $fechaNacimientoCarbon->age;
     {
         if(session('usuario')){
             //$this->logs(session('usuario')->id,'Carga de pagina','configurations'); 
-            return view('configurations');
+            return view('configuraciones.configurations');
         }
         else
             // $this->logs(session('usuario')->id,'Redireccionamiento','configurations'); 
@@ -1039,7 +1039,7 @@ $edad = $fechaNacimientoCarbon->age;
             
             $pais=db::table('pais')->OrderBy('paisnombre')->get();
             //dd($generador);
-            return view('enterprises',['empresas'=>$empresas,'pais'=>$pais,'generador'=>$generador,'dc' => $dc]);
+            return view('empresas.enterprises',['empresas'=>$empresas,'pais'=>$pais,'generador'=>$generador,'dc' => $dc]);
         }
         else
            // $this->logs(session('usuario')->id,'Redireccionamiento','enterprises'); 
@@ -1093,7 +1093,7 @@ $edad = $fechaNacimientoCarbon->age;
         $pais=db::table('pais')->OrderBy('paisnombre')->get();
         
         //dd($red);
-            return view('edit_enterprises',['empresa' => $empresa],['pais' => $pais]);
+            return view('empresas.edit_enterprises',['empresa' => $empresa],['pais' => $pais]);
         
     }
 
@@ -1227,7 +1227,7 @@ elseif($empresas->status==1)
         $empresa = asociadorxempresasxrepresentante::findorfail($id);
         //dd($delegado);
           $delegados=db::table('inversionista_naturals')->get();
-            return view('asociador_modificar',['delegados' => $delegados,'empresa' =>$empresa]);
+            return view('empresas.asociador.asociador_modificar',['delegados' => $delegados,'empresa' =>$empresa]);
         
     }
 
@@ -1271,7 +1271,7 @@ public function asociador($id)
          $delegados=db::table('inversionista_naturals')->get();
         //dd($red);
     //dd($delegados);
-            return view('asociador',['representantes' => $representantes,'delegados' => $delegados,'empresa' => $empresa]);
+            return view('empresas.asociador.asociador',['representantes' => $representantes,'delegados' => $delegados,'empresa' => $empresa]);
         
     }
 
@@ -1317,7 +1317,7 @@ public function add_web($id)
     )->where('enterprise_id',$id)->get();
          $sitios=db::table('rrss')->get();
         //dd($red);
-            return view('add_social_enterprises',['empresa' => $empresa,'redes' => $redes,'sitios' => $sitios]);
+            return view('empresas.rrss.add_social_enterprises',['empresa' => $empresa,'redes' => $redes,'sitios' => $sitios]);
         
     }
 
@@ -1348,7 +1348,7 @@ public function add_web($id)
         //dd($delegado);
           $sitios=db::table('rrss')->get();
 
-            return view('edit_web_enterprise',['delegado' => $delegado,'sitios' =>$sitios]);
+            return view('empresas.rrss.edit_web_enterprise',['delegado' => $delegado,'sitios' =>$sitios]);
         
     }
 
@@ -1492,7 +1492,7 @@ public function add_web($id)
 
 
 
-            return view('previews' ,['instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo,'delegados' => $delegados,'conteo'=>$conteo]);
+            return view('empresas.documentos.previews' ,['instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo,'delegados' => $delegados,'conteo'=>$conteo]);
    
         }
         else
@@ -1602,7 +1602,7 @@ public function add_web($id)
             }
 
   
-     return view('prueba_pdf' ,['instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
+     return view('empresas.documentos.prueba_pdf' ,['instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
     }
 
 
@@ -1682,7 +1682,7 @@ public function previews_delegates($id)
 
 
 
-            return view('previews_delegates' ,['previa' => $previa,'instagram' => $instagram,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
+            return view('delegados.documentos.previews_delegates' ,['previa' => $previa,'instagram' => $instagram,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
    
         }
         else
@@ -1791,7 +1791,7 @@ public function previews_delegates($id)
 
 
 
-            return view('prueba_delegates_pdf' ,['instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
+            return view('delegados.documentos.prueba_delegates_pdf' ,['instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
    
         }
         else
@@ -2054,7 +2054,7 @@ else
 
 
 
-            return view('elaborador' ,['versiones' => $versiones,'instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
+            return view('empresas.documentos.elaborador' ,['versiones' => $versiones,'instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
    
         }
         else
@@ -2174,7 +2174,7 @@ else
 
 
 
-            return view('elaborador_delegados' ,['versiones' => $versiones,'instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
+            return view('delegados.documentos.elaborador_delegados' ,['versiones' => $versiones,'instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
    
         }
         else
@@ -2208,13 +2208,13 @@ public function suspender_pdf_delegados($id){
      {
         $previa->update(['status' => '0']);
         $this->logs(session('usuario')->id,'Eliminacion','suspender_pdf_delegados');
-        return redirect()->route('enterprises')->with('status','Documento Eliminado');
+        return redirect()->route('delegates')->with('status','Documento Eliminado');
 }
 elseif($previa->status == 0)
 {
     $previa->update(['status' => '1']);
      $this->logs(session('usuario')->id,'Restauracion','suspender_pdf_delegados');
-        return redirect()->route('enterprises')->with('status','Documento Restaurando');
+        return redirect()->route('delegates')->with('status','Documento Restaurando');
 }
 }
 
@@ -2330,7 +2330,7 @@ else
 
 
 
-            return view('modificar_elaborador_delegados' ,['versiones' => $versiones,'instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
+            return view('delegados.documentos.modificar_elaborador_delegados' ,['versiones' => $versiones,'instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
    
         }
         else
@@ -2444,7 +2444,7 @@ else
 
 
 
-            return view('modificar_elaborador_empresas' ,['versiones' => $versiones,'instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
+            return view('empresas.documentos.modificar_elaborador_empresas' ,['versiones' => $versiones,'instagram' => $instagram,'previa' => $previa,'facebook' => $facebook,'twitter' => $twitter,'linkedin' => $linkedin,'telefono' => $telefono,'correo' => $correo]);
    
         }
         else
@@ -2733,7 +2733,7 @@ public function embajada_modificar($id)
 
 
 
-            return view('embajada_modificar' ,['previa' => $previa,'paises'=> $paises,'versiones'=>$versiones]);
+            return view('empresas.embajada.embajada_modificar' ,['previa' => $previa,'paises'=> $paises,'versiones'=>$versiones]);
    
         }
         else
@@ -2785,7 +2785,7 @@ public function embajada_modificar($id)
 
 
 
-            return view('embajada' ,['previa' => $previa,'paises'=> $paises,'versiones'=>$versiones]);
+            return view('empresas.embajada.embajada' ,['previa' => $previa,'paises'=> $paises,'versiones'=>$versiones]);
    
         }
         else
@@ -2834,7 +2834,7 @@ public function embajada_modificar($id)
 
 
 
-            return view('embajada_print' ,['previa' => $previa,'paises'=> $paises]);
+            return view('empresas.embajada.embajada_print' ,['previa' => $previa,'paises'=> $paises]);
    
         }
         else
@@ -2911,7 +2911,7 @@ public function embajada_eliminador($id){
 
 
 
-            return view('embajada_register' ,['previa' => $previa,'paises'=> $paises]);
+            return view('empresas.embajada.embajada_register' ,['previa' => $previa,'paises'=> $paises]);
    
         }
         else
@@ -2996,7 +2996,7 @@ public function fases($id, $revision){
 //dd($valor);
     
  // dd($versiones);
-   return view('fases',['valor' => $valor,'fase'=>$fase,'versiones'=>$versiones]);
+   return view('sectores.fases',['valor' => $valor,'fase'=>$fase,'versiones'=>$versiones]);
 }
 
 public function fases_registro(request $request , $id)
@@ -3225,7 +3225,7 @@ $empresas=sector_empresa::findorfail($id);
 //dd($valor);
   
  // dd($versiones);
-   return view('sector_modificar',['valor' => $valor]);
+   return view('sectores.sector_modificar',['valor' => $valor]);
 }
 
 public function sector_vizualizador($id, $revision){
@@ -3267,7 +3267,7 @@ public function sector_vizualizador($id, $revision){
        
                 ->select('sector_empresas.id','sector_empresas.updated_at','datos_empresas.rif as rif','sector_empresas.id as evaluador')->where('datos_empresas.rif',$id)->where('sector_id',$revision)->OrderBy('sector_empresas.created_at','desc')->get();
  // dd($versiones);
-   return view('sector_vizualizador',['valor' => $valor,'versiones'=>$versiones]);
+   return view('sectores.sector_vizualizador',['valor' => $valor,'versiones'=>$versiones]);
 }
 
 public function sector_imprenta($id){
@@ -3306,7 +3306,7 @@ public function sector_imprenta($id){
 //dd($valor);
   
  // dd($versiones);
-   return view('sector_imprenta',['valor' => $valor]);
+   return view('sectores.sector_imprenta',['valor' => $valor]);
 }
 public function sectores()
     {
@@ -3351,7 +3351,7 @@ public function sectores()
             
             $pais=db::table('pais')->OrderBy('paisnombre')->get();
             //dd($generador);
-            return view('sectores',['empresas'=>$empresas,'pais'=>$pais,'generador'=>$generador,'dc' => $dc,'sectores' => $sectores,'valor' => $valor]);
+            return view('sectores.sectores',['empresas'=>$empresas,'pais'=>$pais,'generador'=>$generador,'dc' => $dc,'sectores' => $sectores,'valor' => $valor]);
         }
         else
             // $this->logs(session('usuario')->id,'Redireccionamiento','sectores');
@@ -3397,7 +3397,7 @@ public function sectores()
 
             
            
-            return view('sectores_empresa_registro',['empresas'=>$empresas,'sectores' => $sectores]);
+            return view('sectores.sectores_empresa_registro',['empresas'=>$empresas,'sectores' => $sectores]);
         }
         else
             // $this->logs(session('usuario')->id,'Redireccionamiento','sectores_empresa_registro');
@@ -3639,7 +3639,7 @@ public function asociador_er()
 
    
 
-    return datatables()->of( $asociador_empresas_representantes)->toJson() ; 
+    return datatables()->of($asociador_empresas_representantes)->toJson() ; 
     
 }
 
@@ -3651,7 +3651,7 @@ public function asociador_er()
            
            
           
-            return view('logss');
+            return view('actividades.logss');
         }
         else
            // $this->logs(session('usuario')->id,'Redireccionamiento','stadistics');
@@ -3674,7 +3674,7 @@ public function asociador_er()
     {
         //$this->logs(session('usuario')->id,'Carga de pagina','userpanel');
         if(session('usuario')){
-            return view('Userpanel');
+            return view('panel_usuario.Userpanel');
         }
         else
            // $this->logs(session('usuario')->id,'Redireccionamiento','userpanel');

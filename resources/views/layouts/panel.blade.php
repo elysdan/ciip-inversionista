@@ -177,7 +177,7 @@ position: absolute;
                                  <li>
                                     <a class="dropdown-toggle " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img class="img-responsive rounded-circle" src="{{session('usuario')->file}}" style="aspect-ratio: 1"  alt="#" /><span class="name_user">{{session('usuario')->name}}</span></a>
                                     <div class="dropdown-menu ">
-                                       <a class="dropdown-item" href="{{route('configurations')}}">Configuracion</a>
+                                       <a class="dropdown-item" href="{{route('configurations')}}" hidden>Configuracion</a>
                                        <a class="dropdown-item" href="{{route('logout')}}"><span>Cerrar Sesion</span> <i class="fa fa-sign-out"></i></a>
                                     </div>
                                  </li>
