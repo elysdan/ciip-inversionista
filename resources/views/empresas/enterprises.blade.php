@@ -128,7 +128,8 @@ align-content: center;" >
               </a>
 
             </td>
-            @if($empresa->visualizar > 0)
+           
+            @if($empresa->visualizar > 0 && $empresa->identificador == 1)
 
               <td><a href="{{route('embajada_register',$empresa->id)}}" >
                 
@@ -139,10 +140,11 @@ align-content: center;" >
 
               <td>
                 
-                  <button class="btn btn-secondary">Generar</button>
+                  <button class="btn btn-secondary" >Generar</button>
               </td>
                @endif
-  @if($empresa->visualizare > 0)
+              
+  @if($empresa->visualizare > 0 && $empresa->identificador == 1)
               <td>
 
                 <a href="{{route('embajada',$empresa->id)}}" >

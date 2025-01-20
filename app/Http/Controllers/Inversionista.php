@@ -3426,7 +3426,7 @@ public function sectores()
     public function results()
     {   //$this->logs(session('usuario')->id,'Carga de pagina','results');
         if(session('usuario')){
-            return view('results');
+            return view('busqueda.results');
         }
         else
            // $this->logs(session('usuario')->id,'Redireccionamiento','results');

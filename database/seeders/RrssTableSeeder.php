@@ -22,22 +22,22 @@ class RrssTableSeeder extends Seeder
             0 => 
             array (
                 'id' => 1,
-                'red' => 'twitter',
+                'red' => 'Twitter / X',
             ),
             1 => 
             array (
                 'id' => 2,
-                'red' => 'instagram',
+                'red' => 'Instagram',
             ),
             2 => 
             array (
                 'id' => 3,
-                'red' => 'facebook',
+                'red' => 'Facebook',
             ),
             3 => 
             array (
                 'id' => 4,
-                'red' => 'linkedin',
+                'red' => 'Linkedin',
             ),
         ));
         

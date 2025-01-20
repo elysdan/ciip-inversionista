@@ -77,7 +77,7 @@ Reunion Exploratoria
                                                      <td  class="col-md-2" style="text-align: center;" id="paiis_id">
 @if($fase)
 @if($fase->fase1i)
-                                                    {{$fase->fase1i}}
+                                                    {{date('d-m-Y', strtotime($fase->fase1i))}}
                                                      @else
                                                       <button type="submit" name="fase1i" value="{{today()->format('d-m-y')}}" class="btn btn-outline-success">Iniciar en fecha del: {{today()->format('d-m-y')}}  </button>
                                                      @endif @endif
@@ -86,7 +86,7 @@ Reunion Exploratoria
                                                     </td>
                                                       <td class="col-md-2"  style="text-align: center;" id="paiis_id">
                                                        @if($fase) @if($fase->fase1f)
-                                                            {{$fase->fase1f}}
+                                                            {{date('d-m-Y', strtotime($fase->fase1f))}}
                                                         @elseif($fase->fase1i )
                                                           <button class="btn btn-outline-success" type="submit" name="fase1f" value="{{today()->format('d-m-y')}}">Culminar en fecha del: {{today()->format('d-m-y')}}  </button>
                                                           @else
@@ -118,7 +118,7 @@ Consignacion de Documentos
                                                      <td  class="col-md-2" style="text-align: center;" id="paiis_id">
  @if($fase)
                                                    @if($fase->fase2i)
-                                                        {{$fase->fase2i}}
+                                                        {{date('d-m-Y', strtotime($fase->fase2i))}}
                                                      @else
                                                       <button class="btn btn-outline-success" type="submit" name="fase2i" value="{{today()->format('d-m-y')}}"  >Iniciar en fecha del: {{today()->format('d-m-y')}}  </button>
                                                      @endif @endif
@@ -126,7 +126,7 @@ Consignacion de Documentos
                                                       <td class="col-md-2"  style="text-align: center;" id="paiis_id">
                                                         @if($fase)
   @if($fase->fase2f)
-                                                          {{$fase->fase2f}}  
+                                                          {{date('d-m-Y', strtotime($fase->fase2f))}}  
                                                         @elseif($fase->fase2i )
                                                           <button class="btn btn-outline-success" type="submit" name="fase2f" value="{{today()->format('d-m-y')}}">Culminar en fecha del: {{today()->format('d-m-y')}}  </button>
                                                           @else
@@ -159,7 +159,7 @@ Firma del Acuerdo de Confidencialidad
                                                      <td  class="col-md-2" style="text-align: center;" id="paiis_id">
                                                          @if($fase)
 @if($fase->fase3i)
-                                                        {{$fase->fase3i}}
+                                                        {{date('d-m-Y', strtotime($fase->fase3i))}}
                                                      @else
                                                       <button class="btn btn-outline-success" type="submit" name="fase3i" value="{{today()->format('d-m-y')}}" >Iniciar en fecha del: {{today()->format('d-m-y')}}  </button>
                                                      @endif @endif
@@ -167,7 +167,7 @@ Firma del Acuerdo de Confidencialidad
                                                       <td class="col-md-2"  style="text-align: center;" id="paiis_id">
 @if($fase)
                                                       @if($fase->fase3f)
-                                                            {{$fase->fase3f}}
+                                                            {{date('d-m-Y', strtotime($fase->fase3f))}}
                                                         @elseif($fase->fase3i )
                                                           <button class="btn btn-outline-success" type="submit" name="fase3f" value="{{today()->format('d-m-y')}}">Culminar en fecha del: {{today()->format('d-m-y')}}  </button>
                                                           @else
@@ -199,15 +199,15 @@ Visita al Activo
                                                      <td  class="col-md-2" style="text-align: center;" id="paiis_id">
  @if($fase)
                                                     @if($fase->fase4i)
-                                                        {{$fase->fase4i}}
+                                                        {{date('d-m-Y', strtotime($fase->fase4i))}}
                                                      @else
                                                       <button class="btn btn-outline-success" type="submit" name="fase4i" value="{{today()->format('d-m-y')}}" >Iniciar en fecha del: {{today()->format('d-m-y')}}  </button>
                                                      @endif @endif
                                                     </td>
                                                       <td class="col-md-2"  style="text-align: center;" id="paiis_id">
                                                          @if($fase)
- @if($fase->fase4f)
-                       {{$fase->fase4f}}                                     
+                                                    @if($fase->fase4f)
+                                                        {{date('d-m-Y', strtotime($fase->fase4f))}}                                     
                                                         @elseif($fase->fase4i )
                                                           <button class="btn btn-outline-success" type="submit" name="fase4f" value="{{today()->format('d-m-y')}}">Culminar en fecha del: {{today()->format('d-m-y')}}  </button>
                                                           @else
@@ -240,7 +240,7 @@ Desarrollo y Presentación del Proyecto
                                                      <td  class="col-md-2" style="text-align: center;" id="paiis_id">
  @if($fase)
                                                   @if($fase->fase5i)
-                                                        {{$fase->fase5i}}
+                                                        {{date('d-m-Y', strtotime($fase->fase5i))}}
                                                      @else
                                                       <button class="btn btn-outline-success" type="submit" name="fase5i" value="{{today()->format('d-m-y')}}" >Iniciar en fecha del: {{today()->format('d-m-y')}}  </button>
                                                      @endif @endif
@@ -248,7 +248,7 @@ Desarrollo y Presentación del Proyecto
                                                       <td class="col-md-2"  style="text-align: center;" id="paiis_id">
  @if($fase)
                                                        @if($fase->fase5f)
-                                                            {{$fase->fase5f}}
+                                                            {{date('d-m-Y', strtotime($fase->fase5f))}}
                                                         @elseif($fase->fase5i )
                                                           <button class="btn btn-outline-success" type="submit" name="fase5f" value="{{today()->format('d-m-y')}}">Culminar en fecha del: {{today()->format('d-m-y')}}  </button>
                                                           @else
@@ -280,7 +280,7 @@ Factibilidad
                                                      <td  class="col-md-2" style="text-align: center;" id="paiis_id">
  @if($fase)
                                                    @if($fase->fase6i)
-                                                        {{$fase->fase6i}}
+                                                        {{date('d-m-Y', strtotime($fase->fase6i))}}
                                                      @else
                                                       <button class="btn btn-outline-success" type="submit" name="fase6i" value="{{today()->format('d-m-y')}}" >Iniciar en fecha del: {{today()->format('d-m-y')}}  </button>
                                                      @endif @endif
@@ -288,7 +288,7 @@ Factibilidad
                                                       <td class="col-md-2"  style="text-align: center;" id="paiis_id">
                                                         @if($fase)
  @if($fase->fase6f)
-                       {{$fase->fase6f}}                                     
+                       {{date('d-m-Y', strtotime($fase->fase6f))}}                                     
                                                         @elseif($fase->fase6i )
                                                           <button class="btn btn-outline-success" type="submit" name="fase6f" value="{{today()->format('d-m-y')}}">Culminar en fecha del: {{today()->format('d-m-y')}}  </button>
                                                           @else
@@ -321,7 +321,7 @@ Negociacion y Firma del Contrato
                                                      <td  class="col-md-2" style="text-align: center;" id="paiis_id">
  @if($fase)
                                                    @if($fase->fase7i)
-                                                        {{$fase->fase7i}}
+                                                        {{date('d-m-Y', strtotime($fase->fase7i))}}
                                                      @else
                                                       <button class="btn btn-outline-success" type="submit" name="fase7i" value="{{today()->format('d-m-y')}}" >Iniciar en fecha del: {{today()->format('d-m-y')}}  </button>
                                                      @endif @endif
@@ -329,7 +329,7 @@ Negociacion y Firma del Contrato
                                                       <td class="col-md-2"  style="text-align: center;" id="paiis_id">
                                                          @if($fase)
  @if($fase->fase7f)
-                                                       {{$fase->fase7f}}     
+                                                       {{date('d-m-Y', strtotime($fase->fase7f))}}     
                                                         @elseif($fase->fase7i )
                                                           <button class="btn btn-outline-success" type="submit" name="fase7f" value="{{today()->format('d-m-y')}}">Culminar en fecha del: {{today()->format('d-m-y')}}  </button>
                                                           @else

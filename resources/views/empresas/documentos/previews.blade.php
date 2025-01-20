@@ -176,7 +176,7 @@
                                                 </tr>
                                                
                                                 <tr  style="height: 8rem;font-size: 70%;">
-                                                   <td  style="vertical-align: bottom;">{{session('usuario')->name}} {{session('usuario')->surname}}</td>
+                                                   <td  style="vertical-align: bottom;">{{strtoupper(session('usuario')->name)}} {{strtoupper(session('usuario')->surname)}}</td>
                                                    <td  style="vertical-align: bottom;"></td>
                                                    <td  style="vertical-align: bottom;"></td>
                                                    <td  style="vertical-align: bottom;"></td>

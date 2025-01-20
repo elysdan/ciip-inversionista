@@ -206,10 +206,10 @@
                                                 </tr>
                                                
                                                 <tr  style="height: 8rem;font-size: 70%;">
-                                                   <td  style="vertical-align: bottom;">{{$previa->name}} {{$previa->surname}}</td>
-                                                   <td  style="vertical-align: bottom;">{{$previa->namerev}} {{$previa->surnamerev}}</td>
-                                                   <td  style="vertical-align: bottom;">{{$previa->namecert}} {{$previa->surnamecert}}</td>
-                                                   <td  style="vertical-align: bottom;">{{$previa->nameapro}} {{$previa->surnameapro}}</td>
+                                                   <td  style="vertical-align: bottom;">{{strtoupper($previa->name)}} {{strtoupper($previa->surname)}}</td>
+                                                   <td  style="vertical-align: bottom;">{{strtoupper($previa->namerev)}} {{strtoupper($previa->surnamerev)}}</td>
+                                                   <td  style="vertical-align: bottom;">{{strtoupper($previa->namecert)}} {{strtoupper($previa->surnamecert)}}</td>
+                                                   <td  style="vertical-align: bottom;">{{strtoupper($previa->nameapro)}} {{strtoupper($previa->surnameapro)}}</td>
                                                     
                                                 </tr>
                                                 </table>

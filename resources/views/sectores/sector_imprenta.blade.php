@@ -133,7 +133,7 @@ td:first-child {
                                                     </th>
                                                 
                                                     <td  style="text-align: left;min-width: 50%;max-width: 50%;">
-                                                            {{$valor->cii}}                             
+                                                            {{number_format($valor->cii)}} $                           
                                                     </td>
                                                     
                                             </tr>
@@ -212,14 +212,14 @@ td:first-child {
 
                                                          <td  style="text-align: center;width: 10px;" id="paiis_id">
 
-                                                        {{$valor->fase1i}}
+                                                        {{date('d-m-Y', strtotime($valor->fase1i))}}
                                                    
 
 
                                                         </td>
                                                           <td class=""  style="text-align: center;" id="paiis_id">
                                                        
-                                                                {{$valor->fase1f}}
+                                                                {{date('d-m-Y', strtotime($valor->fase1f))}}
                                                          
                                                         </td>
     @if($valor)                                                      <td class="" style="text-align: center;" id="paiis_id">
@@ -246,13 +246,13 @@ Consignacion de Documentos
 
                                                      <td  class="" style="text-align: center;" id="paiis_id">
 
-                                                        {{$valor->fase2i}}
+                                                        {{date('d-m-Y', strtotime($valor->fase2i))}}
                                                
                                                     </td>
                                                       <td class=""  style="text-align: center;" id="paiis_id">
                                              
 
-                                                          {{$valor->fase2f}}  
+                                                          {{date('d-m-Y', strtotime($valor->fase2f))}}  
                                                      
                                                     </td>
  @if($valor)                                                      <td class="" style="text-align: center;" id="paiis_id">
@@ -278,12 +278,12 @@ Firma del Acuerdo de Confidencialidad
                                                     </td>
 
                                                      <td  class="" style="text-align: center;" id="paiis_id">
-                                                      
+                                                      {{date('d-m-Y', strtotime($valor->fase3i))}}
 
                                                     </td>
                                                       <td class=""  style="text-align: center;" id="paiis_id">
 
-                                                            {{$valor->fase3f}}
+                                                            {{date('d-m-Y', strtotime($valor->fase3f))}}
                                                    
                                                     </td>
             @if($valor)                                           <td class="" style="text-align: center;" id="paiis_id">
@@ -310,13 +310,13 @@ Visita al Activo
 
                                                      <td  class="" style="text-align: center;" id="paiis_id">
  
-                                                        {{$valor->fase4i}}
+                                                        {{date('d-m-Y', strtotime($valor->fase4i))}}
                                                   
                                                     </td>
                                                       <td class=""  style="text-align: center;" id="paiis_id">
                                                      
 
-                       {{$valor->fase4f}}                                     
+                       {{date('d-m-Y', strtotime($valor->fase4f))}}                                     
                                                       
                                                     </td>
     @if($valor)                                                   <td class="" style="text-align: center;" id="paiis_id">
@@ -343,12 +343,12 @@ Desarrollo y Presentación del Proyecto
 
                                                      <td  class="" style="text-align: center;" id="paiis_id">
  
-                                                        {{$valor->fase5i}}
+                                                        {{date('d-m-Y', strtotime($valor->fase5i))}}
                                                  
                                                     </td>
                                                       <td class=""  style="text-align: center;" id="paiis_id">
  
-                                                            {{$valor->fase5f}}
+                                                            {{date('d-m-Y', strtotime($valor->fase5f))}}
                                                         
                                                     </td>
      @if($valor)                                                  <td class="" style="text-align: center;" id="paiis_id">
@@ -375,7 +375,7 @@ Factibilidad
 
                                                      <td  class="" style="text-align: center;" id="paiis_id">
  
-                                                        {{$valor->fase6i}}
+                                                        {{date('d-m-Y', strtotime($valor->fase6i))}}
                                                     
                                                     </td>
                                                       <td class=""  style="text-align: center;" id="paiis_id">
@@ -406,12 +406,13 @@ Negociacion y Firma del Contrato
                                                     </td>
 
                                                      <td  class="" style="text-align: center;" id="paiis_id">
- 
-                                                
+                            
+                                                    {{date('d-m-Y', strtotime($valor->fase7i))}}   
+
                                                     </td>
                                                       <td class=""  style="text-align: center;" id="paiis_id">
                                                        
-                                                       {{$valor->fase7f}}     
+                                                       {{date('d-m-Y', strtotime($valor->fase7f))}}     
                                                        
                                                      
                                                     </td>
